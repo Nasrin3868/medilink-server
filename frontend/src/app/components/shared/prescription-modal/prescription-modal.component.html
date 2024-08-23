@@ -1,0 +1,16 @@
+<!-- <h1>prescription modal</h1> -->
+
+<div id="prescription-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="modal-overlay fixed inset-0 bg-gray-600 bg-opacity-50"></div>
+    <div class="modal-content bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-lg font-semibold">Prescription Details</h2>
+      <div class="mt-4">
+        <p><strong>Disease:</strong> {{ disease }}</p>
+        <p><strong>Prescription:</strong> {{ prescription_note }}</p>
+      </div>
+      <button (click)="closeModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+        Close
+      </button>
+    </div>
+  </div>
+  

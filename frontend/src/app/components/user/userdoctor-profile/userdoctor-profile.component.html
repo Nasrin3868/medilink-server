@@ -1,0 +1,101 @@
+<div class="app-container h-screen flex flex-col">
+  <app-header></app-header>
+
+  <div class="bg-[#f8e9e6] shadow-md rounded-lg p-6 sm:px-8 lg:px-16">
+    <div class="flex flex-col sm:flex-row items-center sm:space-x-6">
+      <div class="sm:px-4 mb-4 sm:mb-0">
+        <img *ngIf="doctor.profile_picture; else no_profile_picture" 
+             [src]="doctor.profile_picture" 
+             alt="Doctor's Profile" 
+             class="h-32 w-32 object-cover rounded-full shadow-lg mx-auto sm:mx-0" />
+        <ng-template #no_profile_picture>
+          <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724227464/ank36p5bo7ypy79ya9me.jpg" 
+               alt="Doctor's Placeholder" 
+               class="w-32 h-32 object-cover rounded-full shadow-lg mx-auto sm:mx-0">
+        </ng-template>
+      </div>
+      <div class="text-center sm:text-left sm:pr-16">
+        <h2 class="text-xl sm:text-2xl font-semibold text-gray-900">
+          Dr. {{(doctor.firstName | capitalizeFirst) + ' ' + (doctor.lastName | capitalizeFirst)}}
+        </h2>
+        <p class="text-gray-700 mt-2">Specialized in {{doctor.specialization | capitalizeFirst}}</p>
+        <p class="text-gray-700 mt-2">Consulting Fee: {{doctor.consultation_fee}}</p>
+        <p class="text-gray-700 mt-2">Experience: {{doctor.experience}} years</p>
+        <p class="text-gray-900 mt-4 font-semibold">About:</p>
+        <p class="text-gray-700 mt-2 text-justify leading-relaxed">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has survived not only five centuries, but also the leap into electronic typesetting.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+    <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <ul
+        class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+        id="defaultTab" role="tablist">
+        <li class="me-2">
+          <button (click)="selectTab('about')"
+            [ngClass]="{'text-gray-900': selectedTab === 'about', 'dark:bg-gray-800': selectedTab === 'about'}"
+            class="inline-block p-4 rounded-ss-lg hover:bg-gray-100 dark:hover:bg-gray-700">Select your slots</button>
+        </li>
+        <li class="me-2">
+          <button (click)="selectTab('services')"
+            [ngClass]="{'text-gray-900': selectedTab === 'services', 'dark:bg-gray-800': selectedTab === 'services'}"
+            class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">Connect with your
+            doctor</button>
+        </li>
+      </ul>
+      <div id="defaultTabContent">
+        <div *ngIf="selectedTab === 'about'" class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" role="tabpanel">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="relative">
+                <div class="m-4 rounded-xl custom-calendar-container">
+                  <p-calendar [(ngModel)]="date" (ngModelChange)="getSlotsForDisplay($event)" [minDate]="minDate"
+                    [maxDate]="maxDate" [readonlyInput]="true" dateFormat="dd/mm/yy" />
+                </div>
+                <div class="card m-4 mt-6">
+                  <div class="mb-3">
+                    <h2 class="text-2xl font-semibold leading-relaxed">Select slots</h2>
+                  </div>
+                  <div class="p-2 pl-8">
+                    <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+                      <div class=" bg-gray-300 p-4 rounded-xl">
+                        <div class="m-4 grid grid-cols-4 gap-2">
+                          <ng-container *ngIf="slots_for_display.length===0; else slots_available">
+                            <div class="justify-center my-8">
+                              <h3>No Slots Available</h3>
+                            </div>
+                          </ng-container>
+                          <ng-template #slots_available>
+                            <div *ngFor="let slot of slots_for_display; let i = index" class="col-span-1">
+                              <button type="button" (click)="confirmSlot(slot)"
+                              class="text-white font-medium rounded-lg text-sm mb-2 w-full h-12 flex items-center justify-center" 
+                              [ngClass]="'bg-gray-700 py-2 px-4 rounded-full font-bold hover:bg-gray-900 hover:text-white'">
+                              {{ slot.time|date:'shortTime' }}
+                              </button>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </p-scrollPanel>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div *ngIf="selectedTab === 'services'" class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" role="tabpanel">
+          <div class="mt-6">
+            <h3 class="text-lg font-semibold text-gray-900">Have any doubts? connect with Dr.{{(doctor.firstName|capitalizeFirst)+' '+(doctor.lastName|capitalizeFirst)}}:</h3>
+            <button (click)="chat()" class="mt-2 bg-gray-600 hover:bg-gray-800 text-white py-2 px-4 rounded">Chat with Dr.</button>
+          </div>
+          <div class="mt-6">
+            <h3 class="text-lg font-semibold text-gray-900">Online Consulting:</h3>
+            <p class="text-gray-700">Click here start the consultation:</p>
+            <button class="mt-2 bg-gray-600 hover:bg-gray-800 text-white py-2 px-4 rounded">Click here to start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+    <app-confirmation-modal [showModal]="showModal" message="Are you sure to confirm this slot?" (confirm)="onConfirmSlot()" (cancel)="onCancelSlot()"></app-confirmation-modal>
+  </div>

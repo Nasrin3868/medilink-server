@@ -1,0 +1,134 @@
+
+
+<div class="bg-gray-100">
+  <div class="container mx-auto p-5">
+    <!-- Title -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold mb-4">
+        Welcome KYC Verification of Dr. {{ (doctor_kyc_details.docId.firstName | capitalizeFirst) +' '+ (doctor_kyc_details.docId.lastName | capitalizeFirst) }}
+      </h1>
+      <button (click)="previous_page()" class="my-4 bg-yellow-500 text-gray-800 px-4 py-2 rounded-lg hover:bg-yellow-400 flex items-center">
+        Previous page
+      </button>
+    </div>
+    <!-- Download Files Section -->
+    <div class="bg-white p-5 rounded-lg shadow-md mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Download Files</h2>
+        <div class="mb-4">
+            <p>Identity proof that the user selected: <strong>PAN Card</strong></p>
+            <button (click)="file_download('identity_proof')" class=" mt-4 bg-blue-500 text-gray-800 px-4 py-2 rounded-lg  hover:bg-blue-600 flex items-center">
+              <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white mr-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+              </svg> -->
+              View Identity Proof
+            </button>
+        </div>
+        <div class="mb-4">
+          <button (click)="file_download('doctors_liscence')" class="bg-blue-500 text-gray-800 px-4 py-2 rounded-lg  hover:bg-blue-600 flex items-center">
+              <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white mr-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+              </svg> -->
+              View Doctor's License
+            </button>
+        </div>
+        <div class="mb-4">
+          <p>Download Qualification Certificates:</p>
+          <div class=" mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" *ngFor="let cerificate of doctor_kyc_details.docId.qualification_certificate; let i=index">
+            <button (click)="file_download('qualification_certificate',i)" class="bg-blue-500 text-gray-800 px-4 py-2 rounded-lg  hover:bg-blue-600 flex items-center">
+              <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white mr-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+              </svg> -->
+              View Certificate {{i+1}}
+            </button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <p>Download Experience Certificates:</p>
+          <div class=" mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" *ngFor="let cerificate of doctor_kyc_details.docId.experience_certificate; let i=index">
+            <button (click)="file_download('experience_certificate',i)" class="bg-blue-500 text-gray-800 px-4 py-2 rounded-lg  hover:bg-blue-600 flex items-center">
+              <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white mr-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
+              </svg> -->
+              View Experience {{i+1}}
+            </button>
+          </div>
+        </div>
+        <div class="mb-4 mt-4">
+          <p>Specialization: <strong>Oncology</strong></p>
+          <p>Current Working Hospital: <strong>XYZ Hospital, Kerala</strong></p>
+        </div>
+    </div>
+
+    <!-- Verification Section -->
+    <div class="bg-white p-5 rounded-lg shadow-md mb-6">
+      <h2 class="text-2xl font-semibold mb-4">Verification</h2>
+      <form [formGroup]="kyc_verification_form" #myform="ngForm" (ngSubmit)="submit_kyc_verification_form()">
+        <div class="mb-4">
+          <p class="font-medium">Id proof type selected and id proof submitted are matching:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="id_proof_type" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="id_proof_type" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verify Identity Proof:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="id_proof" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="id_proof" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verify Doctor's License:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="doctor_liscense" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="doctor_liscense" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verify Qualification Certificates:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="qualification_certificate" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="qualification_certificate" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verify Experience Certificates:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="experience_certificate" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="experience_certificate" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verify Specialization:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="specialization" value="true" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="specialization" value="false">
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="font-medium">Verification by Current Working Hospital:</p>
+          <div class="flex items-center">
+            <label class="mr-2">Yes</label>
+            <input type="radio" formControlName="currently_working_hospital" value="ture" class="mr-4">
+            <label class="mr-2">No</label>
+            <input type="radio" formControlName="currently_working_hospital" value="false">
+          </div>
+        </div>
+        <button type="submit" class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+

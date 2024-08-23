@@ -1,0 +1,108 @@
+
+<div class="container bg-gray-200">
+    <div class="p-4">
+        <h2 class="text-4xl font-semibold leading-relaxed">Appointment Management</h2>
+    </div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+     <!-- Search input -->
+     <div class="flex pl-4 pb-4  dark:bg-gray-900 grid grid-cols-2 divide-x  border-none" >
+        <label for="table-search" class="sr-only">Search</label>
+        <form [formGroup]="searchForm">
+            <div class="relative grid grid-cols-2 divide-x ">
+                <div class=" absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none ">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <div >
+                    <input type="text" formControlName="searchData" id="table-search" placeholder="Search for items" required
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                </div>
+            </div>
+        </form> 
+
+        <div class="relative grid grid-cols-3 divide-x border-none">
+            <form [formGroup]="consultationForm" (ngSubmit)="consultationFormSubmit()">
+                <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-800 rounded-lg shadow-sm h-9 focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" formControlName="status" (change)="consultationFormSubmit()">
+                  <option value="all">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="consulted">Consulted</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="not_consulted">Not Consulted</option>
+                </select>
+              </form>
+        </div>
+    </div>
+
+  <!-- appointments table -->
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-4 w-32">Sl No</th>
+                <th scope="col" class="px-6 py-4">Slot ID</th>
+                <th scope="col" class="px-6 py-4">User Name</th>
+                <th scope="col" class="px-6 py-4">Doctor Name</th>
+                <th scope="col" class="px-6 py-4">Slot Date</th>
+                <th scope="col" class="px-6 py-4">Slot Time</th>
+                <th scope="col" class="px-6 py-4">Consultation Status</th>
+                <th scope="col" class="px-6 py-4">Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments_to_display; let i=index" 
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4 w-32">{{i+1}}</td>
+                <th scope="row" class=" px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.slotId._id}}
+                </th>
+                <th scope="row" class=" px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.userId.firstName+' '+appointment.userId.lastName}}
+                </th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.slotId.docId.firstName+' '+appointment.slotId.docId.lastName}}
+                </th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.slotId.time|date:'dd/MM/YY'}}
+                </th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.slotId.time|date:'shortTime'}}
+                </th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{appointment.consultation_status}}
+                </th>
+                <td class="px-6 py-4">
+                    <div *ngIf="appointment.consultation_status==='pending'">
+                        <th scope="row" class="text-center font-medium text-red-600 dark:text-orange-500">{{appointment.consultation_status}}</th>
+                    </div>
+                    <div *ngIf="appointment.consultation_status==='consulted'">
+                        <th scope="row" class="text-center font-medium text-green-600 dark:text-green-500">{{appointment.consultation_status}}</th>
+                    </div>
+                    <div *ngIf="appointment.consultation_status==='not_consulted'">
+                        <th scope="row" class="text-center font-medium text-green-600 dark:text-red-500">{{appointment.consultation_status}}</th>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    <div *ngIf="appointment.payment_status==='true'">
+                        <th scope="row" class="text-center font-medium text-green-600 dark:text-green-500">Done</th>
+                    </div>
+                    <div *ngIf="appointment.payment_status==='false'">
+                        <th scope="row" class="text-center font-medium text-green-600 dark:text-red-500">Not Done</th>
+                    </div>
+                </td>
+                
+                <!-- <td class="px-6 py-4">
+                    <div *ngIf="appointment.blocked==='true'">
+                        <th scope="row" class="text-center font-medium text-red-600 dark:text-red-500">Blocked</th>
+                        <button  (click)="changeStatus(appointment)" class="font-small text-black-500 dark:text-black-500 hover:underline">want to unblock?</button>
+                    </div>
+                    <div *ngIf="appointment.blocked==='false'">
+                        <th scope="row" class="text-center font-medium text-green-600 dark:text-green-500">Not Blocked</th>
+                        <button  (click)="changeStatus(appointment)" class="font-small text-black-500 dark:text-black-500 hover:underline">want to block?</button>
+                    </div>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

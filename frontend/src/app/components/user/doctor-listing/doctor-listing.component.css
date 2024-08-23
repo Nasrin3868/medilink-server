@@ -1,0 +1,11 @@
+/* Hide scrollbar for WebKit browsers */
+main-content::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for all browsers */
+  main-content {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  

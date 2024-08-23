@@ -1,0 +1,57 @@
+
+<nav class=" border-white bg-white  header">
+    <div class="p-2 px-24 max-w-screen-xxl flex flex-wrap items-center justify-between bg-white">
+          <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724348327/zlocybcbuse2cgpq5ehu.png" class="h-16" alt="" />
+          <!-- <span class="self-center text-black text-2xl font-semibold whitespace-nowrap dark:text-black">MediLink</span> -->
+      <div class="mr-24 hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+        <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+         
+          <ng-container *ngIf="nobody">
+            <li>
+              <a (click)="doctor_signIn()" class="block py-2 px-3 md:p-0 text-black  rounded md:bg-transparent  md:dark:bg-transparent" aria-current="page">SignIn as Doctor</a>
+            </li>
+            <li>
+              <a (click)="userlogin()" class="block py-2 px-3 md:p-0 text-black  rounded md:bg-transparent  md:dark:bg-transparent" aria-current="page">SignIn</a>
+            </li>
+            <li>
+              <a (click)="home()" class="block py-2 px-3 md:p-0 text-black  rounded md:bg-transparent  md:dark:bg-transparent" aria-current="page">Home</a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="user">
+            <li>
+              <a (click)="userHome()" class="block py-2 px-3 md:p-0 text-black rounded md:bg-transparent  md:dark:bg-transparent" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a (click)="doctorListing()" class="block py-2 px-3 md:p-0 text-black rounded md:hover:bg-transparent md:border-0 dark:hover:text-black md:dark:hover:bg-transparent">Doctors</a>
+            </li>
+            <li>
+              <a (click)="userChat()"  class="block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:border-0 text-black dark:hover:text-black md:dark:hover:bg-transparent">Chat with doctor</a>
+            </li>
+            <li>
+              <a (click)='userProfile()' class="block py-2 px-3 md:p-0 text-black rounded md:hover:bg-transparent md:border-0 dark:hover:text-black md:dark:hover:bg-transparent">Profile</a>
+            </li>
+            <li>
+              <a (click)="userLogout()" class="block py-2 text-black px-3 md:p-0 text-gray-900 rounded md:hover:bg-transparent md:border-0 dark:hover:text-black md:dark:hover:bg-transparent">Logout</a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="doctor">
+            <li>
+              <a (click)="doctorHome()" class="block py-2 px-3 md:p-0  bg-blue-700 rounded md:bg-transparent md:dark:bg-transparent" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a (click)="bookings()" class="block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:border-0 text-black dark:hover:text-black md:dark:hover:bg-transparent">Booking</a>
+            </li>
+            <li>
+              <a (click)="doctorChat()" class="block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:border-0 text-black dark:hover:text-black md:dark:hover:bg-transparent">Chat with patients</a>
+            </li>
+            <li>
+              <a (click)="doctorProfile()" class="block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:border-0 text-black dark:hover:text-black md:dark:hover:bg-transparent">Profile</a>
+            </li>
+            <li>
+              <a (click)="userLogout()" class="block py-2 px-3 md:p-0 ] rounded md:hover:bg-transparent md:border-0 text-black dark:hover:text-black md:dark:hover:bg-transparent">Logout</a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </nav>

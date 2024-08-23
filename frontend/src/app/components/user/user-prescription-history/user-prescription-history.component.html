@@ -1,0 +1,35 @@
+<div class="border-2 m-8">
+    <div class="mb-3">
+        <h2 class="text-2xl font-semibold leading-relaxed">Prescription History</h2>
+    </div>
+    <div class="card">
+        <p-table
+            [value]="prescription_to_display"
+            [paginator]="true"
+            [rows]="10"
+            [tableStyle]="{ 'min-width': '25rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <!-- <th style="width:25%">sl No.</th> -->
+                    <th style="width:25%">PrescriptionId</th>
+                    <th style="width:25%">Disease</th>
+                    <th style="width:25%">Details</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-slot>
+                <tr>
+                    <!-- <td>{{i+1}}</td> -->
+                    <td>{{ prescription_to_display._id}}</td>
+                    <td>{{ prescription_to_display.disease}}</td>
+                    <td>
+                        <button type="button" (click)="showDetails(prescription_to_display)" class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Show more
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

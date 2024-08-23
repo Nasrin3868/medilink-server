@@ -1,0 +1,102 @@
+<section class="py-10 my-auto dark:bg-gray-900">
+  <div class="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
+    <div class="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
+      <div class="">
+        <div class="relative mt-2 flex justify-center">
+          <div 
+            class="flex justify-center items-center w-[141px] h-[141px] rounded-full bg-cover bg-center bg-no-repeat" 
+            [style.background-image]="url ? 'url(' + url + ')' : 'url(https://res.cloudinary.com/dyemxd31x/image/upload/v1724227646/i4lf0zmuyz9k9prs8hbw.jpg)'">
+          </div>
+          <input 
+            type="file" 
+            accept=".jpg, .jpeg, .png" 
+            name="profile" 
+            id="upload_profile" 
+            hidden 
+            required 
+            (change)="onFileSelected($event)"
+          >
+        </div>
+        <div class="flex justify-center mt-4">
+          <button 
+            class="justify-center py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900"
+            (click)="triggerFileInput()"
+          >
+            Upload Profile Pic
+          </button>
+        </div>
+        <h1 class="mt-4 lg:text-2xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
+          Profile details
+        </h1>
+        <form [formGroup]="name_form" (ngSubmit)="submit_name()" #myform="ngForm">
+          <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+            <div class="w-full  mb-4 mt-4">
+              <label for="" class="mb-2 dark:text-gray-300">First Name</label>
+              <input type="text" formControlName="firstName"
+                      class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800" 
+                      [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit, 'border-red-500': name_form.get('firstName')?.touched && name_form.get('firstName')?.invalid }"
+                      placeholder="First Name" >
+              <div *ngIf="name_form.get('firstName')?.touched && name_form.get('firstName')?.invalid" class="text-red-500 text-xs mt-1">
+                  <div *ngIf="name_form.get('firstName')?.hasError('required')">*required</div>
+                  <div *ngIf="name_form.get('firstName')?.hasError('maxlength')">*length exceeds</div>
+                  <div *ngIf="name_form.get('firstName')?.hasError('pattern')">*enter a valid firstname</div>
+              </div>
+            </div>
+            <div class="w-full  mb-4 lg:mt-4">
+                <label for="" class=" dark:text-gray-300">Last Name</label>
+                <input type="text" formControlName="lastName"
+                  class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                  [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': email_form.get('lastName')?.touched && email_form.get('lastName')?.invalid}"
+                  placeholder="Last Name">
+                <div *ngIf="email_form.get('lastName')?.touched && email_form.get('lastName')?.invalid" class="text-red-500 text-xs mt-1">
+                  <div *ngIf="email_form.get('lastName')?.hasError('required')">*required</div>
+                  <div *ngIf="email_form.get('lastName')?.hasError('maxlength')">*length exceeds</div>
+                  <div *ngIf="email_form.get('lastName')?.hasError('pattern')">*enter a valid lastname</div>
+                </div>
+            </div>
+            <div class="flex justify-center w-full lg:mt-12 lg:mb-4">
+              <button (click)="close_name()" *ngIf="name_edit===false" class=" py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Edit
+              </button>
+              <button type="submit" *ngIf="name_edit===true" class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Save
+              </button>
+              <button (click)="close_name()" *ngIf="name_edit===true" class="ml-8 py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+        <h1 class="mt-4 lg:text-2xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
+          Your Email
+        </h1>
+        <form [formGroup]="email_form" (ngSubmit)="submit_email()" #myform="ngForm">
+          <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+            <div class="w-full  mb-4 mt-4">
+                <label for="" class="mb-2 dark:text-gray-300">Email</label>
+                <input formControlName="email" type="text"
+                  class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                  [ngClass]="{'border-gray-600 dark:bg-gray-700': email_edit, 'border-gray-300 dark:bg-gray-900': !email_edit,'border-red-500': email_form.get('email')?.touched && email_form.get('email')?.invalid}"
+                  placeholder="Email">
+                <div *ngIf="email_form.get('email')?.touched && email_form.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+                    <div *ngIf="email_form.get('email')?.hasError('required')">*required</div>
+                    <div *ngIf="email_form.get('email')?.hasError('email')">*invalid email</div>
+                </div>
+            </div>
+            <div class="flex justify-start w-full lg:mt-12 lg:mb-4">
+              <button (click)="close_email()" *ngIf="email_edit===false" class=" py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Edit
+              </button>
+              <button type="submit" *ngIf="email_edit===true" class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Save
+              </button>
+              <button (click)="close_email()" *ngIf="email_edit===true" class="ml-8 py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

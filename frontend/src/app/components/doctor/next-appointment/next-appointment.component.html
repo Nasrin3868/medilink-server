@@ -1,0 +1,31 @@
+<div class="bg-gray-100 p-8">
+    <!-- Next Appointment Section -->
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+        <ng-container *ngIf="upcoming_appointment===null; else next_slot">
+            <h2>No Appointmnet</h2>
+        </ng-container>
+        <ng-template #next_slot>
+            <h2 class="text-2xl font-bold mb-4">Next Appointment</h2>
+            <p class="text-lg"><strong>User Name:</strong> {{upcoming_appointment.userId.firstName+' '+upcoming_appointment.userId.lastName}}</p>
+            <p class="text-lg"><strong>Date:</strong> {{upcoming_appointment.slotId.time|date:'dd/MM/YY'}}</p>
+            <p class="text-lg"><strong>Time:</strong> {{upcoming_appointment.slotId.time|date:'shortTime'}}</p>
+        </ng-template>
+    </div>
+
+    <!-- Enter Room ID Section -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Enter room ID:</h2>
+        <form [formGroup]="roomIdForm" (ngSubmit)="roomIdFormSubmit()" #myform="ngForm">
+            <label >RoomId must contain total 8 characters,Only numbers and alphabets</label>
+            <input formControlName="roomId" type="text" class="border border-gray-300 p-2 rounded mb-4 w-full" placeholder="Enter room ID"  [disabled]="disable"
+            [ngClass]="{ 'border-red-500': roomIdForm.get('roomId')?.touched && roomIdForm.get('roomId')?.invalid }" />
+            <div *ngIf="roomIdForm.get('roomId')?.touched && roomIdForm.get('roomId')?.invalid" class="text-red-500 text-xs mt-1">
+                <div *ngIf="roomIdForm.get('roomId')?.hasError('required')">*required</div>
+                <div *ngIf="roomIdForm.get('roomId')?.hasError('pattern')">*enter a roomId with 8 numbers</div>
+            </div>
+            <!-- <input [(ngModel)]="roomId" type="text" class="border border-gray-300 p-2 rounded mb-4 w-full" placeholder="Enter room ID"> -->
+            <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Submit and share to patient through roomId</button>
+        </form> 
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+<!-- <p>doctor-video-call-room works!</p> -->
+<div  #root></div>
+<div class="border rounded-md p-4 w-full mx-auto max-w-2xl mt-8">
+    <h4 class="text-xl lg:text-2xl font-semibold mt-8">
+        Did patient join?
+    </h4>
+    
+    <div>
+        <label class="flex bg-gray-100 text-gray-700 rounded-md px-3 py-2 my-3  hover:bg-indigo-300 cursor-pointer ">
+             <input type="radio" [(ngModel)]="consultation_status" name="Country" value="consulted">
+             <i class="pl-2">Consulted</i>
+        </label>
+        <label class="flex bg-gray-100 text-gray-700 rounded-md px-3 py-2 my-3  hover:bg-indigo-300 cursor-pointer ">
+            <input type="radio" [(ngModel)]="consultation_status" name="Country" value="not_consulted">
+            <i class="pl-2">Not Consulted</i>
+        </label>
+    </div>
+    <button (click)="consultationStatus()" class="m-8 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">Change Status</button>
+    <!-- <button (click)="addPrescription()" class="m-8 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">Add Prescription</button> -->
+</div>
+

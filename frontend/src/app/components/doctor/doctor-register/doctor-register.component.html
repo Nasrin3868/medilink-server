@@ -1,0 +1,207 @@
+
+  
+
+<div class="app-container">
+    <app-header></app-header>
+    <div class="content flex items-center justify-center">
+        <div class="w-full max-w-4xl p-2">
+            <div class="col-span-1 pad">
+                <div class="bg-white border-gray-200 rounded-lg shadow md:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <form class="max-w-lg mx-auto" [formGroup]="registration_form" (ngSubmit)="onsubmit()" #myform="ngForm">
+                        
+                        <div class="mb-5 text-center text-xl text-blue-900">
+                            <h1>{{title}}</h1>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your firstname</label>
+                                <input type="text" id="first_name" formControlName="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="firstname" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('firstName')?.touched && registration_form.get('firstName')?.invalid }"
+                                />
+                                <div *ngIf="registration_form.get('firstName')?.touched && registration_form.get('firstName')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('firstName')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('firstName')?.hasError('minlength')">*must be at least 2 characters</div>
+                                    <div *ngIf="registration_form.get('firstName')?.hasError('pattern')">*enter a valid firstname</div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your lastname</label>
+                                <input type="text" id="last_name" formControlName="lastName" 
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lastname" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('lastName')?.touched && registration_form.get('lastName')?.invalid }" />
+                                <div *ngIf="registration_form.get('lastName')?.touched && registration_form.get('lastName')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('lastName')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('lastName')?.hasError('minlength')">*must be at least 2 characters</div>
+                                    <div *ngIf="registration_form.get('lastName')?.hasError('pattern')">*enter a valid lastName</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your email</label>
+                                <input type="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="@gmail.com" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('email')?.touched && registration_form.get('email')?.invalid }" />
+                                <div *ngIf="registration_form.get('email')?.touched && registration_form.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('email')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('email')?.hasError('email')">*enter a valid email</div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label for="contactno" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Contact number</label>
+                                <input type="text" id="contactno" formControlName="contactno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="00000-00000" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('contactno')?.touched && registration_form.get('contactno')?.invalid }" />
+                                <div *ngIf="registration_form.get('contactno')?.touched && registration_form.get('contactno')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('contactno')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('contactno')?.hasError('pattern')">*enter a valid contact number</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5 col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-white" for="user_avatar">Upload Profile Picture ( .jpg, .jpeg, .png images only)</label>
+                                <input id="profile_picture" type="file" (change)="onFileSelected($event,'profile_picture')" accept=".jpg, .jpeg, .png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help"
+                                [ngClass]="{ 'border-red-500': registration_form.get('profile_picture')?.touched && registration_form.get('profile_picture')?.invalid }" >
+                                <div *ngIf="registration_form.get('profile_picture')?.touched && registration_form.get('profile_picture')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('profile_picture')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select your specialization</label>
+                                <select id="countries" formControlName="specialization" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                [ngClass]="{ 'border-red-500': registration_form.get('specialization')?.touched && registration_form.get('specialization')?.invalid }" >
+                                <ng-container *ngFor="let spec of specialization">
+                                  <option [value]="spec.specialization">{{spec.specialization}}</option>
+                                </ng-container>
+                                </select>
+                                <div *ngIf="registration_form.get('specialization')?.touched && registration_form.get('specialization')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('specialization')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label for="current_working_hospital_address" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Current working hospital</label>
+                                <input type="text" id="current_working_hospital_address" formControlName="current_working_hospital_address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="......." required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('current_working_hospital_address')?.touched && registration_form.get('current_working_hospital_address')?.invalid }" />
+                                <div *ngIf="registration_form.get('current_working_hospital_address')?.touched && registration_form.get('current_working_hospital_address')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('current_working_hospital_address')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('current_working_hospital_address')?.hasError('maxlength')">*must be at least 5 characters</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="identity_proof_type" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Select ID Type</label>
+                                <select id="identity_proof_type" formControlName='identity_proof_type' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    [ngClass]="{ 'border-red-500': registration_form.get('identity_proof_type')?.touched && registration_form.get('identity_proof_type')?.invalid }" >
+                                    <option selected>Adhaar</option>
+                                    <option>Pan</option>
+                                </select>
+                                <div *ngIf="registration_form.get('identity_proof_type')?.touched && registration_form.get('identity_proof_type')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('identity_proof_type')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5 col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-white" for="user_avatar">Upload Identity Proof</label>
+                                <input id="identity_proof" type="file" (change)="onFileSelected($event,'identity_proof')" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help"
+                                [ngClass]="{ 'border-red-500': registration_form.get('identity_proof')?.touched && registration_form.get('identity_proof')?.invalid }" >
+                                <div *ngIf="registration_form.get('identity_proof')?.touched && registration_form.get('identity_proof')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('identity_proof')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5 col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-white" for="user_avatar">Upload Doctors liscence</label>
+                                <input id="doctors_liscence" type="file" (change)="onFileSelected($event,'doctors_liscence')" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" 
+                                [ngClass]="{ 'border-red-500': registration_form.get('doctors_liscence')?.touched && registration_form.get('doctors_liscence')?.invalid }" >
+                                <div *ngIf="registration_form.get('doctors_liscence')?.touched && registration_form.get('doctors_liscence')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('doctors_liscence')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5 col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-white" for="user_avatar">Upload Qualification cerificate</label>
+                                <input id="qualification_certificate" type="file" multiple (change)="onFileSelected($event,'qualification_certificate')" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" 
+                                [ngClass]="{ 'border-red-500': registration_form.get('qualification_certificate')?.touched && registration_form.get('qualification_certificate')?.invalid }" >
+                                <div *ngIf="registration_form.get('qualification_certificate')?.touched && registration_form.get('qualification_certificate')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('qualification_certificate')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5 col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-600 dark:text-white" for="user_avatar">Upload Experience certificate</label>
+                                <input id="experience_certificate" type="file" multiple (change)="onFileSelected($event,'experience_certificate')" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" 
+                                [ngClass]="{ 'border-red-500': registration_form.get('experience_certificate')?.touched && registration_form.get('experience_certificate')?.invalid }" >
+                                <div *ngIf="registration_form.get('experience_certificate')?.touched && registration_form.get('experience_certificate')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('experience_certificate')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="experience" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your experience</label>
+                                <input type="text" id="experience" formControlName="experience" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="......." required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('experience')?.touched && registration_form.get('experience')?.invalid }" />
+                                <div *ngIf="registration_form.get('experience')?.touched && registration_form.get('experience')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('experience')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('experience')?.hasError('pattern')">*should upto 60 years</div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label for="consultation_fee" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your consultation fee</label>
+                                <input type="text" id="consultation_fee" formControlName="consultation_fee" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="......." required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('consultation_fee')?.touched && registration_form.get('consultation_fee')?.invalid }" />
+                                <div *ngIf="registration_form.get('consultation_fee')?.touched && registration_form.get('consultation_fee')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('consultation_fee')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('consultation_fee')?.hasError('pattern')">*should be between &#8377;200 to &#8377;2000</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="mb-5">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your password</label>
+                                <input type="password" id="password" formControlName="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('password')?.touched && registration_form.get('password')?.invalid }" />
+                                <div *ngIf="registration_form.get('password')?.touched && registration_form.get('password')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('password')?.hasError('required')">*required</div>
+                                    <div *ngIf="registration_form.get('password')?.hasError('pattern')">*password should include atleast 8 characters,uppercase,lowercase,number,digit,special character ?@$!%*.</div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Confirm password</label>
+                                <input type="confirm_password" id="confirm_password" formControlName="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required 
+                                [ngClass]="{ 'border-red-500': registration_form.get('confirm_password')?.touched && registration_form.get('confirm_password')?.invalid }" />
+                                <div *ngIf="registration_form.get('confirm_password')?.touched && registration_form.get('confirm_password')?.invalid" class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="registration_form.get('confirm_password')?.hasError('required')">*required</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                            <button type="button" (click)="close()" class="text-white p-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Close</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

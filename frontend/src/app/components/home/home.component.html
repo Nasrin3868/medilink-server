@@ -1,0 +1,127 @@
+<div class="app-container min-h-screen flex flex-col">
+    <div>
+        <app-header></app-header>
+    </div>
+
+    <!-- Additional Content Section -->
+    <div class="mb-4   rounded shadow">
+        <div class="grid grid-cols-1 divide-y">
+            <!-- first div -->
+            <div class="bg-[#f8e9e6] relative grid grid-cols-2 divide-x "> 
+                <div class="ml-32 mt-12 mb-8 relative z-10">
+                    <h2 class="text-4xl font-semibold leading-relaxed">Skip the travel! <br>Take Online Doctor Consultation</h2>
+                    <p class="text-xl leading-relaxed">Private consultation + Audio call · Starts at just ₹199</p>
+                    <!-- Overlapping Images -->
+                    <div class="mt-4 relative flex -space-x-4">
+                        <div class="relative z-30">
+                            <img src='https://res.cloudinary.com/dyemxd31x/image/upload/c_fill,g_auto,w_200,h_200/v1724176105/c1wty2kurzv2xjxrlpmq.jpg' alt='Pic' class='h-10 w-10 rounded-full border-2'>
+                        </div>
+                        <div class="relative z-20">
+                            <img src='https://res.cloudinary.com/dyemxd31x/image/upload/c_fill,g_auto,w_200,h_200/v1724176066/ohaj38ywv8ytwvkknnsz.jpg' alt='Pic' class='h-10 w-10 rounded-full border-2'>
+                        </div>
+                        <div class="relative z-10">
+                            <img src='https://res.cloudinary.com/dyemxd31x/image/upload/c_fill,g_auto,w_200,h_200/v1724176270/zmglfp48pqletbrqzlrj.jpg' alt='Pic' class='h-10 w-10 rounded-full border-2'>
+                        </div>
+                        <div>
+                            <p class="ml-8 text-lg leading-relaxed">+170 Doctors are online</p> 
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <button type="button" (click)="consultButton()" class="text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-900 focus:outline-none dark:focus:ring-gray-500">
+                            Consult Now
+                        </button>
+                    </div>
+                    <p class="mt-6 leading-relaxed flex items-center space-x-4">
+                        <span class="flex items-center">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6.072 10.072 2 2 6-4m3.586 4.314.9-.9a2 2 0 0 0 0-2.828l-.9-.9a2 2 0 0 1-.586-1.414V5.072a2 2 0 0 0-2-2H13.8a2 2 0 0 1-1.414-.586l-.9-.9a2 2 0 0 0-2.828 0l-.9.9a2 2 0 0 1-1.414.586H5.072a2 2 0 0 0-2 2v1.272a2 2 0 0 1-.586 1.414l-.9.9a2 2 0 0 0 0 2.828l.9.9a2 2 0 0 1 .586 1.414v1.272a2 2 0 0 0 2 2h1.272a2 2 0 0 1 1.414.586l.9.9a2 2 0 0 0 2.828 0l.9-.9a2 2 0 0 1 1.414-.586h1.272a2 2 0 0 0 2-2V13.8a2 2 0 0 1 .586-1.414Z"/>
+                            </svg> 
+                            <span>Verified Doctors</span>
+                        </span>
+                        <span class="flex items-center">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
+                            </svg>
+                            <span>Digital prescription</span>
+                        </span>
+                        <span class="flex items-center">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+                            </svg>
+                            <span>Free Followup</span>
+                        </span>
+                    </p>
+                </div>
+                <div>
+                    <!-- Background Image -->
+                    <img class="absolute  object-cover h-full" src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724221291/j5h7c48is8sjryoij1je.png" alt="image description">
+                    <!-- <img class="absolute  object-cover h-full" src="/assets/images/homeImage.png" alt="image description">https://res.cloudinary.com/dyemxd31x/image/upload/v1724221291/j5h7c48is8sjryoij1je.png -->
+                </div>
+            </div>
+            <!-- next div -->
+            <div class="flex flex-col items-center m-16 mx-64 border-none">
+                <h2 class="text-4xl font-semibold leading-relaxed mb-8">How It Works</h2>
+                <div class="flex items-center space-x-20">
+                    <!-- Circle 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative">
+                            <div class="h-20 w-20 rounded-full border-2 bg-gray-300 border-gray-300 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+                                  </svg>
+                            </div>
+                            <!-- Connecting line to the next circle -->
+                            <div class="absolute left-full top-1/2 transform -translate-y-1/2 w-80 h-0.5 bg-gray-300"></div>
+                        </div>
+                        <p class="mt-2 text-center">Select a speciality or doctor</p>
+                    </div>
+                    <!-- Circle 2 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative">
+                            <div class="h-20 w-20 rounded-full border-2 bg-gray-300 border-gray-300 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"/>
+                                  </svg>
+                            </div>
+                            <!-- Connecting line to the next circle -->
+                            <div class="absolute left-full top-1/2 transform -translate-y-1/2 w-80 h-0.5 bg-gray-300"></div>
+                        </div>
+                        <p class="mt-2 text-center">Audio/ video call with a verified doctor</p>
+                    </div>
+                    <!-- Circle 3 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative">
+                            <div class="h-20 w-20 rounded-full border-2 bg-gray-300 border-gray-300 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-3 5h3m-6 0h.01M12 16h3m-6 0h.01M10 3v4h4V3h-4Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-center">Get a digital prescription & a free follow-up</p>
+                    </div>
+                </div>
+            </div>
+            <!-- next div -->
+            <div class="bg-black relative grid grid-cols-4 divide-x text-white border-none">
+                <div class="flex justify-center items-centre m-16 border-none">
+                    <h1>2,00,000+<br>Happy Users</h1>
+                </div>
+                <div class="flex justify-center items-centre m-16 border-none">
+                    <h1>2,000+<br>Verified Doctors</h1>
+                </div>
+                <div class="flex justify-center items-centre m-16 border-none">
+                    <h1>25+<br>Specialities</h1>
+                </div>  
+                <div class="flex justify-center items-centre m-16 border-none">
+                    <h1>4.5/5<br>App Rating</h1>
+                </div>
+            </div>
+            <div>
+                <app-footer></app-footer>       
+            </div>
+        </div>
+    </div>
+</div>
+                                            
+
+

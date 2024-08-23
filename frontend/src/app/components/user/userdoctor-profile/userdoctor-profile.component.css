@@ -1,0 +1,17 @@
+/* Custom styles for PrimeNG p-calendar */
+.p-calendar {
+    border-radius: 0.75rem; /* Adjust this value as needed */
+  }
+  
+  .p-calendar .p-inputtext {
+    border-radius: 0.75rem; /* Adjust this value to match the calendar */
+  }
+
+  /* In your global stylesheet or component stylesheet */
+.custom-calendar-container .p-calendar {
+    border-radius: 0.75rem; /* Adjust for desired roundness */
+  }
+  
+  .custom-calendar-container .p-inputtext {
+    border-radius: 0.75rem; /* Apply same rounding to input */
+  }

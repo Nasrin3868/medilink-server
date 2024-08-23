@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@types/socket.io": "^3.0.2",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "download": "^8.0.0",
+    "express": "^4.19.2",
+    "is-pdf-valid": "^0.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "node-downloader-helper": "^2.1.9",
+    "nodemailer": "^6.9.13",
+    "nodemon": "^3.1.0",
+    "pdf-parse": "^1.1.1",
+    "razorpay": "^2.9.4",
+    "request-promise-native": "^1.0.9",
+    "socket.io": "^4.7.5",
+    "uuid": "^9.0.1"
+  }
+}

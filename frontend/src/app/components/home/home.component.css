@@ -1,0 +1,21 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Set the container to at least full height of the viewport */
+  }
+  
+  .content {
+    flex-grow: 1; /* Allow the content area to grow to fill remaining space */
+    
+  }
+  
+  .user-header, .user-footer {
+    background-color: #F0F2F7;
+    padding: 20px;
+    z-index: 10;
+  }
+  
+  .user-footer {
+    margin-top: auto; /* Push the footer to the bottom of the container */
+  }
+  

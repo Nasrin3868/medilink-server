@@ -1,0 +1,116 @@
+<div class=" bg-white bg-centre ">
+    <app-header></app-header>
+
+    <div class="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Left Section: Appointment Summary and Additional Information -->
+        <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col h-full">
+            <div class="bg-cover bg-centre bg-[url('https://res.cloudinary.com/dyemxd31x/image/upload/v1724348999/rr6khb6xqdsayxpnsj8e.jpg')] p-6 flex flex-col items-center mb-6">
+                <h2 class="text-xl font-bold mb-4">Appointment Summary</h2>
+                <p class="text-gray-700 mb-2">Date: {{slotDetails.time | date:"dd/MM/YY"}}</p>
+                <p class="text-gray-700 mb-2">Time: {{slotDetails.time|date:'shortTime'}}</p>
+                <p class="text-gray-700 mb-2">Consultant: Dr.{{(slotDetails.docId.firstName | capitalizeFirst) + ' ' + (slotDetails.docId.lastName | capitalizeFirst) }}</p>
+                <p class="text-gray-700 mb-2">Specialization: {{slotDetails.docId.specialization}}</p>
+                <button type="button" class="bg-gray-900 text-white px-4 py-2 rounded">Consultation Fee: Rs.{{slotDetails.docId.consultation_fee}}</button>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Privacy and Booking Information</h3>
+                <p class="text-gray-700 mb-4">
+                    Your personal information is securely stored and handled with the utmost care. We use advanced encryption methods to ensure your privacy.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Our platform provides a seamless experience for booking appointments with top-notch healthcare professionals. Enjoy an easy and fast booking process with secure and confidential data handling.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 pt-6">
+                    <li>Experienced and verified doctors.</li>
+                    <li>Easy and fast appointment booking.</li>
+                    <li>Secure and confidential data handling.</li>
+                    <li>24/7 customer support.</li>
+                    <li>Comprehensive healthcare services.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Section: Forms -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <!-- Patient Details Form -->
+            <form [formGroup]="patient_details_form" #myform="ngForm" (submit)="patient_details_form_submit()">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Patient Name</label>
+                    <input formControlName="name" type="text" id="name" class="w-full p-2 border border-gray-300 rounded mt-1" required
+                    [ngClass]="{ 'border-red-500': patient_details_form.get('name')?.touched && patient_details_form.get('name')?.invalid }"
+                    />
+                    <div *ngIf="patient_details_form.get('name')?.touched && patient_details_form.get('name')?.invalid" class="text-red-500 text-xs mt-1">
+                        <div *ngIf="patient_details_form.get('name')?.hasError('required')">*required</div>
+                        <div *ngIf="patient_details_form.get('name')?.hasError('minlength')">*must be at least 2 characters</div>
+                        <div *ngIf="patient_details_form.get('name')?.hasError('pattern')">*enter a valid name</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700">Email</label>
+                    <input formControlName="email" type="email" id="email" class="w-full p-2 border border-gray-300 rounded mt-1" required
+                    [ngClass]="{ 'border-red-500': patient_details_form.get('email')?.touched && patient_details_form.get('email')?.invalid }" />
+                    <div *ngIf="patient_details_form.get('email')?.touched && patient_details_form.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+                        <div *ngIf="patient_details_form.get('email')?.hasError('required')">*required</div>
+                        <div *ngIf="patient_details_form.get('email')?.hasError('email')">*enter a valid email</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="age" class="block text-gray-700">Age</label>
+                    <input formControlName="age" type="number" id="age" class="w-full p-2 border border-gray-300 rounded mt-1" required
+                    [ngClass]="{ 'border-red-500': patient_details_form.get('age')?.touched && patient_details_form.get('age')?.invalid }" />
+                    <div *ngIf="patient_details_form.get('age')?.touched && patient_details_form.get('age')?.invalid" class="text-red-500 text-xs mt-1">
+                        <div *ngIf="patient_details_form.get('age')?.hasError('required')">*required</div>
+                        <div *ngIf="patient_details_form.get('age')?.hasError('pattern')">*invalid age</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <span class="block text-gray-700 mb-1">Gender</span>
+                    <div class="flex items-center">
+                        <label class="mr-2">Female</label>
+                        <input type="radio" formControlName="gender" value="female" class="mr-4">
+                        <label class="mr-2">Male</label>
+                        <input type="radio" formControlName="gender" value="male">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="address" class="block text-gray-700">Address</label>
+                    <textarea formControlName="address" id="address" class="w-full p-2 border border-gray-300 rounded mt-1" required
+                    [ngClass]="{ 'border-red-500': patient_details_form.get('address')?.touched && patient_details_form.get('address')?.invalid }"
+                    ></textarea>
+                    <div *ngIf="patient_details_form.get('address')?.touched && patient_details_form.get('address')?.invalid" class="text-red-500 text-xs mt-1">
+                        <div *ngIf="patient_details_form.get('address')?.hasError('required')">*required</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="reason" class="block text-gray-700">Reason for Visit</label>
+                    <textarea formControlName="reason_for_visit" id="reason" class="w-full p-2 border border-gray-300 rounded mt-1" required
+                    [ngClass]="{ 'border-red-500': patient_details_form.get('reason_for_visit')?.touched && patient_details_form.get('reason_for_visit')?.invalid }"
+                    ></textarea>
+                    <div *ngIf="patient_details_form.get('reason_for_visit')?.touched && patient_details_form.get('reason_for_visit')?.invalid" class="text-red-500 text-xs mt-1">
+                        <div *ngIf="patient_details_form.get('reason_for_visit')?.hasError('required')">*required</div>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <button type="button" onclick="window.history.back()" class="bg-gray-300 hover:bg-gray-400 text-white px-4 py-2 rounded">Back</button>
+                    <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded">Confirm</button>
+                </div>
+            </form>
+
+            <!-- Payment Form -->
+            <form [formGroup]="payment_form" (ngSubmit)="payment_form_submit()" class="mt-6">
+                <h3 class="text-xl font-bold mb-4">Payment Options</h3>
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="onlinePayment" formControlName="payment_method" value="online_payment" class="mr-2">
+                        <label for="onlinePayment" class="text-gray-700">Online Payment</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="walletPayment" formControlName="payment_method" value="wallet_payment" class="mr-2">
+                        <label for="walletPayment" class="text-gray-700">Wallet Payment</label>
+                    </div>
+                </div>
+                <button type="submit" class="px-4 py-2 rounded" [disabled]="isDisable" [ngClass]="{'bg-gray-900 text-white': !isDisable, 'bg-gray-500 text-gray-200': isDisable}">Proceed to Pay</button>
+            </form>
+        </div>
+    </div>
+</div>

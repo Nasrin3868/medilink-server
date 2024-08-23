@@ -1,0 +1,156 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-2 lg:px-2">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <img class="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow">
+        <h2 class="mt-2 text-center text-3xl leading-9 font-extrabold text-gray-900">
+            Create a new account
+        </h2>
+        <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+            Or
+            <a (click)="close()"
+                class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                login to your account
+            </a>
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <form class="max-w-sm mx-auto" [formGroup]="user_registration_form" (ngSubmit)="onsubmit()" #myform="ngForm">
+                <div>
+                    <label for="email" class="block text-sm font-medium leading-5  text-gray-700">First Name</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input formControlName="firstname" placeholder="first name" type="text"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="email" class="block text-sm font-medium leading-5  text-gray-700">Last Name</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input formControlName="lastname" placeholder="last name" type="text" 
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                        Email address
+                    </label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input formControlName="email" id="email" name="email" placeholder="user@example.com" type="email"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="mt-6">
+                    <div class="mb-5 col-span-2">
+                        <label class="block text-sm font-medium leading-5 text-gray-700">
+                            Upload Profile picture
+                        </label>
+                        <input formControlName="profile_pic"  type="file" (change)="onFileSelected($event,'profile_pic')"  accept="image/jpeg, image/jpg, image/png"  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" >
+                        <span class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">*only accept jpeg,jpg,png files</span>
+                    </div>
+                </div> -->
+
+                <div class="mt-6">
+                    <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
+                        Password
+                    </label>
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <input formControlName="password" id="password" name="password" type="password" required=""
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                        Confirm Password
+                    </label>
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <input formControlName="confirmPassword" id="password_confirmation" name="password_confirmation" type="password" required=""
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <span class="block w-full rounded-md shadow-sm">
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                            Create account
+                        </button>
+                    </span>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- 
+<div class="app-container">
+    <app-header></app-header>
+    <div class="content ">
+
+        <div class="grid grid-cols-3">
+            <div class="col-span-1 "></div>
+            <div class="col-span-1 pad">
+                <div class="bg-white border-gray-200 rounded-lg shadow md:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <form class="max-w-sm mx-auto" [formGroup]="user_registration_form" (ngSubmit)="onsubmit()" #myform="ngForm">
+                    
+                        <div class="mb-5 text-center text-xl text-blue-900">
+                            <h1>{{title}}</h1>
+                        </div>
+                    
+                        <div class="mb-5">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your firstname</label>
+                            <input type="text" id="first_name" formControlName="firstname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="firstname" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your lastname</label>
+                            <input type="text" id="last_name" formControlName="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lastname" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your email</label>
+                            <input type="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="@gmail.com" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Your password</label>
+                            <input type="password" id="password" formControlName="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Confirm password</label>
+                            <input type="confirm_password" id="confirm_password" formControlName="confirmPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        <button (click)="close()" class="text-white p-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Close</button>
+                      </form>
+                    </div> 
+            </div>
+            <div class="col-span-1"></div>
+        </div>
+
+    </div>
+</div> -->

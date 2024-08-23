@@ -1,0 +1,86 @@
+<div class="h-screen card flex justify-content-center relative grid grid-cols-2 divide-y border-none">
+    <div class="relative">
+        <div class="m-4 rounded-lg">
+            <p-calendar 
+                [(ngModel)]="date" 
+                (ngModelChange)="onDateChange($event)"
+                [minDate]="minDate" 
+                [maxDate]="maxDate"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy" />
+                <!-- <p-calendar 
+                [(ngModel)]="date" 
+                [minDate]="minDate" 
+                [maxDate]="maxDate" 
+                [readonlyInput]="true" /> -->
+        </div>
+        <div class="card m-4 mt-6">
+            <div class="mb-3">
+                <h2 class="text-2xl font-semibold leading-relaxed">Add slots</h2>
+            </div>
+            <div class="border-none bg-gray-100 rounded-xl p-4 pl-8">
+                <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+                    <ng-container *ngIf="slots_for_display.length===0;else have_slots">
+                        <h4>No Slots available / added every slots</h4>
+                    </ng-container>
+                    <ng-template #have_slots>
+                        <!-- Morning Slots -->
+                        <div>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div *ngFor="let time of slots_for_display; let i = index" class="col-span-1">
+                                    <button 
+                                        type="button" (click)="addSlots(time,i)" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                                        [ngClass]="
+                                            'bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700' 
+                                        ">
+                                        {{ time|date:'hh:mm a' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-scrollPanel>
+            </div>
+            <div class="mt-4">
+                <button 
+                    type="button" (click)="defaultSlots()" class="text-white font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                    [ngClass]="'bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700' ">
+                    Add all slots
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="border-none">
+        <div class="mb-3">
+            <h2 class="text-2xl font-semibold leading-relaxed">Selected slots</h2>
+        </div>
+        <div class="card">
+            <p-table
+                [value]="slots"
+                [paginator]="true"
+                [rows]="5"
+                [tableStyle]="{ 'min-width': '25rem' }"
+                [rowsPerPageOptions]="[5, 10, 20]"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:25%">date</th>
+                        <th style="width:25%">Time</th>
+                        <th style="width:25%">Remove</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-slot let-i="rowIndex">
+                    <tr>
+                        <td>{{ slot.time | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ slot.time | date: 'shortTime'}}</td>
+                        <td>
+                            <button type="button" (click)="remove_slot(slot,i)" class="text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
