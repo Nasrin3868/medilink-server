@@ -4,7 +4,7 @@ mongoose.set("strictQuery", true);
 
 const connectToDatabase = () => {
   mongoose
-    .connect("mongodb://127.0.0.1:27017/MediLink", {})
+    .connect(process.env.mongodb_url, {})
     .then(() => {
       console.log("Database Connected");
     })

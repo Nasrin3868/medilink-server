@@ -756,40 +756,97 @@ const get_bookings_of_doctor= async (req, res) => {
     if (!data) {
       res.status(HttpStatusCodes.BAD_REQUEST).json({ message: "get_payment_details Failed" });
     } else {
-      const now = new Date(); // Current time
-      let minutes = now.getMinutes();
+
+      const now = new Date().toISOString(); // Get the current date and time in ISO format
+        const slots = await slotCollection
+          .find({ 
+            docId: data.doctorId, 
+            booked: true,
+            time: { $gte: now } // Filter slots from the current time onward
+          })
+          .sort({ time: 1 })
+          
+        // const slots = await slotCollection
+        //   .find({ docId: data._id })
+        //   .sort({ time: 1 });
+        console.log("slots to diaplay in slotadding page:", slots.length);
+        const slotIds = slots.map(slot => slot._id);
+    
+        if (slotIds.length === 0) {
+          return res.status(HttpStatusCodes.Ok).json([]); // No slots available
+        }
+    
+        // Step 3: Find booked slots that reference these slot IDs
+        const bookedSlots = await bookedSlotCollection
+          .find({
+            slotId: { $in: slotIds },
+            doctorId: data.doctorId,
+            consultation_status: 'pending'
+          })
+          .populate("slotId")
+          .populate("userId")
+          .populate("doctorId");
+    
+        console.log("Booked slots:", bookedSlots.length);
+        res.status(HttpStatusCodes.OK).json(bookedSlots);
+        
+    // // Get current time in ISO format
+    // const now = new Date().toISOString();
+    
+    // // Find booked slots for the given doctor where the consultation status is 'pending' and time is greater than or equal to now
+    // const bookedSlots = await bookedSlotCollection
+    //   .find({
+    //     doctorId: data.doctorId,
+    //     consultation_status: 'pending',
+    //     time: { $gte: now } // Filter by time greater than or equal to current time
+    //   })
+    //   .populate("slotId")
+    //   .populate("userId")
+    //   .populate("doctorId");
+
+    // console.log("booked slots:", bookedSlots.length);
+
+
+
+    // res.status(HttpStatusCodes.OK).json(slots);
+
+
+
+    
+      // const now = new Date(); // Current time
+      // // let minutes = now.getMinutes();
       
-      // Round up to the next 30-minute mark
-      if (minutes > 0 && minutes <= 30) {
-        now.setMinutes(30);
-      } else if (minutes > 30) {
-        now.setHours(now.getHours() + 1);
-        now.setMinutes(0);
-      } else {
-        now.setMinutes(0);
-      }
-      now.setSeconds(0);
-      now.setMilliseconds(0);
+      // // // Round up to the next 30-minute mark
+      // // if (minutes > 0 && minutes <= 30) {
+      // //   now.setMinutes(30);
+      // // } else if (minutes > 30) {
+      // //   now.setHours(now.getHours() + 1);
+      // //   now.setMinutes(0);
+      // // } else {
+      // //   now.setMinutes(0);
+      // // }
+      // // now.setSeconds(0);
+      // // now.setMilliseconds(0);
       
-      const nextSlot = now.toISOString(); // Convert to ISO 8601 format
-      const bookedSlots = await bookedSlotCollection
-        .find({
-          doctorId: data.doctorId,
-          consultation_status:'pending',
-          time: { $gte: nextSlot } // Filter by slots starting from the next available time slot
-        })
-        .populate("slotId")
-        .populate("userId")
-        .populate("doctorId");
-      
-      console.log("booked slots:", bookedSlots.length);
+      // const nextSlot = now.toISOString(); // Convert to ISO 8601 format
       // const bookedSlots = await bookedSlotCollection
-      //   .find({ doctorId: data.doctorId,consultation_status:'pending'})
+      //   .find({
+      //     doctorId: data.doctorId,
+      //     consultation_status:'pending',
+      //     time: { $gte: nextSlot } // Filter by slots starting from the next available time slot
+      //   })
       //   .populate("slotId")
       //   .populate("userId")
-      //   // .populate("doctorId");
+      //   .populate("doctorId");
+      
       // console.log("booked slots:", bookedSlots.length);
-      res.status(HttpStatusCodes.OK).json(bookedSlots);
+      // // const bookedSlots = await bookedSlotCollection
+      // //   .find({ doctorId: data.doctorId,consultation_status:'pending'})
+      // //   .populate("slotId")
+      // //   .populate("userId")
+      // //   // .populate("doctorId");
+      // // console.log("booked slots:", bookedSlots.length);
+      // res.status(HttpStatusCodes.OK).json(bookedSlots);
     }
   } catch (error) {
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
