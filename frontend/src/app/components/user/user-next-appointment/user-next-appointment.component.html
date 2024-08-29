@@ -1,7 +1,7 @@
 <div class="h-screen bg-gray-200 p-8">
     <!-- Next Appointment Section -->
     <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-        <ng-container *ngIf="slotDetails===null; else next_slot">
+        <!-- <ng-container *ngIf="slotDetails===0; else next_slot">
             <h2>No Appointmnet</h2>
             <button (click)="doctor_listing()" class="mt-4 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Book Appointmnet</button>
         </ng-container>
@@ -10,14 +10,22 @@
             <p class="text-lg"><strong>Name:</strong> {{slotDetails.doctorId.firstName+' '+slotDetails.doctorId.lastName}}</p>
             <p class="text-lg"><strong>Date:</strong> {{slotDetails.slotId.time|date:'dd/MM/YY'}}</p>
             <p class="text-lg"><strong>Time:</strong> {{slotDetails.slotId.time|date:'shortTime'}}</p>
-            <!-- <button class="mt-4 bg-gray-900 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Check profile</button> -->
+        </ng-template> -->
+        <ng-container *ngIf="slotDetails===0; else next_slot">
+            <h2>No Appointmnet</h2>
+        </ng-container>
+        <ng-template #next_slot>
+            <h2 class="text-2xl font-bold mb-4">Next Appointment</h2>
+            <p class="text-lg"><strong>User Name:</strong> {{slotDetails?.userId?.firstName+' '+slotDetails?.userId?.lastName}}</p>
+            <p class="text-lg"><strong>Date:</strong> {{slotDetails?.slotId?.time|date:'dd/MM/YY'}}</p>
+            <p class="text-lg"><strong>Time:</strong> {{slotDetails?.slotId?.time|date:'shortTime'}}</p>
         </ng-template>
     </div>
 
     <!-- Enter Room ID Section -->
     <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold mb-4">Your Link:</h2>
-        <span>Recieve roomId from your doctor through the chat page.</span>
+        <span>Recieve roomId from your doctor through email.</span>
         <span>*enables at appointment time only</span>
         <input [(ngModel)]="roomId" type="text" class="border border-gray-300 p-2 rounded mb-4 w-full" placeholder="Enter room ID"  [disabled]="disable">
         <button (click)="enterRoom()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Submit and Enter</button>

@@ -90,6 +90,7 @@ import { ErrorPageComponent } from './components/shared/error-page/error-page.co
 import { WalletComponent } from './components/user/wallet/wallet.component';
 import { BookingsComponent } from './components/doctor/bookings/bookings.component';
 import { PrescriptionModalComponent } from './components/shared/prescription-modal/prescription-modal.component';
+import { UserBookingComponent } from './components/user/user-booking/user-booking.component';
 
 
 @NgModule({
@@ -140,6 +141,7 @@ import { PrescriptionModalComponent } from './components/shared/prescription-mod
     WalletComponent,
     BookingsComponent,
     PrescriptionModalComponent,
+    UserBookingComponent,
   ],
   imports: [
     BrowserModule,

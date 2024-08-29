@@ -23,10 +23,13 @@ export class UserNextAppointmentComponent implements OnInit{
 
   ngOnInit(): void {
     const userId=localStorage.getItem('userId')
+    if(userId)
       this._userService.upcoming_appointment({_id:userId}).subscribe({
         next:(Response)=>{
-          if(!Response._id){
-            this.noAppointmnet=true
+          console.log('response:',Response);
+          
+          if(Object.entries(Response).length === 0){
+            this.slotDetails=0
           }else{
             this.slotDetails=Response
             this.checkAppointmentTime()

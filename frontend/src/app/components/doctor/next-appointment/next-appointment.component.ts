@@ -28,8 +28,12 @@ export class NextAppointmentComponent implements OnInit{
       if(doctorId)
       this._doctorService.upcomingAppointment({doctorId:doctorId}).subscribe({
         next:(Response)=>{
-          this.upcoming_appointment=Response
-          this.checkAppointmentTime()
+          if(Object.entries(Response).length === 0){
+            this.upcoming_appointment=0
+          }else{
+            this.upcoming_appointment=Response
+            this.checkAppointmentTime()
+          }
           console.log(Response)
         },error:(error)=>{
           this._messageService.showErrorToastr(error.error.message)

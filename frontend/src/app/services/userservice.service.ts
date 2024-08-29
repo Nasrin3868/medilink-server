@@ -157,5 +157,9 @@ export class UserserviceService {
     const httpParams = new HttpParams({ fromObject: data })
     return this._http.get<any>(`${this._api}/user/get_prescription_details`, { params: httpParams })
   }
+  get_bookings_of_user(data: any): Observable<any> {
+    const httpParams = new HttpParams({ fromObject: data })
+    return this._http.get<any>(`${this._api}/user/get_bookings_of_user`, { params: httpParams })
+  }
 
 }
