@@ -454,6 +454,10 @@ const booking_payment = async (req, res, next) => {
       currency: "INR",
       receipt: "razorUser@gmail.com",
     };
+    console.log("Razorpay Key ID:", razorID_Key);
+    console.log('keys are same:',razorID_Key===razorpayInstance.key_id);
+    
+    console.log("Razorpay Secret Key:", razorSEC_Key);
 
     razorpayInstance.orders.create(options, (err, order) => {
       console.log("razorpay instance creation", order);
