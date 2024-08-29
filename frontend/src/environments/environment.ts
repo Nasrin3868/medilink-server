@@ -1,3 +1,6 @@
+// export const environment = {
+//     api:'http://localhost:3000'
+// };
 export const environment = {
-    api:'http://localhost:3000'
+    api:'https://medilink.live'
 };
