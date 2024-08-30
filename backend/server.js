@@ -22,15 +22,15 @@ const port = process.env.port_no || 3000;
 const io = socketIo(server, {
   pingTimeout: 10000,
   cors: {
-  origin: "http://localhost:4200",
+  // origin: "http://localhost:4200",
     // origin: "https://medilink-frontend-git-c4b0d0-fathima-nasrins-projects-5c6b05e5.vercel.app",
-    // origin: "https://nasrin.medilink.live",
+    origin: "https://nasrin.medilink.live",
     
   },
 });
 
-app.use(cors({ origin: ["http://localhost:4200"] }));
-// app.use(cors({ origin: ["https://nasrin.medilink.live"] }));
+// app.use(cors({ origin: ["http://localhost:4200"] }));
+app.use(cors({ origin: ["https://nasrin.medilink.live"] }));
 
 app.use(express.static(path.join(__dirname, "images")));
 app.use(logger("dev"));
