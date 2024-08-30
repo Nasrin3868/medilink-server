@@ -31,24 +31,28 @@ const userAccessChat = async (req, res) => {
     if (isChat) {
       res.status(HttpStatusCodes.OK).json(isChat);
     } else {
-      let chatData = {
-        chatName: "sender",
-        user: userId,
-        doctor: doctorId,
-      };
-      console.log('chatdata:',chatData);
-      const createdChat = await chatCollection.create(chatData);
-      console.log('createdChat',createdChat);
-      const fullChat = await chatCollection
-        .findOne({
-          _id: createdChat._id,
-        })
-        .populate({ path: "user", model: "usercollection" })
-        .populate({ path: "doctor", model: "doctorcollection" });
-
-        console.log("full chat is ==>", fullChat)
-      res.status(HttpStatusCodes.OK).json(fullChat);
-      // return fullChat;
+      if(!req.query.doctorId){
+      res.status(HttpStatusCodes.BAD_REQUEST).json({message:"You dont have any chats yet"});
+      }else{
+        let chatData = {
+          chatName: "sender",
+          user: userId,
+          doctor: doctorId,
+        };
+        console.log('chatdata:',chatData);
+        const createdChat = await chatCollection.create(chatData);
+        console.log('createdChat',createdChat);
+        const fullChat = await chatCollection
+          .findOne({
+            _id: createdChat._id,
+          })
+          .populate({ path: "user", model: "usercollection" })
+          .populate({ path: "doctor", model: "doctorcollection" });
+  
+          console.log("full chat is ==>", fullChat)
+        res.status(HttpStatusCodes.OK).json(fullChat);
+        // return fullChat;
+      }
     }
   } catch (error) {
     console.log("chat access in userside error");
@@ -164,6 +168,7 @@ const doctor_accessed_chats = async (req, res) => {
       ])
       .sort({ updatedAt: -1 });
       console.log(data)
+      
     // console.log('data after populating the user,doctor,latestmessage while fetchchats:',data);
     res.status(HttpStatusCodes.OK).json(data);
   } catch (error) {
