@@ -25,7 +25,6 @@ const io = socketIo(server, {
   // origin: "http://localhost:4200",
     // origin: "https://medilink-frontend-git-c4b0d0-fathima-nasrins-projects-5c6b05e5.vercel.app",
     origin: "https://nasrin.medilink.live",
-    
   },
 });
 
