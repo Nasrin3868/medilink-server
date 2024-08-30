@@ -32,6 +32,7 @@ const userAccessChat = async (req, res) => {
       res.status(HttpStatusCodes.OK).json(isChat);
     } else {
       if(!req.query.doctorId){
+        console.log('req.query.doctorId:',req.query.doctorId)
       res.status(HttpStatusCodes.BAD_REQUEST).json({message:"You dont have any chats yet"});
       }else{
         let chatData = {
