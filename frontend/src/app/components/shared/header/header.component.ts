@@ -90,6 +90,9 @@ export class HeaderComponent implements OnInit{
   bookings(){
     this._router.navigate(['doctor/bookings'])
   }
+  user_bookings(){
+    this._router.navigate(['user/bookings'])
+  }
   userLogout(){
     if(this._authService.checkUserLoggedIn()){
       // this._store.dispatch(logoutUser())

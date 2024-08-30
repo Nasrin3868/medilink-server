@@ -56,3 +56,7 @@ export interface loginResponseModel{
     email?:string,
 }
 
+export interface ChatAccessData{
+    userId:string
+}
+

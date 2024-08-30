@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 // import { ChatService} from 'src/app/services/chat.service';
-
+import {ChatAccessData} from 'src/app/store/model/usermodel'
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { io } from 'socket.io-client';
@@ -67,7 +67,8 @@ export class UserChatComponent implements OnInit{
   }
 
   accessedchat(){
-    this._chatService.accessChat({userId:this.userId}).subscribe({
+    const ChatAccessData :ChatAccessData={userId:this.userId}
+    this._chatService.accessChat(ChatAccessData).subscribe({
       next:(Response)=>{
         this.userFetchAllChat();
       },error:(error)=>{
@@ -77,7 +78,8 @@ export class UserChatComponent implements OnInit{
   }
 
   userFetchAllChat(){
-    this._chatService.userFetchAllChat({userId:this.userId}).subscribe({
+    const ChatAccessData :ChatAccessData={userId:this.userId}
+    this._chatService.userFetchAllChat(ChatAccessData).subscribe({
       next:(Response)=>{
         this.chats=Response
       },

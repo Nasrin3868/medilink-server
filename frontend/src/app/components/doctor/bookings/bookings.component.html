@@ -1,72 +1,86 @@
 <app-header></app-header>
 <div class="container p-8  bg-gray-200 min-h-screen">
-  <div class="p-4">
-    <h2 class="text-4xl font-semibold uppercase leading-relaxed">Upcoming Appointments</h2>
-  </div>
-  
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-4">
-    <!-- Search input -->
-    <div class="flex pl-4 pb-4 dark:bg-gray-900 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-x border-none">
-      <label for="table-search" class="sr-only">Search</label>
-      <form [formGroup]="searchForm" class="w-full">
-        <div class="relative grid grid-cols-1">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-          </div>
-          <div>
-            <input type="text" formControlName="searchData" id="table-search" placeholder="Search for items" required
-              class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          </div>
-        </div>
-      </form>
+  <ng-container *ngIf="payments_to_display.length!==0 else no_appointments">
+    <div class="p-4">
+      <h2 class="text-4xl font-semibold uppercase leading-relaxed">Upcoming Appointments</h2>
     </div>
 
-    <!-- Payments table -->
-    <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-4 w-32">Sl No</th>
-          <th scope="col" class="px-6 py-4">Slot ID</th>
-          <th scope="col" class="px-6 py-4">User Name</th>
-          <th scope="col" class="px-6 py-4">Slot Date</th>
-          <th scope="col" class="px-6 py-4">Slot Time</th>
-          <th scope="col" class="px-6 py-4">Consultation Status</th>
-          <th scope="col" class="px-6 py-4">Payment Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let payment of payments_to_display; let i=index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-          <td class="px-6 py-4 w-32">{{i+1}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId._id}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.userId.firstName+' '+payment.userId.lastName}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'dd/MM/YY'}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'shortTime'}}</td>
-          <td class="px-6 py-4">
-            <div *ngIf="payment.consultation_status === 'pending'">
-              <span class="text-center font-medium text-red-600 dark:text-orange-500">{{payment.consultation_status}}</span>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-4">
+      <!-- Search input -->
+      <div class="flex pl-4 pb-4 dark:bg-gray-900 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-x border-none">
+        <label for="table-search" class="sr-only">Search</label>
+        <form [formGroup]="searchForm" class="w-full">
+          <div class="relative grid grid-cols-1">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
             </div>
-            <div *ngIf="payment.consultation_status === 'consulted'">
-              <span class="text-center font-medium text-green-600 dark:text-green-500">{{payment.consultation_status}}</span>
+            <div>
+              <input type="text" formControlName="searchData" id="table-search" placeholder="Search for items" required
+                class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
-            <div *ngIf="payment.consultation_status === 'not_consulted'">
-              <span class="text-center font-medium text-red-600 dark:text-red-500">{{payment.consultation_status}}</span>
-            </div>
-            <div *ngIf="payment.consultation_status === 'cancelled'">
-              <span class="text-center font-medium text-red-600 dark:text-red-500">{{payment.consultation_status}}</span>
-            </div>
-          </td>
-          <td class="px-6 py-4">
-            <div *ngIf="payment.payment_status === true">
-              <span class="text-center font-medium text-green-600 dark:text-green-500">Done</span>
-            </div>
-            <div *ngIf="payment.payment_status === false">
-              <span class="text-center font-medium text-red-600 dark:text-red-500">Not Done</span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Payments table -->
+      <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-4 w-32">Sl No</th>
+            <th scope="col" class="px-6 py-4">Slot ID</th>
+            <th scope="col" class="px-6 py-4">User Name</th>
+            <th scope="col" class="px-6 py-4">Slot Date</th>
+            <th scope="col" class="px-6 py-4">Slot Time</th>
+            <th scope="col" class="px-6 py-4">Consultation Status</th>
+            <th scope="col" class="px-6 py-4">Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of payments_to_display; let i=index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td class="px-6 py-4 w-32">{{i+1}}</td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId._id}}</td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.userId.firstName+' '+payment.userId.lastName}}</td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'dd/MM/YY'}}</td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'shortTime'}}</td>
+            <td class="px-6 py-4">
+              <div *ngIf="payment.consultation_status === 'pending'">
+                <span class="text-center font-medium text-red-600 dark:text-orange-500">{{payment.consultation_status}}</span>
+              </div>
+              <div *ngIf="payment.consultation_status === 'consulted'">
+                <span class="text-center font-medium text-green-600 dark:text-green-500">{{payment.consultation_status}}</span>
+              </div>
+              <div *ngIf="payment.consultation_status === 'not_consulted'">
+                <span class="text-center font-medium text-red-600 dark:text-red-500">{{payment.consultation_status}}</span>
+              </div>
+              <div *ngIf="payment.consultation_status === 'cancelled'">
+                <span class="text-center font-medium text-red-600 dark:text-red-500">{{payment.consultation_status}}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div *ngIf="payment.payment_status === true">
+                <span class="text-center font-medium text-green-600 dark:text-green-500">Done</span>
+              </div>
+              <div *ngIf="payment.payment_status === false">
+                <span class="text-center font-medium text-red-600 dark:text-red-500">Not Done</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #no_appointments>
+    <div class="flex justify-center items-center">
+      <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg border border-gray-200">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center">
+          No Appointments
+        </h2>
+        <p class="mt-4 text-center text-gray-600">
+          There are currently no appointments available. Please check back later.
+        </p>
+      </div>
+    </div>
+  </ng-template>
 </div>

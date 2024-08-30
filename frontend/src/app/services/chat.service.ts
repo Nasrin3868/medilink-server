@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpResponseModel } from '../store/model/commonModel';
 import { environment } from 'src/environments/environment';
+import { ChatAccessData } from '../store/model/usermodel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,16 @@ export class ChatService {
   private _api: String =environment.api
 
   //access chat userSide 
-  accessChat(data: any): Observable<any> {
-    console.log('access chat from userSide');
-    const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get(`${this._api}/user/userAccessChat`, { params: httpParams })
-  }
+    accessChat(data: ChatAccessData): Observable<any> {
+      console.log('access chat from userSide');
+      const httpParams = new HttpParams({ fromObject:  { userId: data.userId.toString() } })
+      return this._http.get(`${this._api}/user/userAccessChat`, { params: httpParams })
+    }
 
   //userFetchAllChat
-  userFetchAllChat(data: any): Observable<any> {
+  userFetchAllChat(data: ChatAccessData): Observable<any> {
     console.log('userFetchAllChat from userSide');
-    const httpParams = new HttpParams({ fromObject: data })
+    const httpParams = new HttpParams({ fromObject:  { userId: data.userId.toString() } })
     return this._http.get(`${this._api}/user/userFetchAllChat`, { params: httpParams })
   }
 

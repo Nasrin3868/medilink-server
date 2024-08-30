@@ -163,6 +163,7 @@ const doctor_accessed_chats = async (req, res) => {
         { path: "latestMessage", model: "messageCollection" },
       ])
       .sort({ updatedAt: -1 });
+      console.log(data)
     // console.log('data after populating the user,doctor,latestmessage while fetchchats:',data);
     res.status(HttpStatusCodes.OK).json(data);
   } catch (error) {
