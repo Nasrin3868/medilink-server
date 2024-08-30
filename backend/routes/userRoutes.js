@@ -60,6 +60,6 @@ router.get("/get_prescription_details",usercontroller.get_prescription_details)
 
 router.post("/editUserProfile_name",usercontroller.editUserProfile_name)
 router.post("/opt_for_new_email",usercontroller.opt_for_new_email)
-router.get("/edit_user_profile_picture",usercontroller.edit_user_profile_picture)
+router.post("/edit_user_profile_picture",usercontroller.edit_user_profile_picture)
 
 module.exports = router;
