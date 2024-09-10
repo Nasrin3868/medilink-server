@@ -42,32 +42,18 @@ import { SideBarComponent } from './components/doctor/side-bar/side-bar.componen
 import { DoctorDashboardComponent } from './components/doctor/doctor-dashboard/doctor-dashboard.component';
 import { DoctorProfileDataComponent } from './components/doctor/doctor-profile-data/doctor-profile-data.component';
 import { SlotAddingComponent } from './components/doctor/slot-adding/slot-adding.component';
-// import { AppointmentsComponent } from './components/doctor/appointments/appointments.component';
-
-// import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-
-
 import { CalendarModule } from 'primeng/calendar';
-
-
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { DoctorListingComponent } from './components/user/doctor-listing/doctor-listing.component';
 import { UserdoctorProfileComponent } from './components/user/userdoctor-profile/userdoctor-profile.component';
 import { AppointmentBookingComponent } from './components/user/appointment-booking/appointment-booking.component';
 import { CapitalizeFirstPipe } from './pipe/capitalize-first.pipe';
-
 //for primeng modal
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
 import { CustomDatePipe } from './pipe/custom-date.pipe';
-// import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { AvatarModule } from 'primeng/avatar';
 import { NextAppointmentComponent } from './components/doctor/next-appointment/next-appointment.component';
 import { PaymentDetailsComponent } from './components/user/payment-details/payment-details.component';
 import { BookingDetailsComponent } from './components/user/booking-details/booking-details.component';
@@ -115,7 +101,6 @@ import { UserBookingComponent } from './components/user/user-booking/user-bookin
     DoctorDashboardComponent,
     DoctorProfileDataComponent,
     SlotAddingComponent,
-    // AppointmentsComponent,
     DoctorListingComponent,
     UserdoctorProfileComponent,
     AppointmentBookingComponent,
@@ -167,12 +152,8 @@ import { UserBookingComponent } from './components/user/user-booking/user-bookin
     ButtonModule,
     CalendarModule,
     ScrollPanelModule,
-
     TableModule, CommonModule,
     ChartModule,
-
-
-
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, ConfirmationService, MessageService],

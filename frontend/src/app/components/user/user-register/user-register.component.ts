@@ -32,12 +32,12 @@ export class UserRegisterComponent implements OnInit{
 
   user_registration(){
     this.user_registration_form=this._formBuilder.group({
-      firstname:['fathima',[Validators.required,Validators.minLength(2),Validators.pattern(namePattern)]],
-      lastname:['nasrin',[Validators.required,Validators.minLength(2),Validators.pattern(namePattern)]],
-      email:['nass@gmail.com',[Validators.required,Validators.email]],
+      firstname:['',[Validators.required,Validators.minLength(2),Validators.pattern(namePattern)]],
+      lastname:['',[Validators.required,Validators.minLength(2),Validators.pattern(namePattern)]],
+      email:['',[Validators.required,Validators.email]],
       // profile_pic:[null,Validators.required],
-      password:['Nasrin@123',[Validators.required,Validators.pattern(passwordPattern)]],
-      confirmPassword:['Nasrin@123',Validators.required]
+      password:['',[Validators.required,Validators.pattern(passwordPattern)]],
+      confirmPassword:['',Validators.required]
     })
   }
 

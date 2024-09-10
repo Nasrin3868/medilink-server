@@ -43,12 +43,12 @@ export class AppointmentBookingComponent implements OnInit{
   }
 
   patient_details_form=this._formBuilder.group({
-    name:['sadf',[Validators.required,Validators.minLength(2),Validators.pattern(this.namePattern)]],
-    email:['jndsf@gmail.com',[Validators.required,Validators.email]],
-    age:['12',[Validators.required,Validators.pattern(this.agePattern)]],
-    gender:['female',Validators.required],
-    address:['dsf',Validators.required],
-    reason_for_visit:['afsd',Validators.required]
+    name:['',[Validators.required,Validators.minLength(2),Validators.pattern(this.namePattern)]],
+    email:['',[Validators.required,Validators.email]],
+    age:['',[Validators.required,Validators.pattern(this.agePattern)]],
+    gender:['',Validators.required],
+    address:['',Validators.required],
+    reason_for_visit:['',Validators.required]
   })
 
   markFormGroupTouched(formGroup: FormGroup) {

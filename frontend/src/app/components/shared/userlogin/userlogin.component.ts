@@ -30,7 +30,7 @@ export class UserloginComponent {
   user_login(){
     this.loginForm = this._formbuilder.group({
       email:['',[Validators.required,Validators.email]],
-      password:['Nasrin@123',[Validators.required,Validators.pattern(passwordPattern)]]
+      password:['',[Validators.required,Validators.pattern(passwordPattern)]]
     });
   }
 
