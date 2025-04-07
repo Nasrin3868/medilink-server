@@ -126,6 +126,11 @@ router.get(
   doctorController.add_prescription
 );
 router.get(
+  "/prescriptionDetails",
+  doctorAuth,
+  doctorController.prescriptionDetails
+)
+router.get(
   "/get_doctor_dashboard_details",
   doctorAuth,
   checkDoctorBlocked,

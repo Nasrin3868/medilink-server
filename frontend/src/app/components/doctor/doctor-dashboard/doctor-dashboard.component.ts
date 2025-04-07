@@ -57,7 +57,7 @@ export class DoctorDashboardComponent implements OnInit {
     },0)
     this.total_upcoming_booking=this.booked_Slots.reduce((acc:number,data:any)=>{
       if(data.consultation_status==='pending'){
-          return acc+(data.slotId.bookingAmount-data.slotId.adminPaymentAmount)
+          return acc+1
       }
       return acc
     },0)
@@ -129,13 +129,13 @@ export class DoctorDashboardComponent implements OnInit {
           {
             type: 'bar',
             label: 'Cancelled',
-            backgroundColor: documentStyle.getPropertyValue('--orange-500'),
+            backgroundColor: documentStyle.getPropertyValue('--red-500'),
             data: processedData.cancelled
           },
           {
             type: 'bar',
             label: 'Not Consulted',
-            backgroundColor: documentStyle.getPropertyValue('--red-500'),
+            backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
             data: processedData.notConsulted
           }
         ]
@@ -190,7 +190,7 @@ export class DoctorDashboardComponent implements OnInit {
         weeklyData.consulted[dayIndex]++;
       } else if (slot.consultation_status === 'cancelled') {
         weeklyData.cancelled[dayIndex]++;
-      } else if (slot.consultation_status === 'not-consulted') {
+      } else if (slot.consultation_status === 'not_consulted') {
         weeklyData.notConsulted[dayIndex]++;
       }
     });
@@ -216,7 +216,7 @@ export class DoctorDashboardComponent implements OnInit {
         monthlyData.consulted[month]++;
       } else if (slot.consultation_status === 'cancelled') {
         monthlyData.cancelled[month]++;
-      } else if (slot.consultation_status === 'not-consulted') {
+      } else if (slot.consultation_status === 'not_consulted') {
         monthlyData.notConsulted[month]++;
       }
     });

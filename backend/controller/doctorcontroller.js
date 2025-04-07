@@ -914,6 +914,23 @@ const add_prescription = async (req, res) => {
   }
 };
 
+const prescriptionDetails=async(req,res)=>{
+  try{
+    console.log("get_prescription_details serverside");
+    const slotId = req.query.slotId;
+    console.log('slotId:',slotId);
+    if (!slotId) {
+      res.status(HttpStatusCodes.BAD_REQUEST).json({ message: "slotId is not passed" });
+    } else {
+      const prescription=await prescriptionCollection.findOne({bookedSlot:slotId})
+      console.log('prescription',prescription);
+      res.status(HttpStatusCodes.OK).json(prescription);
+    }
+  }catch(error){
+    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
+  }
+}
+
 const get_doctor_dashboard_details = async (req, res) => {
   try {
     console.log("get_doctor_dashboard_details server side");
@@ -981,5 +998,6 @@ module.exports = {
   add_prescription,
   get_doctor_dashboard_details,
   share_roomId_through_email,
+  prescriptionDetails
   // accessedChats
 };

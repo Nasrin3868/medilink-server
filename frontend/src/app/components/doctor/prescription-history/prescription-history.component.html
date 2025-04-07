@@ -1,1 +1,43 @@
-<p>prescription-history works!</p>
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300"
+>
+  <div
+    class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative transform transition-transform scale-100 animate-fadeIn"
+  >
+    <!-- Close Button -->
+    <button
+      class="absolute top-4 right-4 text-gray-900 hover:text-gray-700 text-xl transition"
+      (click)="close()"
+    >
+      ✖
+    </button>
+
+    <!-- Heading -->
+    <h2 class="text-2xl font-extrabold text-gray-900 mb-6 text-center">
+      📝 Prescription Details
+    </h2>
+
+    <!-- Details -->
+    <div class="space-y-4 text-gray-700 text-base">
+      <p>
+        <span class="font-semibold text-gray-800">Disease:</span>
+        {{ disease }}
+      </p>
+      <p>
+        <span class="font-semibold text-gray-800">Prescription:</span>
+        {{ prescription }}
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-6 text-center">
+      <button
+        class="bg-gray-900 hover:bg-gray-700 text-white py-2 px-6 rounded-lg transition duration-200"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

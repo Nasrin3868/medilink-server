@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-prescription-history',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./prescription-history.component.css']
 })
 export class PrescriptionHistoryComponent {
+  @Input() disease = '';
+  @Input() prescription = '';
+  @Input() isOpen = false;
+  @Input() close!: () => void;
 
 }

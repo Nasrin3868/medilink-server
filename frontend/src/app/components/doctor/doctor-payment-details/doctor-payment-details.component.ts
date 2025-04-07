@@ -62,7 +62,7 @@ export class DoctorPaymentDetailsComponent implements OnInit{
     if (searchTerm) {
       const regex = new RegExp(searchTerm, 'i');
       this.payments_to_display = this.payments_to_display.filter((appointment:any) =>
-        regex.test(appointment.doctorId.firstName)||
+        regex.test(appointment.userId.firstName)||
         regex.test(appointment.slotId.bookingAmount)||
         regex.test(appointment.payment_method)
       );

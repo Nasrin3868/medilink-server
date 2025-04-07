@@ -70,26 +70,26 @@
                 </th> -->
                 <td class=" px-6 py-4">
                     <div class="flex justify-center" *ngIf="payment.consultation_status==='pending'">
-                        <th scope="row" class="text-center font-medium text-red-600 dark:text-orange-500">{{payment.consultation_status}}</th>
+                        <th scope="row" class="bg-yellow-100 px-2 rounded-lg text-center font-medium text-yellow-600 dark:text-orange-500">{{payment.consultation_status}}</th>
                         <!-- <button  (click)="changeStatus(payment)" class="font-small text-black-500 dark:text-black-500 hover:underline">want to cancel?</button> -->
                     </div>
                     <div *ngIf="payment.consultation_status==='consulted'">
-                        <th scope="row" class="text-center font-medium text-green-600 dark:text-green-500">{{payment.consultation_status}}</th>
+                        <th scope="row" class="bg-green-100 px-2 rounded-lg text-center font-medium text-green-600 dark:text-green-500">{{payment.consultation_status}}</th>
                     </div>
                     <div *ngIf="payment.consultation_status==='not_consulted'">
-                        <th scope="row" class="text-center font-medium text-green-600 dark:text-red-500">{{payment.consultation_status}}</th>
+                        <th scope="row" class="bg-orange-100 px-2 rounded-lg text-center font-medium text-orange-600 dark:text-red-500">{{payment.consultation_status}}</th>
                     </div>
                     <div *ngIf="payment.consultation_status==='cancelled'">
-                        <th scope="row" class="text-center font-medium text-green-600 dark:text-red-500">{{payment.consultation_status}}</th>
+                        <th scope="row" class="bg-red-100 px-2 rounded-lg text-center font-medium text-red-600 dark:text-red-500">{{payment.consultation_status}}</th>
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <div *ngIf="payment.consultation_status==='consulted'">
-                        <button class="justify-center py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">view</button>   
+                    <div *ngIf="payment.consultation_status==='consulted';else no_prescription">
+                        <button (click)="openPrescriptionModal(payment._id)" class="justify-center py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900 hover:bg-gray-700">view</button>   
                     </div>
-                    <div *ngIf="payment.consultation_status!=='consulted'">
-                        <button class="justify-center py-2.5 px-6  rounded-lg text-sm font-medium text-white bg-gray-900" [disabled]="true">view</button>
-                    </div>
+                    <ng-template #no_prescription>
+                        <button class="justify-center py-2.5 px-6  rounded-lg text-sm font-medium text-white bg-gray-200" [disabled]="true">view</button>
+                    </ng-template>
                 </td>
                 <td class="px-6 py-4">
                     <div *ngIf="payment.payment_status===true">
@@ -105,3 +105,9 @@
     </table>
 </div>
 </div>
+<app-prescription-history
+  [disease]="selectedPrescription.disease"
+  [prescription]="selectedPrescription.prescription"
+  [isOpen]="showModal"
+  [close]="closeModal.bind(this)">
+</app-prescription-history>

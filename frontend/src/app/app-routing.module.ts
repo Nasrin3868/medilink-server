@@ -61,7 +61,7 @@ const userRoutes: Routes = [
     ]
   },
   { path: 'success_payment/:id', component: SuccessPaymentComponent, canActivate: [userLoggedInGuard] },
-  { path: 'doctor_listing', component: DoctorListingComponent },
+  { path: 'doctor_listing', component: DoctorListingComponent , canActivate: [userLoggedInGuard]},
   { path: 'doctor_profile/:id', component: UserdoctorProfileComponent, canActivate: [userLoggedInGuard] },
   { path: 'appoinment_booking', component: AppointmentBookingComponent, canActivate: [userLoggedInGuard] },
   { path: 'userchat', component: UserChatComponent, canActivate: [userLoggedInGuard] },

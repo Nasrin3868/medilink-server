@@ -5,7 +5,11 @@ module.exports = {
     "./node_modules/flowbite/**/*.js"    
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+    },
     colors:{
       pink:'#fda4af'
     },

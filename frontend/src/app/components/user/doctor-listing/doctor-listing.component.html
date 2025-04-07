@@ -1,66 +1,93 @@
-<div class="app-container min-h-screen flex flex-col">
+<!-- <div class="app-container min-h-screen flex flex-col"> -->
+<div class="app-container h-screen flex flex-col overflow-hidden">
   <app-header></app-header>
-  <div class="flex flex-1">
-    <div class="w-1/4 bg-gray-100 shadow-md rounded-lg p-4 h-screen">
-      <h2 class="text-blue-900 text-lg font-semibold mb-4">Specializations</h2>
-      <ul class="space-y-2">
-        <button (click)="specializedDoctors('all')" 
-                  class="w-full text-left text-gray-700 p-2 hover:bg-blue-900 hover:text-white rounded-lg transition-colors duration-300 ease-in-out">
+  <div class="border-t flex flex-1">
+    <div class="w-1/6 shadow-md rounded-lg pt-4 pl-4 h-screen overflow-hidden">
+      <h2 class="text-gray-900 text-lg font-semibold mb-4">Specializations</h2>
+      <ul class="border-t space-y-2 overflow-y-auto max-h-[calc(100vh-7rem)] pr-2 pb-10">
+        <li>
+          <button (click)="specializedDoctors('all')" 
+                  class="w-full text-left text-gray-900 p-2 hover:bg-gray-900 hover:text-white rounded-lg transition-colors duration-300 ease-in-out">
             All doctors
           </button>
+        </li>
+        <!-- Loop through all specializations -->
         <li *ngFor="let spec of specializations">
           <button (click)="specializedDoctors(spec.specialization)" 
-                  class="w-full text-left text-gray-700 p-2 hover:bg-blue-900 hover:text-white rounded-lg transition-colors duration-300 ease-in-out">
+                  class="w-full text-left text-gray-900 p-2 hover:bg-gray-900 hover:text-white rounded-lg transition-colors duration-300 ease-in-out">
             {{ spec.specialization }}
           </button>
         </li>
       </ul>
     </div>
+    
 
-    <div class="w-3/4 flex flex-col items-center overflow-y-auto h-screen bg-gray-200">
+
+    <div class="pb-12 w-5/6 mb-4 flex flex-col items-center overflow-y-auto h-screen rounded-lg ml-4">
       <div class="text-center p-5">
-        <h1 class="font-bold text-4xl mb-2">Select your doctor</h1>
+        <h1 class="font-bold text-4xl mb-2 ">Select your doctor</h1>
       </div>
       <!-- <label for="table-search" class="sr-only">Search</label> -->
-        <form *ngIf="displayed_doctor.length > 0" [formGroup]="searchForm">
-            <div class="relative grid grid-cols-2 divide-x ">
-                <div class=" absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none ">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                </div>
-                <div >
-                    <input type="text" formControlName="searchData" id="table-search" placeholder="Search for items" required
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
-                </div>
+        <!-- Search Form -->
+        <form [formGroup]="searchForm" class="w-full flex justify-center gap-4 items-center mt-4">
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
             </div>
+            <input type="text" formControlName="searchData" id="table-search" placeholder="Search doctors..."
+              class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-700 focus:border-gray-700 dark:bg-gray-500 dark:border-gray-400 dark:placeholder-gray-300 dark:text-white dark:focus:ring-gray-200 dark:focus:border-gray-200" />
+          </div>
+        
+          <button class="flex items-center gap-2 text-white bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2 transition-all duration-300"
+          type="button" (click)="specializedDoctors('all')" >
+            Show All
+          </button>
         </form>
+
       <section id="Projects" class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-0 gap-x-14 mt-6 mb-5">
         <ng-container *ngIf="displayed_doctor.length > 0; else nodoctor">
           <div *ngFor="let doctor of displayed_doctor">
             <div class="w-72 mb-8 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-              <img *ngIf="doctor.profile_picture;else no_profile_picture" [src]="doctor.profile_picture" alt="Product" class="h-50 w-72 object-cover rounded-t-xl" />
-              <ng-template #no_profile_picture>
-                <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724227464/ank36p5bo7ypy79ya9me.jpg" alt="Product" class="h-50 w-72 object-cover rounded-t-xl" />
-              </ng-template>  
+              
+              <div (click)="doctorProfile(doctor._id)" class="cursor-pointer">
+                <img 
+                  *ngIf="doctor.profile_picture; else no_profile_picture"
+                  [src]="doctor.profile_picture"
+                  alt="Doctor Image"
+                  class="h-50 w-72 object-cover rounded-t-xl" />
+                
+                <ng-template #no_profile_picture>
+                  <img 
+                    src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724227464/ank36p5bo7ypy79ya9me.jpg"
+                    alt="Default Image"
+                    class="h-50 w-72 object-cover rounded-t-xl" />
+                </ng-template>
+              </div>
+        
               <div class="px-4 py-3 w-72">
-                <span class="text-gray-400 mr-3 uppercase text-xs">Specialization: {{doctor.specialization}}</span>
-                <p class="text-lg font-bold text-black truncate block capitalize">Dr. {{ doctor.firstName + ' ' + doctor.lastName }}</p>
+                <span class="text-gray-400 mr-3 uppercase text-xs">Specialization: {{ doctor.specialization }}</span>
+                <p class="text-lg font-bold text-black truncate block capitalize">{{ doctor.firstName + ' ' + doctor.lastName }}</p>
                 <p class="text-lg font-semibold text-black cursor-auto mt-3">Consultation fee: {{ doctor.consultation_fee }}</p>
                 <p class="text-lg font-semibold text-black cursor-auto mb-3">Experience: {{ doctor.experience }}</p>
-                <div class="flex items-center  mb-4">
-                  <button type="button" (click)="doctorProfile(doctor._id)" class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">Book Appointment</button>
+                <div class="flex items-center mb-4">
+                  <button type="button" (click)="doctorProfile(doctor._id)" class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-700">
+                    Book Appointment
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </ng-container>
+        
         <ng-template #nodoctor>
           <div class="flex flex-col items-center w-full pl-8">
             <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724348695/rewo4e68erfoeixftpfa.jpg" alt="No doctors available" class="w-1/2 mb-8" />
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Doctors Available</h2>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">No Doctors Available</h2>
             <p class="text-lg text-gray-500 mb-4">Currently, there are no doctors listed in this category. Please check back later or explore other specializations.</p>
-            <button class="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-lg px-5 py-2.5">Explore Specializations</button>
+            <button (click)="specializedDoctors('all')" class="text-white bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-lg px-5 py-2.5">Show available doctors</button>
           </div>
         </ng-template>
       </section>

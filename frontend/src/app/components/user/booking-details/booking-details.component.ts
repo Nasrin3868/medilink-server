@@ -4,6 +4,7 @@ import { debounceTime } from "rxjs";
 import { MessageToasterService } from "src/app/services/message-toaster.service";
 import { UserserviceService } from "src/app/services/userservice.service";
 import { PrescriptionModalComponent } from "../../shared/prescription-modal/prescription-modal.component";
+import { DoctorService } from "src/app/services/doctor.service";
 
 @Component({
   selector: 'app-booking-details',
@@ -15,17 +16,25 @@ export class BookingDetailsComponent implements OnInit{
   userId!:any
   appointments!:any
   appointments_to_display!:any
-
+  showModal=false
+  selectedPrescription = {
+    disease: '',
+    prescription: ''
+  };
   constructor(
     private _userService:UserserviceService,
     private _messageService:MessageToasterService,
     private _formBuilder:FormBuilder,
-    private _cdr:ChangeDetectorRef
+    private _cdr:ChangeDetectorRef,
+    private _doctorService:DoctorService
   ){}
 
   ngOnInit(): void {
     this.getAppointmentDetails()
     this.setupSearchSubscription();
+  }
+  closeModal() {
+    this.showModal = false;
   }
 
   getAppointmentDetails(){
@@ -49,19 +58,19 @@ export class BookingDetailsComponent implements OnInit{
   //     modal.openModal();
   //   }
   // }
-  openPrescriptionModal(prescription_id: string | null) {
-    prescription_id="66b43fa6725d8689a520191f"
-    console.log('Opening prescription modal with ID:', prescription_id);
-    const modal = document.querySelector('app-prescription-modal') as unknown as PrescriptionModalComponent;
-    if (modal) {
-      modal.prescription_id = prescription_id;
-      if (prescription_id) {
-        modal.openModal
-      } else {
-        console.error('Invalid prescription ID:', prescription_id);
-      }
-    }
-  }
+  // openPrescriptionModal(prescription_id: string | null) {
+  //   prescription_id="66b43fa6725d8689a520191f"
+  //   console.log('Opening prescription modal with ID:', prescription_id);
+  //   const modal = document.querySelector('app-prescription-modal') as unknown as PrescriptionModalComponent;
+  //   if (modal) {
+  //     modal.prescription_id = prescription_id;
+  //     if (prescription_id) {
+  //       modal.openModal
+  //     } else {
+  //       console.error('Invalid prescription ID:', prescription_id);
+  //     }
+  //   }
+  // }
   
   searchForm=this._formBuilder.group({
     searchData:['',Validators.required]
@@ -142,5 +151,17 @@ export class BookingDetailsComponent implements OnInit{
       return item;
     });
     this._cdr.detectChanges();
+  }
+  openPrescriptionModal(payment: any) {
+    console.log('slot details:',payment);
+    
+    this._userService.getPrescriptionDetails({slotId:payment}).subscribe({
+      next:(Response)=>{
+        console.log('prescription:',Response);
+        this.selectedPrescription.disease = Response.disease || 'N/A';
+        this.selectedPrescription.prescription = Response.prescription || 'N/A';
+        this.showModal = true;
+      }
+    })
   }
 }

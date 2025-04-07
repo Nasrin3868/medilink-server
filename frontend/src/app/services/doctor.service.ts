@@ -16,6 +16,11 @@ export class DoctorService {
   constructor(private _http: HttpClient) { }
 
   private _api: String =environment.api
+
+  getPrescriptionDetails(data:any):Observable<any>{
+    const httpParams = new HttpParams({ fromObject: data })
+    return this._http.get<any>(`${this._api}/doctor/prescriptionDetails`, { params: httpParams })
+  }
   
   //doctor registration
   doctorRegister(data: FormData): Observable<HttpResponseModel> {

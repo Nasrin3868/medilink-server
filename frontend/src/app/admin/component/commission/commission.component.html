@@ -1,24 +1,24 @@
-<div class="relative grid grid-cols-3 flex divide-y bg-gray-200">
-    <div class="h-screen col-span-1 border-none ">
+<div class="relative grid grid-cols-3 flex divide-y ">
+    <div class="col-span-1 ">
         <h2 class="py-4 text-center font-bold text-3xl leading-relaxed">PayOut details</h2> 
-        <div *ngIf="edit===false;else editpayOut" >
+        <div *ngIf="edit===false;else editpayOut" class="shadow-lg rounded-md m-4 p-4">
             <h2 class="py-4 text-center font-bold text-xl leading-relaxed">Your current PayOut: Rs.{{payOut}}</h2>
             <div class="flex justify-center mt-4">
-                <button type="button" (click)="edit=!edit" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button type="button" (click)="edit=!edit" class=" text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                     Edit</button>
             </div>
         </div>
         <ng-template #editpayOut >
-            <div class="border-1 border-black p-4 mx-4 sm:rounded-lg bg-gray-400  ">
+            <div class="p-4 mx-4 sm:rounded-lg bg-gray-50 shadow-md ">
                 <form [formGroup]="payOutForm" (ngSubmit)="Submit()" class="max-w-sm mx-auto">
                     <div class="mb-5">
-                      <label for="payOut" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edit Payment</label>
+                      <label for="payOut" class="block m-4 text-center text-lg font-medium text-gray-900 dark:text-white">Edit Payment</label>
                       <input formControlName="payOut" type="text" id="specialization" placeholder="type here" required 
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                      class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"/>
                     </div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button type="submit" class="text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                         Submit</button>
-                    <button (click)="edit=false" class="ml-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button (click)="edit=false" class="ml-4 text-white hover:text-gray-700 bg-gray-500 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                         Cancel</button>
                 </form>  
             </div>

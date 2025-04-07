@@ -121,6 +121,9 @@ export class UserdoctorProfileComponent implements OnInit {
       }
     })
   }
+  upcomingSlotDetails(){
+    this._router.navigate(['/user/user_profile/user_next_appointment'])
+  }
 
   chat() {
     this._router.navigate(['/user/userchat'])

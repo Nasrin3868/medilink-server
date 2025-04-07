@@ -11,7 +11,7 @@ import { UserserviceService } from 'src/app/services/userservice.service';
 export class UserNextAppointmentComponent implements OnInit{
 
   roomId!:any
-  slotDetails!:any
+  slotDetails:any=''
   link!:any
   disable=false
   noAppointmnet=false
@@ -59,17 +59,25 @@ export class UserNextAppointmentComponent implements OnInit{
   }
 
   enterRoom(){
-    this._userService.getUpcomingSlot({appointmentId:this.slotDetails._id,roomId:this.roomId}).subscribe({
-      next:(Response)=>{
-        if(Response.roomId===this.roomId){
-          this._router.navigate(['/user/user_video_call_room',this.roomId,this.slotDetails._id])
-        }else{
-          this._messageService.showErrorToastr('InCorrect roomId. Check once more')
+    // console.log(this.slotDetails._id,this.roomId);
+    if(!this.slotDetails._id&&!this.roomId){
+      console.log('no slotDetails');
+      
+      this._messageService.showErrorToastr('Enter roomId')
+    }else{
+      this._userService.getUpcomingSlot({appointmentId:this.slotDetails._id,roomId:this.roomId}).subscribe({
+        next:(Response)=>{
+          if(Response.roomId===this.roomId){
+            this._router.navigate(['/user/user_video_call_room',this.roomId,this.slotDetails._id])
+          }else{
+            this._messageService.showErrorToastr('InCorrect roomId. Check once more')
+          }
+        },error:(error)=>{
+          this._messageService.showErrorToastr(error.error.message)
         }
-      },error:(error)=>{
-        this._messageService.showErrorToastr(error.error.message)
-      }
-    })
+      })
+    }
+    
     // if(this.roomId){
     //   this._router.navigate(['/user/user_video_call_room',this.roomId,this.slotDetails._id])
     // }else{

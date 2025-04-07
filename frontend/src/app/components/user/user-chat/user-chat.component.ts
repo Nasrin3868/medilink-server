@@ -6,9 +6,10 @@ import {ChatAccessData} from 'src/app/store/model/usermodel'
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { io } from 'socket.io-client';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChatService } from 'src/app/services/chat.service';
+import { UserserviceService } from 'src/app/services/userservice.service';
 
 @Component({
   selector: 'app-user-chat',
@@ -26,12 +27,15 @@ export class UserChatComponent implements OnInit{
   chats!:any
   messages!:any
   chatId!:any
+  userDetails!:any
 
   //specific chats
   selectedDoctor!: any;
   profile_picture!:any
   selectedChatMessages: any[] = [];
   lastSeen: string = '';
+  searchTerm: string = '';
+  filteredChats: any[] = [];
   
   @ViewChild('chatContainer')
   chatContainer!: ElementRef;
@@ -40,7 +44,9 @@ export class UserChatComponent implements OnInit{
     private _formBuilder:FormBuilder,
     private _messageService:MessageToasterService,
     private _chatService:ChatService,
-    private _socketService:SocketService
+    private _socketService:SocketService,
+    private _userService:UserserviceService,
+    private _showMessage:MessageToasterService
   ){
     this.socket = io(environment.api);
   }
@@ -48,8 +54,15 @@ export class UserChatComponent implements OnInit{
 
   
   ngOnInit() {
-    // this.doctorId = this.route.snapshot.paramMap.get('id');
     this.userId=localStorage.getItem('userId')
+    this._userService.getuserDetails({userId:this.userId}).subscribe({
+      next:(response)=>{
+        this.userDetails=response
+      },
+      error:(error)=>{
+        this._showMessage.showErrorToastr('Error in fetching user data')
+      }
+    })
     this.accessedchat()
     this.scrollToBottom();
     this.socketServiceSubscription = this._socketService.onMessage().subscribe((res: any) => {
@@ -64,7 +77,16 @@ export class UserChatComponent implements OnInit{
         })
       }
     });
+    this.setupSearchSubscription()
   }
+  isSameDate(date1: string | Date, date2: string | Date): boolean {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return d1.getDate() === d2.getDate() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getFullYear() === d2.getFullYear();
+  }
+  
 
   accessedchat(){
     const ChatAccessData :ChatAccessData={userId:this.userId}
@@ -82,6 +104,7 @@ export class UserChatComponent implements OnInit{
     this._chatService.userFetchAllChat(ChatAccessData).subscribe({
       next:(Response)=>{
         this.chats=Response
+        this.chats_to_display=Response
       },
       error:(error)=>{
         console.log('error:',error);
@@ -99,14 +122,41 @@ export class UserChatComponent implements OnInit{
       }
     })
   }
+  searchForm=this._formBuilder.group({
+    searchData:['',Validators.required]
+  })
+
+  setupSearchSubscription() {
+    this.searchForm.get('searchData')?.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe(value => {
+          this.filterDoctors(value);
+      });
+  }
+  chats_to_display!:any
+  filterDoctors(searchTerm: string|null) {
+    if (searchTerm) {
+      const regex = new RegExp(searchTerm, 'i');
+      this.chats_to_display = this.chats.filter((chat:any) =>
+        regex.test(`${chat.doctor.firstName} ${chat.doctor.lastName}`)
+      );
+      console.log('chats to disply:',this.chats_to_display,this.chats);
+      
+    } else {
+      this.chats_to_display = this.chats;
+    }
+  }
+  
 
   selectDoctor(chat: any): void {
     this._socketService.register(this.userId)
     this.chatId=chat._id
     this.fetchAllMessages(this.chatId)
     this.selectedDoctor = `${chat.doctor.firstName} ${chat.doctor.lastName}`;
+    // this.selectDoctor=chat.doctor
+    console.log(this.selectDoctor);
     this.profile_picture=chat.doctor.profile_picture
-    this.selectedChatMessages = this.messages // Assuming `messages` is an array of messages for the selected chat
+    this.selectedChatMessages = this.messages
     this.lastSeen = chat.updatedAt
   }
 

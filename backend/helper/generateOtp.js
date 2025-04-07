@@ -10,6 +10,8 @@ const generateMail = async (email) => {
 
   let transpoter = nodemailer.createTransport({
     service: "gmail",
+    secure: false, // Use false for TLS
+    requireTLS: true, // Force TLS
     auth: {
       user: process.env.nodemailer_email,
       pass: process.env.nodemailer_password,

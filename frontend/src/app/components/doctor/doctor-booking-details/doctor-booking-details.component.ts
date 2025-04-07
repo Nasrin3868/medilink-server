@@ -13,13 +13,21 @@ export class DoctorBookingDetailsComponent implements OnInit {
   payments!:any
   payments_to_display!:any
   doctorId!:string|null
-  
+  showModal=false
+  selectedPrescription = {
+    disease: '',
+    prescription: ''
+  };
   constructor(
     private _messageService:MessageToasterService,
     private _formBuilder:FormBuilder,
     private _cdr: ChangeDetectorRef,
     private _doctorService:DoctorService,
   ){}
+  closeModal() {
+    this.showModal = false;
+  }
+  
 
   ngOnInit(): void {
     this.getAppointmentDetails()
@@ -29,6 +37,18 @@ export class DoctorBookingDetailsComponent implements OnInit {
     this.doctorId=localStorage.getItem('doctorId')
     this.setupSearchSubscription()
   }
+  openPrescriptionModal(payment: any) {
+    this._doctorService.getPrescriptionDetails({slotId:payment}).subscribe({
+      next:(Response)=>{
+        console.log('prescription:',Response);
+        
+        this.selectedPrescription.disease = Response.disease || 'N/A';
+        this.selectedPrescription.prescription = Response.prescription || 'N/A';
+        this.showModal = true;
+      }
+    })
+  }
+  
 
   getAppointmentDetails(){
     this._doctorService.get_booking_details_of_doctor({doctorId:localStorage.getItem('doctorId')}).subscribe({

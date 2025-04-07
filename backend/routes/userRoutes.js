@@ -16,12 +16,14 @@ router.get(
   checkUserBlocked,
   usercontroller.getuserDetails
 );
+
 router.post(
   "/editUserProfile",
   userAuth,
   checkUserBlocked,
   usercontroller.editUserProfile
 );
+
 router.get("/getSpecialization", usercontroller.getSpecialization);
 router.get("/getDocotrs", usercontroller.getDocotrs);
 router.get(
@@ -39,6 +41,7 @@ router.get(
   checkUserBlocked,
   usercontroller.check_if_the_slot_available
 );
+
 router.use(checkUserBlocked);
 //payment
 router.post("/booking_payment", usercontroller.booking_payment);
@@ -57,7 +60,10 @@ router.get("/upcoming_appointment", usercontroller.upcoming_appointment);
 router.get("/getUpcomingSlot", usercontroller.getUpcomingSlot);
 // router.get("/add_prescription", usercontroller.add_prescription);
 router.get("/get_prescription_details",usercontroller.get_prescription_details)
-
+router.get(
+  "/prescriptionDetails",
+  usercontroller.prescriptionDetails
+)
 router.post("/editUserProfile_name",usercontroller.editUserProfile_name)
 router.post("/opt_for_new_email",usercontroller.opt_for_new_email)
 router.post("/edit_user_profile_picture",usercontroller.edit_user_profile_picture)

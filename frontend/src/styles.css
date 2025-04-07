@@ -22,3 +22,7 @@
        
     }
 } */
+.p-calendar .p-inputtext {
+    @apply rounded-md;
+  }
+  

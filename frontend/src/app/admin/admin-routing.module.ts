@@ -15,12 +15,13 @@ import { AppointmentHistoryComponent } from './component/appointment-history/app
 import { PaymentHistoryComponent } from './component/payment-history/payment-history.component';
 import { ErrorPageComponent } from '../components/shared/error-page/error-page.component';
 import { PdfviewerComponent } from './component/pdfviewer/pdfviewer.component';
+import { adminGuardGuard } from './admin-guard.guard';
 
 
 const routes:Routes=[
   {path:'',redirectTo:'/login',pathMatch:'full' },
   {path:'login',component:AdminLoginComponent},
-  {path:'admin_home',component:AdminHomeComponent ,children:[
+  {path:'admin_home',component:AdminHomeComponent,canActivate:[adminGuardGuard] ,children:[
     {path:'dashboard',component:DashboardComponent},
     {path:'doctor_listing',component:DoctorListComponent},
     {path:'kyc_verification',component:KycComponent},

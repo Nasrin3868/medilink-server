@@ -39,6 +39,9 @@ export class DoctorListingComponent implements OnInit{
       .pipe(debounceTime(300)) // Adjust debounce time as needed
       .subscribe(value => {
           this.filterDoctors(value);
+          this.searchForm.get('searchData')?.reset(
+            '', { emitEvent: false } // Prevent another valueChanges trigger
+          );
       });
   }
 
@@ -59,6 +62,8 @@ export class DoctorListingComponent implements OnInit{
     this._userService.getSpecialization().subscribe({
       next:(Response)=>{
         this.specializations=Response
+        console.log('specialization',Response);
+        
       },error:(error)=>{
         this._messageService.showErrorToastr(error.error.message)
       }
@@ -71,9 +76,8 @@ export class DoctorListingComponent implements OnInit{
         this.doctors=Response
         this.displayed_doctor=this.doctors
         this.displayed_doctor.forEach(data=>{
-          console.log(data);
-          console.log('profile pic',data.profile_picture);
-          
+          // console.log(data);
+          // console.log('profile pic',data.profile_picture);
         })
       },error:(error)=>{
         this._messageService.showErrorToastr(error.error.message)

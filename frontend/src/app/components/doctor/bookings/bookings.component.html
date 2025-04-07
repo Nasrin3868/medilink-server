@@ -1,11 +1,10 @@
 <app-header></app-header>
-<div class="container p-8  bg-gray-200 min-h-screen">
-  <ng-container *ngIf="payments_to_display.length!==0 else no_appointments">
-    <div class="p-4">
-      <h2 class="text-4xl font-semibold uppercase leading-relaxed">Upcoming Appointments</h2>
-    </div>
+<div class="border-t container p-8 min-h-screen">
+  <div class="p-4">
+    <h2 class="text-4xl font-semibold uppercase leading-relaxed">Upcoming Appointments</h2>
+  </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-4">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-4">
       <!-- Search input -->
       <div class="flex pl-4 pb-4 dark:bg-gray-900 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-x border-none">
         <label for="table-search" class="sr-only">Search</label>
@@ -18,13 +17,14 @@
             </div>
             <div>
               <input type="text" formControlName="searchData" id="table-search" placeholder="Search for items" required
-                class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
           </div>
         </form>
       </div>
       
       <!-- Payments table -->
+      <ng-container *ngIf="payments_to_display.length!==0 else no_appointments">
       <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -69,18 +69,18 @@
           </tr>
         </tbody>
       </table>
-    </div>
-  </ng-container>
-  <ng-template #no_appointments>
-    <div class="flex justify-center items-center">
-      <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg border border-gray-200">
-        <h2 class="text-2xl font-semibold text-gray-800 text-center">
-          No Appointments
-        </h2>
-        <p class="mt-4 text-center text-gray-600">
-          There are currently no appointments available. Please check back later.
-        </p>
+    </ng-container>
+    <ng-template #no_appointments>
+      <div class=" m-4 flex justify-center items-center">
+        <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg border border-gray-200">
+          <h2 class="text-2xl font-semibold text-gray-800 text-center">
+            No Appointments
+          </h2>
+          <p class="mt-4 text-center text-gray-600">
+            There are currently no appointments available. Please check back later.
+          </p>
+        </div>
       </div>
+    </ng-template>
     </div>
-  </ng-template>
 </div>

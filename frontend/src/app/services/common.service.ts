@@ -44,7 +44,9 @@ export class CommonService {
   getAuthFromLocalStorage(): string {
     return localStorage.getItem('auth') as string
   }
-
+  getAdminTokenFromLocalStorage():string{
+    return localStorage.getItem('adminToken') as string
+  }
   
 
 }

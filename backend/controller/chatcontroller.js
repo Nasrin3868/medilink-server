@@ -51,8 +51,8 @@ const userAccessChat = async (req, res) => {
           .populate({ path: "doctor", model: "doctorcollection" });
   
           console.log("full chat is ==>", fullChat)
-        res.status(HttpStatusCodes.OK).json(fullChat);
-        // return fullChat;
+          res.status(HttpStatusCodes.OK).json(fullChat);
+          // return fullChat;
       }
     }
   } catch (error) {

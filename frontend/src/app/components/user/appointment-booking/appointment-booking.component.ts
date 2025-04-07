@@ -119,6 +119,7 @@ export class AppointmentBookingComponent implements OnInit{
   
   razorpayPopUp(res:any){
     console.log('razorpayPopUp');
+
     const RazorpayOptions = {
       description:'Medilink Razorpay payment',
       currency:'INR',
@@ -126,7 +127,8 @@ export class AppointmentBookingComponent implements OnInit{
       name:'MediLink',
       key:res.key_id,
       order_id:res.order_id,
-      image:'https://imgs.search.brave.com/bmhZt0Gh9CjW_Wk8CCob0T2V4PS_bHQYW3lfF_Ptlso/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzM3LzM1LzA2/LzM2MF9GXzQzNzM1/MDY3Nl85Y1VibE1k/N29zNnNrZzA0VmE1/dUhhTWY1VFRaaEhX/Zy5qcGc',
+      image:'https://res.cloudinary.com/dyemxd31x/image/upload/v1724348327/zlocybcbuse2cgpq5ehu.png',
+      // image:'https://imgs.search.brave.com/bmhZt0Gh9CjW_Wk8CCob0T2V4PS_bHQYW3lfF_Ptlso/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzM3LzM1LzA2/LzM2MF9GXzQzNzM1/MDY3Nl85Y1VibE1k/N29zNnNrZzA0VmE1/dUhhTWY1VFRaaEhX/Zy5qcGc',
       prefill:{
         name:'Medilink',
         email:'medilink@gmail.com',
@@ -138,15 +140,27 @@ export class AppointmentBookingComponent implements OnInit{
       modal:{
         ondismiss:()=>{
           this._messageService.showWarningToastr('Payment Failed');
+          // clearTimeout(autoCloseTimer);
         }
       },
-      handler:this.paymentSuccess.bind(this)
+      handler:
+        // console.log('when click on payment success button');
+        // // clearTimeout(autoCloseTimer);
+        this.paymentSuccess.bind(this)
     }
     const rpz = new Razorpay(RazorpayOptions);
     rpz.open()
+    // const autoCloseTimer = setTimeout(() => {
+    //   console.log('clear timout for modal');
+      
+    //   rpz.close(); // Razorpay method to close modal
+    //   this._messageService.showWarningToastr('Payment session expired. Please try again.');
+    // }, 1 * 60 * 1000); 
   }
 
   paymentSuccess(options:any){
+    console.log('payment success func');
+    
     this.patient_details.payment_method='online_payment'
     this.patient_details.payment_status=true
     this.payment(this.patient_details)

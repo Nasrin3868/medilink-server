@@ -59,5 +59,43 @@ const delete_unbooked_slots=async()=>{
         }
       });
 }
+const change_status_of_non_consulted_slots=async()=>{
+  console.log('change_status_of_non_consulted_slots')
+  cron.schedule('38,50 9-20 * * *', async() => {
+      console.log('Running task every 30 minutes from 9:20 AM to 8:20 PM');
+      
+   
+      try {
+        // Get current time in UTC (matching MongoDB's ISO time format)
+        const now = new Date();
+  
+        // Step 1: Find slot IDs whose time is in the past
+        const pastSlots = await slotcollection.find({ time: { $lt: now } }, { _id: 1 });
+  
+        const pastSlotIds = pastSlots.map(slot => slot._id);
+  
+        if (pastSlotIds.length === 0) {
+          console.log('✅ No past slots found at this time.');
+          return;
+        }
+  
+        // Step 2: Update bookedSlots linked to those past slots, if still pending
+        const result = await bookedSlotCollection.updateMany(
+          {
+            slotId: { $in: pastSlotIds },
+            consultation_status: 'non_consulted'
+          },
+          {
+            $set: { consultation_status: 'not_consulted' }
+          }
+        );
+  
+        console.log(`✅ Updated ${result.modifiedCount} booked slots to 'not_consulted'`);
+      } catch (err) {
+        console.error('❌ Error updating booked slot status:', err);
+      }
+    });
+}
 
-module.exports={email_to_notify_booking_time,delete_unbooked_slots}
+
+module.exports={email_to_notify_booking_time,delete_unbooked_slots,change_status_of_non_consulted_slots}

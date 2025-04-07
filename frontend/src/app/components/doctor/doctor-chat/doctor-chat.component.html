@@ -1,14 +1,12 @@
-<div class="bg-gray-100">
+<!-- <div class="bg-gray-100">
     <div class="bg-gray-100 h-screen">
       <app-header></app-header>
       <div class="container mx-auto h-full flex">
-        <!-- Sidebar for Messages -->
         <div class="w-1/3 bg-white shadow-md h-full flex flex-col">
           <div class="p-4">
             <form class="relative">
               <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
                 <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search" class="w-5 h-5 text-gray-700">
-                  <!-- <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round" ></path> -->
                 </svg>
               </button>
               <input
@@ -27,7 +25,6 @@
           <div class="flex-1 p-4 overflow-y-auto">
             <h2 class="text-xl font-semibold mb-4">Messages</h2>
             <div class="space-y-4">
-              <!-- Dynamic user listing -->
               <div *ngFor="let chat of chats" class="flex items-center p-2 bg-gray-100 rounded-md cursor-pointer" (click)="selectDoctor(chat)">
                 <img *ngIf="chat.user.profile_picture;else no_profile_picture" [src]="chat.user.profile_picture" alt="User" class="w-12 h-12 rounded-full mr-4">
                 <ng-template #no_profile_picture>
@@ -46,7 +43,6 @@
           </div>
         </div>
   
-        <!-- Chat Area -->
         <div class="w-2/3 bg-white shadow-md h-full flex flex-col">
           <div *ngIf="!selectedDoctor" class="flex flex-col justify-center items-center h-full text-center p-10">
             <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724348695/rewo4e68erfoeixftpfa.jpg" alt="Welcome" class="w-1/2 mb-6">
@@ -66,7 +62,6 @@
             
             <div class="flex-1 p-4 overflow-y-auto flex flex-col-reverse" #chatContainer (scroll)="onScroll($event)">
               <div class="space-y-4" *ngFor="let message of messages; let i = index; let isLast = last">
-                <!-- Messages -->
                 <div [ngClass]="{'justify-end pb-2': message.senderModel === 'doctorcollection', 'justify-start pb-2': message.senderModel !== 'doctorcollection'}" class="flex">
                   <div [ngClass]="{'bg-blue-500 text-white': message.senderModel === 'doctorcollection', 'bg-gray-200 text-black': message.senderModel !== 'doctorcollection'}" class="p-2 rounded-lg max-w-md">
                     <p>{{message.content}}</p>
@@ -84,6 +79,154 @@
                 </form>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+   <div class="bg-gray-100 h-screen flex flex-col">
+    <app-header></app-header>
+  
+    <div class="border-t container mx-auto flex flex-1 overflow-hidden">
+      <!-- Sidebar for Messages -->
+      <div class="w-1/3 bg-white shadow-md h-full flex flex-col overflow-hidden">
+        <div class="p-4">
+          <form class="relative" [formGroup]="searchForm">
+            <input formControlName="searchData"
+              class="w-full rounded-full px-8 py-3 border-transparent focus:outline-none focus:border-gray-300 placeholder-gray-400 transition-all duration-300 shadow-md"
+              placeholder="Search doctor..."
+              type="text"
+            />
+            <button type="reset" class="absolute right-3 -translate-y-1/2 top-1/2 p-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+  
+        <!-- Scrollable message user list -->
+           <!-- <h2 class="text-xl font-semibold px-4">Messages</h2> -->
+        <div class="flex-1 p-4 overflow-y-auto">
+          <div class="space-y-4">
+            <div *ngFor="let chat of chats_to_display" class=" border-t flex items-center p-2 rounded-md cursor-pointer shadow-sm" (click)="selectDoctor(chat)">
+              <img *ngIf="chat.user.profile_picture;else no_profile_picture" [src]="chat.user.profile_picture" alt="User" class="w-12 h-12 rounded-full mr-4">
+              <ng-template #no_profile_picture>
+                <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724227464/ank36p5bo7ypy79ya9me.jpg" alt="User" class="w-12 h-12 rounded-full mr-4">
+              </ng-template>
+              <div>
+                <h3 class="text-lg font-semibold">{{ (chat.user.firstName|capitalizeFirst)+' '+(chat.user.lastName|capitalizeFirst) }}</h3>
+                <p *ngIf="chat.latestMessage" class="text-sm text-gray-600">{{ chat.latestMessage.content }}</p>
+                <span class="text-xs text-gray-400">{{ chat.updatedAt| date:'d/M/yy' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Go Back Button -->
+        <!-- <div class="p-4 ">
+          <button class="w-full py-2 bg-gray-900 hover:bg-gray-700 text-white rounded-md">Go Back</button>
+        </div> -->
+      </div>
+  
+      <!-- Chat Area -->
+      <div class="w-2/3 bg-white shadow-md flex flex-col overflow-hidden">
+        <div *ngIf="!selectedDoctor" class="flex-1 flex flex-col justify-center items-center text-center pb-20">
+          <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724348695/rewo4e68erfoeixftpfa.jpg" alt="Welcome" class="w-1/2">
+          <h2 class="text-2xl font-semibold mb-2">Welcome to Chat</h2>
+          <p class="text-gray-500">Get connect with your doctor here. You can enquire about important follow-up.</p>
+          <p class="text-gray-500">Select your doctor from the list.</p>
+        </div>
+  
+        <div *ngIf="selectedDoctor" class="flex flex-col flex-1 overflow-hidden">
+          <!-- Chat Header -->
+          <div class="p-4 border-b flex items-center shadow-md">
+            <img *ngIf="profile_picture; else no_profile_picture" [src]="profile_picture" alt="User" class="w-12 h-12 rounded-full mr-4">
+            <ng-template #no_profile_picture>
+              <img src="https://res.cloudinary.com/dyemxd31x/image/upload/v1724227464/ank36p5bo7ypy79ya9me.jpg" alt="User" class="w-12 h-12 rounded-full mr-4">
+            </ng-template>
+            <h2 class="text-xl font-semibold">{{ selectedDoctor | titlecase }}</h2>
+          </div>
+  
+          <!-- Messages Area -->
+          <!-- <div class="flex-1 p-4 overflow-y-auto flex flex-col-reverse" #chatContainer (scroll)="onScroll($event)">
+            <div class="space-y-4" *ngFor="let message of messages; let i = index; let isLast = last">
+              <div [ngClass]="{'justify-end': message.senderModel === 'doctorcollection', 'justify-start': message.senderModel !== 'doctorcollection'}" class="flex mb-2">
+                <div [ngClass]="{'bg-gray-200 text-black': message.senderModel === 'doctorcollection', 'text-black': message.senderModel !== 'doctorcollection'}" class="shadow-lg p-2 rounded-lg max-w-md">
+                  <p>{{ message.content }}</p>
+                  <span [ngClass]="{'text-gray-500': message.senderModel === 'doctorcollection', 'text-gray-400': message.senderModel !== 'doctorcollection'}" class="text-xs">{{message.createdAt|date:'d/M/yy, h:mm a'}}</span>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="flex-1 p-4 overflow-y-auto flex flex-col-reverse " #chatContainer>
+            <div *ngFor="let message of messages; let i = index">
+              <!-- Show date header only if it's the first message of the day -->
+              <ng-container *ngIf="i === messages.length - 1 || !isSameDate(message.createdAt, messages[i + 1]?.createdAt)">
+                <div class="flex justify-center mb-2">
+                  <span class="text-xs text-gray-500 bg-white px-2 py-1 rounded-md shadow-sm">
+                    {{ message.createdAt | date:'dd/M/yy' }}
+                  </span>
+                </div>
+              </ng-container>
+              <div class="flex items-end gap-2 mb-1"
+                   [ngClass]="{'justify-end': message.senderModel === 'doctorcollection', 'justify-start': message.senderModel !== 'doctorcollection'}">
+          
+                <!-- Profile image (only at end of message group) -->
+                <ng-container *ngIf="message.senderModel !== 'doctorcollection' && (i === 0 || message.senderModel !== messages[i - 1]?.senderModel); else spacer">
+                  <img
+                    [src]="profile_picture"
+                    class="w-8 h-8 rounded-full"
+                  />
+                </ng-container>
+                <ng-template #spacer>
+                  <div class="w-8 h-8"></div>
+                </ng-template>
+          
+                <!-- <div [ngClass]="{
+                      'bg-gray-200': message.senderModel === 'doctorcollection',
+                      ' text-black': message.senderModel !== 'doctorcollection'
+                    }" 
+                    class=" px-3 rounded-xl max-w-md shadow-md mb-2"
+                >
+                  <p>{{ message.content }}</p>
+                  <span class="text-xs text-gray-400">{{ message.createdAt | date:'h:mm a' }}</span>
+                </div> -->
+                <div [ngClass]="{
+                  'bg-gray-200': message.senderModel === 'doctorcollection',
+                  'bg-white text-black': message.senderModel !== 'doctorcollection'
+                }" 
+               class="px-3 py-2 rounded-xl max-w-md shadow-md mb-2 inline-block"
+          >
+            <div class="flex items-end gap-2 justify-between">
+              <p class="text-sm break-words max-w-[90%]">
+                {{ message.content }}
+              </p>
+              <span class="text-xs text-gray-500 whitespace-nowrap">{{ message.createdAt | date:'h:mm a' }}</span>
+            </div>
+          </div>
+          
+                <!-- Profile image on right for user -->
+                <ng-container *ngIf="(i === 0 || message.senderModel !== messages[i - 1]?.senderModel); else spaceright">
+                  <img *ngIf="message.senderModel === 'doctorcollection'" [src]="doctorDetails.profile_picture" 
+                       class="w-8 h-8 rounded-full order-2" />
+                </ng-container>
+                <ng-template #spaceright>
+                  <!-- Invisible image to reserve space -->
+                  <div class="w-8 h-8"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          
+  
+          <!-- Chat Input -->
+          <div class="p-4 ">
+            <form [formGroup]="chatForm" (ngSubmit)="chatFormSubmit()" class="flex items-center gap-2">
+              <input type="text" formControlName="message" placeholder="Type your message here..." class="flex-1 p-2 border rounded-md" />
+              <button type="submit" class="p-2 bg-gray-900 hover:bg-gray-700 text-white rounded-md">Send</button>
+            </form>
           </div>
         </div>
       </div>

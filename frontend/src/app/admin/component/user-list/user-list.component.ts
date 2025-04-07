@@ -21,13 +21,20 @@ export class UserListComponent implements OnInit{
     private _messageService:MessageToasterService,
     private _formBuilder:FormBuilder
   ){}
+  
 
   ngOnInit(){
     this.getAllUsers()
+    // this.statusForm.get('status')?.valueChanges.subscribe(value => {
+    //   console.log('Status changed to:', value);
+    //   if(value) this.getAllUsers();
+    // });
     this.statusForm.get('status')?.valueChanges.subscribe(value => {
       console.log('Status changed to:', value);
-      if(value) this.getAllUsers();
+      if (value !== null) this.statusFormSubmit(); // ✅ Only filter based on status
     });
+    
+    this.setupSearchSubscription()
   }
 
   searchForm=this._formBuilder.group({
@@ -52,6 +59,7 @@ export class UserListComponent implements OnInit{
       );
     } else {
       this.users_to_display = this.users;
+      // this.statusForm.get('status')?.setValue('all')
     }
   }
 

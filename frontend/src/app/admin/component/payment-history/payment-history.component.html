@@ -1,5 +1,5 @@
 
-<div class="container bg-gray-200">
+<div class="container">
     <div class="p-4">
         <h2 class="text-4xl font-semibold leading-relaxed">payment Management</h2>
     </div>
@@ -7,7 +7,7 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
      <!-- Search input -->
      <div class="flex pl-4 pb-4  dark:bg-gray-900 grid grid-cols-2 divide-x  border-none" >
-        <label for="table-search" class="sr-only">Search</label>
+        <!-- <label for="table-search" class="sr-only">Search</label>
         <form [formGroup]="searchForm">
             <div class="relative grid grid-cols-2 divide-x ">
                 <div class=" absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none ">
@@ -20,10 +20,10 @@
                     class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-50 bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-500 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                 </div>
             </div>
-        </form> 
+        </form>  -->
         <div class="relative grid grid-cols-3 divide-x border-none">
             <form [formGroup]="paymentForm" (ngSubmit)="paymentFormSubmit()">
-                <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-800 rounded-lg shadow-sm h-9 focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 bg-none" formControlName="status" (change)="paymentFormSubmit()">
+                <select class="block w-sm text-sm font-medium transition duration-75 border border-gray-800 rounded-lg shadow-sm h-9 focus:border-gray-600 focus:ring-1 focus:ring-inset focus:ring-gray-600 bg-none" formControlName="status" (change)="paymentFormSubmit()">
                   <option value="all">All</option>
                   <option value="onlinePayment">Online Payment</option>
                   <option value="walletPayment">Wallet Payment</option>

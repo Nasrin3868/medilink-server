@@ -495,18 +495,19 @@ const appointmnet_booking = async (req, res) => {
         message:
           "This slot is already booked,try again from selecting the slot",
       });
+    }else{
+      // if(patient_details.payment_status===true){
+      const slots = await slotCollection.findByIdAndUpdate(
+        patient_details.slotId,
+        { $set: { booked: true } }
+      );
+      // }
+      //booked slots creation
+      const bookedSlot = await bookedSlotCollection.create(patient_details);
+      res
+        .status(HttpStatusCodes.CREATED)
+        .json({ message: "Slot booking completed" });
     }
-    // if(patient_details.payment_status===true){
-    const slots = await slotCollection.findByIdAndUpdate(
-      patient_details.slotId,
-      { $set: { booked: true } }
-    );
-    // }
-    //booked slots creation
-    const bookedSlot = await bookedSlotCollection.create(patient_details);
-    res
-      .status(HttpStatusCodes.CREATED)
-      .json({ message: "Slot booking completed" });
   } catch (error) {
     res
       .status(HttpStatusCodes.INTERNAL_SERVER_ERROR)
@@ -563,8 +564,10 @@ const cancelSlot = async (req, res) => {
     const data = req.query;
     console.log(data, data.slotId);
     const slot = await slotCollection.findByIdAndUpdate(data.slotId, {
-      $set: { cancelled: true },
+      $set: { cancelled: true,booked:false },
     });
+    console.log('cancelled slot:',slot);
+    
     const bookedSlot = await bookedSlotCollection.findOneAndUpdate(
       { slotId: data.slotId },
       { $set: { consultation_status: "cancelled" } }
@@ -587,11 +590,7 @@ const upcoming_appointment = async (req, res) => {
     console.log("get upcoming_appointment serverside");
     const data = req.query;
     console.log("data:", data);
-    
-    // Get the current time
     const now = new Date();
-    
-    // Define the time margin (e.g., 15 minutes)
     const margin = 15 * 60 * 1000; // 15 minutes in milliseconds
     
     // Fetch all booked slots for the specified doctor
@@ -767,7 +766,22 @@ const edit_user_profile_picture = async (req, res) => {
       .json({ message: "Internal Server Error" });
   }
 };
-
+const prescriptionDetails=async(req,res)=>{
+  try{
+    console.log("get_prescription_details serverside");
+    const slotId = req.query.slotId;
+    console.log('slotId:',slotId);
+    if (!slotId) {
+      res.status(HttpStatusCodes.BAD_REQUEST).json({ message: "slotId is not passed" });
+    } else {
+      const prescription=await prescriptionCollection.findOne({bookedSlot:slotId})
+      console.log('prescription',prescription);
+      res.status(HttpStatusCodes.OK).json(prescription);
+    }
+  }catch(error){
+    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
+  }
+}
 module.exports = {
   registerUser,
   resendOtp,
@@ -796,4 +810,5 @@ module.exports = {
   editUserProfile_name,
   opt_for_new_email,
   edit_user_profile_picture,
+  prescriptionDetails
 };

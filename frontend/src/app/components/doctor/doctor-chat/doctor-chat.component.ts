@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { io } from 'socket.io-client';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChatService } from 'src/app/services/chat.service';
+import { DoctorService } from 'src/app/services/doctor.service';
  
 @Component({
   selector: 'app-doctor-chat',
@@ -22,6 +23,7 @@ export class DoctorChatComponent implements OnInit{
   senderId:any
   selectedDoctor!: any;
   profile_picture!:any;
+  doctorDetails!:any;
   selectedChatMessages: any[] = [];
   lastSeen: string = '';
   @ViewChild('chatContainer')
@@ -35,18 +37,35 @@ export class DoctorChatComponent implements OnInit{
     private _messageService:MessageToasterService,
     private _formBuilder:FormBuilder,
     private _socketService:SocketService,
+    private _doctorService:DoctorService
   ){
     this.socket = io(environment.api);
   }
-
+  isSameDate(date1: string | Date, date2: string | Date): boolean {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return d1.getDate() === d2.getDate() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getFullYear() === d2.getFullYear();
+  }
   ngOnInit(): void {
     this.doctorId=localStorage.getItem('doctorId')
+      this._doctorService.getDoctorDetails({_id:this.doctorId}).subscribe({
+        next:(Response)=>{
+          this.doctorDetails=Response
+        },
+        error:(error)=>{
+          // console.log('error while fetching doc details:',error.error.message);
+          this._messageService.showErrorToastr(error.error.message)
+        }
+      })
     this.fetch_all_chats()
     if(this.chatId){
       this.socket.emit('joinChat', this.chatId);
     }
     this.scrollToBottom();
     this.messageSubscription()
+    this.setupSearchSubscription()
   }
 
   //call if any message comes
@@ -65,6 +84,30 @@ export class DoctorChatComponent implements OnInit{
       this.senderId=res?.sender?._id
     });
   }
+  searchForm=this._formBuilder.group({
+    searchData:['',Validators.required]
+  })
+
+  setupSearchSubscription() {
+    this.searchForm.get('searchData')?.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe(value => {
+          this.filterDoctors(value);
+      });
+  }
+  chats_to_display!:any
+  filterDoctors(searchTerm: string|null) {
+    if (searchTerm) {
+      const regex = new RegExp(searchTerm, 'i');
+      this.chats_to_display = this.chats.filter((chat:any) =>
+        regex.test(`${chat.user.firstName} ${chat.user.lastName}`)
+      );
+      console.log('chats to disply:',this.chats_to_display,this.chats);
+      
+    } else {
+      this.chats_to_display = this.chats;
+    }
+  }
 
   //fetching accessible chats
   fetch_all_chats(){
@@ -72,6 +115,7 @@ export class DoctorChatComponent implements OnInit{
       next:(Response)=>{
         console.log('fetched chats:',Response);
         this.chats=Response
+        this.chats_to_display=Response
       }
     })
   }

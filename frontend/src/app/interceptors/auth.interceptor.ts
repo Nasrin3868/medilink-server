@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const userToken = this._commonService.getTokenFromLocalStorage(); // User token from local storage
     const doctorToken = this._commonService.getDoctorTokenFromLocalStorage(); // Doctor token from local storage
-    // const adminToken = this.commonService.getAdminTokenFromLocalStorage(); // Admin token from local storage
+    // const adminToken = this._commonService.getAdminTokenFromLocalStorage(); // Admin token from local storage
 
     let authRequest = request;
     if(window.location.pathname.includes('/user') && userToken) {

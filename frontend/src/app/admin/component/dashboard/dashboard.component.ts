@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit{
 
   get_dashboard_display_contents(){
     this.total_revenue=this.booked_Slots.reduce((acc:number,data:any)=>{
-      if(data.consultation_status==='consulted'||data.consultation_status==='not_consulted'){
+      if(data.consultation_status==='consulted'||data.consultation_status==='not_consulted'||data.consultation_status==="pending"){
           return acc+data.slotId.adminPaymentAmount
       }
       return acc
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit{
       return acc
     },0)
     this.total_booking=this.booked_Slots.reduce((acc:number,data:any)=>{
-      if(data.consultation_status==='pending'||data.consultation_status==='consulted'){
+      if(data.consultation_status==='pending'||data.consultation_status==='consulted'||data.consultation_status==="not_consulted"){
           return acc+1
       }
       return acc
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit{
       return acc
     },0)
     this.total_not_consulted_bookings=this.booked_Slots.reduce((acc:number,data:any)=>{
-      if(data.consultation_status==='not_consulted'){
+      if(data.consultation_status==='not_consulted'||data.consultation_status==="pending"){
           return acc+1
       }
       return acc
@@ -190,7 +190,7 @@ export class DashboardComponent implements OnInit{
         weeklyData.consulted[dayIndex]++;
       } else if (slot.consultation_status === 'cancelled') {
         weeklyData.cancelled[dayIndex]++;
-      } else if (slot.consultation_status === 'not-consulted') {
+      } else if (slot.consultation_status === 'not_consulted'||slot.consultation_status==="pending") {
         weeklyData.notConsulted[dayIndex]++;
       }
     });
@@ -213,7 +213,7 @@ export class DashboardComponent implements OnInit{
         monthlyData.consulted[month]++;
       } else if (slot.consultation_status === 'cancelled') {
         monthlyData.cancelled[month]++;
-      } else if (slot.consultation_status === 'not-consulted') {
+      } else if (slot.consultation_status === 'not_consulted'||slot.consultation_status==='pending') {
         monthlyData.notConsulted[month]++;
       }
     });

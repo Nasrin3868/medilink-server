@@ -35,6 +35,20 @@ const slotschema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  status: {
+    type: String,
+    enum: ['available', 'pending', 'booked'],
+    default: 'available',
+  },
+  reservedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'usercollection',
+    default: null,
+  },
+  reservedAt: {
+    type: Date,
+    default: null,
+  },
 });
 
 module.exports = mongoose.model("slotcollection", slotschema);
