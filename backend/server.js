@@ -28,7 +28,7 @@ const io = socketIo(server, {
   },
 });
 
-app.use(cors({ origin: ["http://localhost:4200"] }));
+app.use(cors({ origin: ["http://localhost:4200","https://nasrin.medilnk.live"] }));
 // app.use(cors({ origin: ["https://nasrin.medilink.live"] }));
 
 app.use(express.static(path.join(__dirname, "images")));
