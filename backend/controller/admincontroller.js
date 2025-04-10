@@ -283,7 +283,7 @@ const editpayOut = async (req, res) => {
   }
 };
 
-const get_kyc_details_of_doctor = async (req, res) => {
+const getKycDetailsOfDoctor = async (req, res) => {
   try {
     console.log("get get_kyc_details_of_doctor serverside");
     const data = req.query;
@@ -303,7 +303,7 @@ const get_kyc_details_of_doctor = async (req, res) => {
   }
 };
 
-const submit_kyc_details = async (req, res) => {
+const submitKycDetails = async (req, res) => {
   try {
     console.log("get submit_kyc_details serverside");
     const data = req.body;
@@ -365,9 +365,9 @@ const submit_kyc_details = async (req, res) => {
 
 const download = require("download");
 
-const download_kyc_documents = async (req, res) => {
+const downloadKycDocuments = async (req, res) => {
   try {
-    console.log("get download_kyc_documents serverside");
+    console.log("get downloadKycDocuments serverside");
     const data = req.query;
     if (!data) {
       return res
@@ -440,9 +440,9 @@ const download_kyc_documents = async (req, res) => {
   }
 };
 
-const get_appointment_details = async (req, res) => {
+const getAppointmentDetails = async (req, res) => {
   try {
-    console.log("get get_appointment_details serverside");
+    console.log("get getAppointmentDetails serverside");
     const bookedSlots = await bookedSlotCollection
       .find({})
       .populate({
@@ -459,13 +459,15 @@ const get_appointment_details = async (req, res) => {
   }
 };
 
-const get_admin_dashboard_details = async (req, res) => {
+const getAdminDashboardDetails = async (req, res) => {
   try {
-    console.log("get_admin_dashboard_details serverside");
+    console.log("getAdminDashboardDetails serverside");
     const data = await bookedSlotCollection.find({}).populate("slotId");
     const user = await userCollection.find({}).count();
     const doctor = await doctorCollection.find({}).count();
     console.log("userCount,docCount:", user, doctor);
+    console.log('data:',data);
+    
     res
       .status(HttpStatusCodes.OK)
       .json({ slotDetails: data, user_count: user, doctor_count: doctor });
@@ -479,9 +481,9 @@ module.exports = {
   doctorStatusChange,
   doctordata,
   doctorBlock,
-  get_kyc_details_of_doctor,
-  submit_kyc_details,
-  download_kyc_documents,
+  getKycDetailsOfDoctor,
+  submitKycDetails,
+  downloadKycDocuments,
   userdata,
   userBlock,
   userDetails,
@@ -492,6 +494,6 @@ module.exports = {
   editSpecialization,
   deleteSpecialization,
   editpayOut,
-  get_appointment_details,
-  get_admin_dashboard_details,
+  getAppointmentDetails,
+  getAdminDashboardDetails,
 };

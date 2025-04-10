@@ -48,6 +48,10 @@ const userschema = new mongoose.Schema({
   profile_picture: {
     type: String,
   },
+  refreshToken: {
+    type: String,
+    default: null,
+  }
 });
 
 module.exports = mongoose.model("usercollection", userschema);

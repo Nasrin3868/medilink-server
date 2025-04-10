@@ -10,7 +10,7 @@ router.post(
   uploads.fields([
     { name: "identity_proof", maxCount: 1 },
     { name: "doctors_liscence", maxCount: 1 },
-    {name:'profile_picture', maxCount: 1 },
+    { name: "profile_picture", maxCount: 1 },
     { name: "qualification_certificate" },
     { name: "experience_certificate" },
   ]),
@@ -22,128 +22,45 @@ router.post("/verifyOtp", doctorController.verifyOtp);
 router.post("/login", doctorController.doctorLogin);
 router.post("/verifyEmail", doctorController.verifyEmail);
 router.post("/updatePassword", doctorController.updatePassword);
-router.get(
-  "/getDoctorDetails",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.getDoctorDetails
-);
-router.post(
-  "/editDoctorProfile",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.editDoctorProfile
-);
-router.post(
-  "/edit_doctor_profile_picture",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.edit_doctor_profile_picture
-);
-router.post(
-  "/opt_for_new_email",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.opt_for_new_email
-);
 
+router.use(doctorAuth, checkDoctorBlocked);
+
+router.get("/getDoctorDetails", doctorController.getDoctorDetails);
+router.post("/editDoctorProfile", doctorController.editDoctorProfile);
 router.post(
-  "/slotCreation",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.slotCreation
+  "/editDoctorProfilePicture",
+  doctorController.editDoctorProfilePicture
 );
-router.post(
-  "/add_all_slots",
-  // doctorAuth,
-  // checkDoctorBlocked,
-  doctorController.add_all_slots
-);
-router.get(
-  "/doctorSlotDetails",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.doctorSlotDetails
-);
-router.delete(
-  "/RemoveSlot",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.RemoveSlot
-);
-router.get(
-  "/get_booking_details",
-  checkDoctorBlocked,
-  doctorAuth,
-  doctorController.get_booking_details
-);
-router.get(
-  "/get_bookings_of_doctor",
-  checkDoctorBlocked,
-  doctorAuth,
-  doctorController.get_bookings_of_doctor
-);
+router.post("/optForNewEmail", doctorController.optForNewEmail);
+
+router.post("/slotCreation", doctorController.slotCreation);
+router.post("/addAllSlots", doctorController.addAllSlots);
+router.get("/doctorSlotDetails", doctorController.doctorSlotDetails);
+router.delete("/RemoveSlot", doctorController.RemoveSlot);
+router.get("/getBookingDetails", doctorController.getBookingDetails);
+router.get("/getBookingsOfDoctor", doctorController.getBookingsOfDoctor);
 
 //chat
-router.get(
-  "/doctor_accessed_chats",
-  doctorAuth,
-  checkDoctorBlocked,
-  chatController.doctor_accessed_chats
-);
-router.get(
-  "/doctorFetchAllMessages",
-  doctorAuth,
-  checkDoctorBlocked,
-  chatController.doctorFetchAllMessages
-);
+router.get("/doctorAccessedChats", chatController.doctorAccessedChats);
+router.get("/doctorFetchAllMessages", chatController.doctorFetchAllMessages);
 router.post("/doctorSendMessage", chatController.doctorSendMessage);
 
+router.get("/upcomingAppointment", doctorController.upcomingAppointment);
+router.get("/updateUpcomingSlot", doctorController.updateUpcomingSlot);
 router.get(
-  "/upcoming_appointment",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.upcoming_appointment
-);
-router.get(
-  "/updateUpcomingSlot",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.updateUpcomingSlot
-);
-router.get(
-  "/update_consultationStatus",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorController.update_consultationStatus
+  "/updateConsultationStatus",
+  doctorController.updateConsultationStatus
 );
 
+router.get("/addPrescription", doctorController.addPrescription);
+router.get("/prescriptionDetails", doctorController.prescriptionDetails);
 router.get(
-  "/add_prescription",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorAuth,
-  doctorController.add_prescription
+  "/getDoctorDashboardDetails",
+  doctorController.getDoctorDashboardDetails
 );
 router.get(
-  "/prescriptionDetails",
-  doctorAuth,
-  doctorController.prescriptionDetails
-)
-router.get(
-  "/get_doctor_dashboard_details",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorAuth,
-  doctorController.get_doctor_dashboard_details
+  "/shareRoomIdThroughEmail",
+  doctorController.shareRoomIdThroughEmail
 );
-router.get(
-  "/share_roomId_through_email",
-  doctorAuth,
-  checkDoctorBlocked,
-  doctorAuth,
-  doctorController.share_roomId_through_email
-);
-
 
 module.exports = router;

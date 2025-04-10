@@ -4,6 +4,7 @@ const router = express.Router();
 const adminAuth = require("../middlewares/adminAuth");
 
 router.post("/adminLogin", adminController.adminLogin);
+router.use(adminAuth)
 router.get("/doctordata", adminController.doctordata);
 router.post("/doctorBlock", adminController.doctorBlock);
 router.get("/userdata", adminController.userdata);
@@ -17,15 +18,15 @@ router.post("/editSpecialization", adminController.editSpecialization);
 router.delete("/deleteSpecialization", adminController.deleteSpecialization);
 router.post("/editpayOut", adminController.editpayOut);
 router.get(
-  "/get_kyc_details_of_doctor",
-  adminController.get_kyc_details_of_doctor
+  "/getKycDetailsOfDoctor",
+  adminController.getKycDetailsOfDoctor
 );
-router.post("/submit_kyc_details", adminController.submit_kyc_details);
-router.get("/download_kyc_documents", adminController.download_kyc_documents);
-router.get("/get_appointment_details", adminController.get_appointment_details);
+router.post("/submitKycDetails", adminController.submitKycDetails);
+router.get("/downloadKycDocuments", adminController.downloadKycDocuments);
+router.get("/getAppointmentDetails", adminController.getAppointmentDetails);
 router.get(
-  "/get_admin_dashboard_details",
-  adminController.get_admin_dashboard_details
+  "/getAdminDashboardDetails",
+  adminController.getAdminDashboardDetails
 );
 
 module.exports = router;

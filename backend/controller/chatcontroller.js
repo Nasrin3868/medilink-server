@@ -154,7 +154,7 @@ const userFetchAllMessages = async (req, res) => {
   }
 };
 
-const doctor_accessed_chats = async (req, res) => {
+const doctorAccessedChats = async (req, res) => {
   try {
     const { doctorId } = req.query;
     if(!doctorId){
@@ -247,7 +247,7 @@ module.exports = {
   userFetchAllChat,
   sendMessage,
   userFetchAllMessages,
-  doctor_accessed_chats,
+  doctorAccessedChats,
   doctorFetchAllMessages,
   doctorSendMessage,
 };

@@ -180,7 +180,8 @@ const userLogin = async (req, res) => {
             const data = {
               userId: userdata._id,
             };
-            const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
+            const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN,{ expiresIn: '15m' });
+
             const accessedUser = {
               _id: userdata._id,
               firstName: userdata.firstName,
@@ -188,7 +189,8 @@ const userLogin = async (req, res) => {
               email: userdata.email,
               role: userdata.role,
             };
-            res.status(HttpStatusCodes.OK).json({
+            res
+            .status(HttpStatusCodes.OK).json({
               accessToken,
               accessedUser,
               message: "Login successfully",
@@ -211,6 +213,29 @@ const userLogin = async (req, res) => {
       .json({ message: "Internal server error" });
   }
 };
+
+
+// const refreshToken = async (req, res) => {
+//   const token = req.cookies.refreshToken;
+//   if (!token) return res.status(401).json({ message: 'No refresh token found' });
+
+//   try {
+//     const payload = jwt.verify(token, process.env.JWT_REFRESH_TOKEN);
+
+//     const user = await usercollection.findById(payload.userId);
+//     if (!user || user.refreshToken !== token) {
+//       return res.status(403).json({ message: 'Invalid refresh token' });
+//     }
+
+//     const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_TOKEN, { expiresIn: '15m' });
+
+//     res.status(200).json({ accessToken: newAccessToken });
+
+//   } catch (error) {
+//     res.status(403).json({ message: 'Refresh token expired or invalid' });
+//   }
+// };
+
 
 //verify email for forget password
 const verifyEmail = async (req, res) => {
@@ -410,9 +435,9 @@ const getSlot = async (req, res, next) => {
   }
 };
 
-const check_if_the_slot_available = async (req, res, next) => {
+const checkIfTheSlotAvailable = async (req, res, next) => {
   try {
-    console.log("check_if_the_slot_available backend");
+    console.log("checkIfTheSlotAvailable backend");
     if (!req.query.slotId) {
       res
         .status(HttpStatusCodes.BAD_REQUEST)
@@ -445,9 +470,9 @@ const razorpayInstance = new razorpay({
   key_secret: razorSEC_Key,
 });
 
-const booking_payment = async (req, res, next) => {
+const bookingPayment = async (req, res, next) => {
   try {
-    console.log("booking_payment backend");
+    console.log("bookingPayment backend");
     const { consultation_fee } = req.body;
     const options = {
       amount: consultation_fee * 100,
@@ -535,9 +560,9 @@ const userDetails = async (req, res) => {
   }
 };
 
-const get_booking_details = async (req, res) => {
+const getBookingDetails = async (req, res) => {
   try {
-    console.log("get get_booking_details serverside");
+    console.log("get getBookingDetails serverside");
     const data = req.query;
     console.log(data, data.userId);
     const bookedSlots = await bookedSlotCollection
@@ -560,7 +585,7 @@ const get_booking_details = async (req, res) => {
 
 const cancelSlot = async (req, res) => {
   try {
-    console.log("get get_booking_details serverside");
+    console.log("get getBookingDetails serverside");
     const data = req.query;
     console.log(data, data.slotId);
     const slot = await slotCollection.findByIdAndUpdate(data.slotId, {
@@ -585,9 +610,9 @@ const cancelSlot = async (req, res) => {
   }
 };
 
-const upcoming_appointment = async (req, res) => {
+const upcomingAppointment = async (req, res) => {
   try {
-    console.log("get upcoming_appointment serverside");
+    console.log("get upcomingAppointment serverside");
     const data = req.query;
     console.log("data:", data);
     const now = new Date();
@@ -670,7 +695,7 @@ const getUpcomingSlot = async (req, res) => {
   }
 };
 
-// const add_prescription = async (req, res) => {
+// const addPrescription = async (req, res) => {
 //   try {
 //     console.log(req.query);
 //     const { userId } = req.query;
@@ -687,9 +712,9 @@ const getUpcomingSlot = async (req, res) => {
 //   }
 // };
 
-const get_prescription_details= async (req, res) => {
+const getPrescriptionDetails= async (req, res) => {
   try {
-    console.log('get_prescription_details:',req.query);
+    console.log('getPrescriptionDetails:',req.query);
     if(!req.query_id){
       res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required data"})
     }else{
@@ -705,7 +730,7 @@ const get_prescription_details= async (req, res) => {
   }
 };
 
-const editUserProfile_name = async (req, res) => {
+const editUserProfileName = async (req, res) => {
   try {
     const { userId, firstName, lastName } = req.body;
     await usercollection.findByIdAndUpdate(userId, {
@@ -721,7 +746,7 @@ const editUserProfile_name = async (req, res) => {
   }
 };
 
-const opt_for_new_email = async (req, res) => {
+const optForNewEmail = async (req, res) => {
   try {
     const { userId, email } = req.body;
     const user = await usercollection.findById(userId);
@@ -745,7 +770,7 @@ const opt_for_new_email = async (req, res) => {
   }
 };
 
-const edit_user_profile_picture = async (req, res) => {
+const editUserProfilePicture = async (req, res) => {
   try {
     const { userId, image_url } = req.body;
     if (!userId && !image_url) {
@@ -766,9 +791,10 @@ const edit_user_profile_picture = async (req, res) => {
       .json({ message: "Internal Server Error" });
   }
 };
+
 const prescriptionDetails=async(req,res)=>{
   try{
-    console.log("get_prescription_details serverside");
+    console.log("getPrescriptionDetails serverside");
     const slotId = req.query.slotId;
     console.log('slotId:',slotId);
     if (!slotId) {
@@ -782,6 +808,7 @@ const prescriptionDetails=async(req,res)=>{
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
   }
 }
+
 module.exports = {
   registerUser,
   resendOtp,
@@ -797,18 +824,19 @@ module.exports = {
   getSlots,
   addSlots,
   getSlot,
-  check_if_the_slot_available,
-  booking_payment,
+  checkIfTheSlotAvailable,
+  bookingPayment,
   appointmnet_booking,
   userDetails,
-  get_booking_details,
+  getBookingDetails,
   cancelSlot,
-  upcoming_appointment,
+  upcomingAppointment,
   getUpcomingSlot,
-  // add_prescription,
-  get_prescription_details,
-  editUserProfile_name,
-  opt_for_new_email,
-  edit_user_profile_picture,
-  prescriptionDetails
+  // addPrescription,
+  getPrescriptionDetails,
+  editUserProfileName,
+  optForNewEmail,
+  editUserProfilePicture,
+  prescriptionDetails,
+  // refreshToken
 };

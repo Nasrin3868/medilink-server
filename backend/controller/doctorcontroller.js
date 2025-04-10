@@ -109,139 +109,6 @@ const doctorRegistration = async (req, res) => {
   }
 };
 
-// const doctorRegistration = async (req, res) => {
-//   try {
-//     console.log("doctor registration backend");
-//     //validation of input
-//     const requiredFields = [
-//       "firstName",
-//       "lastName",
-//       "email",
-//       "contactno",
-//       "specialization",
-//       "current_working_hospital_address",
-//       "experience",
-//       "consultation_fee",
-//       "identity_proof_type",
-//       "password",
-
-//     ];
-//     const missingFields = requiredFields.filter((field) => !req.body[field]);
-
-//     // Validation of PDF files
-//     const identity_proof = check_the_file_is_in_pdf(
-//       req.files["identity_proof"][0]
-//     );
-//     const doctors_liscence = check_the_file_is_in_pdf(
-//       req.files["doctors_liscence"][0]
-//     );
-//     const qualification_certificate = req.files[
-//       "qualification_certificate"
-//     ].map((file) => check_the_file_is_in_pdf(file));
-//     const experience_certificate = req.files["experience_certificate"].map(
-//       (file) => check_the_file_is_in_pdf(file)
-//     );
-//     const profile_picture=check_the_file_is_an_image(
-//       req.files['profile_picture'][0]
-//     )
-
-//     const allFileChecks = [
-//       identity_proof,
-//       doctors_liscence,
-//       ...qualification_certificate,
-//       ...experience_certificate,
-//       profile_picture
-//     ];
-
-//     try {
-//       await Promise.all(allFileChecks);
-//       console.log("All files are valid PDFs");
-//     } catch (error) {
-//       console.log("One or more files are not PDFs");
-//       return res
-//         .status(HttpStatusCodes.BAD_REQUEST)
-//         .json({ message: "One or more files are not in PDF format" });
-//     }
-
-//     //validation of missing fields
-//     const requiredFieldOfCertificates = [
-//       "identity_proof",
-//       "doctors_liscence",
-//       "qualification_certificate",
-//       "experience_certificate",
-//       'profile_picture'
-//     ];
-//     const missingFieldOfCertificates = requiredFieldOfCertificates.filter(
-//       (field) => !req.files[field]
-//     );
-//     if (missingFields.length > 0 || missingFieldOfCertificates.length > 0) {
-//       return res
-//         .status(HttpStatusCodes.BAD_REQUEST)
-//         .json({
-//           error: `Missing required fields: ${
-//             (missingFields.join(", "), missingFieldOfCertificates.join(", "))
-//           }`,
-//         });
-//     } else {
-//       const {
-//         firstName,
-//         lastName,
-//         email,
-//         contactno,
-//         specialization,
-//         current_working_hospital_address,
-//         experience,
-//         consultation_fee,
-//         identity_proof_type,
-//         password,
-//       } = req.body;
-//       const doctor = await doctorcollection.findOne({ email });
-//       if (doctor != null) {
-//         res.status(HttpStatusCodes.BAD_REQUEST).json({ message: "Email already exists" });
-//       } else {
-//         const hashed_password = await hashedPass(password);
-//         console.log("hased password:", hashed_password);
-//         const otp = await generateMail(email);
-//         const doctordata = await doctorcollection.create({
-//           firstName: firstName,
-//           lastName: lastName,
-//           email: email,
-//           contactno: contactno,
-//           profile_picture:req.files['profile_picture'][0].path,
-//           current_working_hospital_address: current_working_hospital_address,
-//           specialization: specialization,
-//           experience: experience,
-//           consultation_fee: consultation_fee,
-//           identity_proof_type: identity_proof_type,
-//           identity_proof: req.files["identity_proof"][0].path,
-//           doctors_liscence: req.files["doctors_liscence"][0].path,
-//           qualification_certificate: req.files["qualification_certificate"].map(
-//             (file) => file.path
-//           ),
-//           experience_certificate: req.files["experience_certificate"].map(
-//             (file) => file.path
-//           ),
-//           otp: otp,
-//           password: hashed_password,
-//         });
-//         console.log("doctordata befor updating mongodb:", doctordata);
-//         await doctordata.save();
-//         const data = await doctorcollection.findOne({ email: email });
-//         console.log("data:", data);
-//         const kyc = await doctorKycCollection.create({
-//           docId: data._id,
-//         });
-//         console.log("kyc:", kyc);
-//         console.log("updated mongodb");
-//         res.status(HttpStatusCodes.CREATED).json({ message: "Doctor Registration successfull" });
-//       }
-//     }
-//   } catch (error) {
-//     console.log("error due to doctor registration");
-//     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
-//   }
-// };
-
 const getSpecialization = async (req, res) => {
   try {
     console.log("get specialization serverside");
@@ -517,7 +384,7 @@ const editDoctorProfile = async (req, res) => {
   }
 };
 
-const edit_doctor_profile_picture=async(req,res)=>{
+const editDoctorProfilePicture=async(req,res)=>{
   try{
     const {doctorId,image_url}=req.body
     if(!doctorId&&!image_url){
@@ -531,7 +398,7 @@ const edit_doctor_profile_picture=async(req,res)=>{
   }
 }
 
-const opt_for_new_email= async (req, res) => {
+const optForNewEmail= async (req, res) => {
   try {
     const {doctorId,email}=req.body
     const doctor=await doctorcollection.findById(doctorId)
@@ -603,10 +470,9 @@ const slotCreation = async (req, res) => {
   }
 };
 
-const add_all_slots = async (req, res) => {
+const addAllSlots = async (req, res) => {
   try {
-    console.log("add_all_slots serverside");
-
+    console.log("addAllSlots serverside");
     const { doctorId, slots } = req.body; // Use req.body instead of req.query for POST requests
 
     // Validate input
@@ -699,9 +565,9 @@ const RemoveSlot = async (req, res) => {
   }
 };
 
-const get_booking_details = async (req, res) => {
+const getBookingDetails = async (req, res) => {
   try {
-    console.log("get_booking_details serverside");
+    console.log("getBookingDetails serverside");
     const data = req.query;
     console.log(data);
     if (!data) {
@@ -748,7 +614,7 @@ const get_booking_details = async (req, res) => {
   }
 };
 
-const get_bookings_of_doctor= async (req, res) => {
+const getBookingsOfDoctor= async (req, res) => {
   try {
     console.log("get_bookings_of_details serverside");
     const data = req.query;
@@ -791,9 +657,9 @@ const get_bookings_of_doctor= async (req, res) => {
   }
 };
 
-const upcoming_appointment = async (req, res) => {
+const upcomingAppointment = async (req, res) => {
   try {
-    console.log("get upcoming_appointment serverside");
+    console.log("get upcomingAppointment serverside");
     const data = req.query;
     console.log("data:", data);
     
@@ -831,35 +697,6 @@ const upcoming_appointment = async (req, res) => {
       console.log("No upcoming appointments found.");
       res.status(HttpStatusCodes.OK).json({});
     }
-
-    // const bookedSlots = await bookedSlotCollection
-    //   .find({ doctorId: data.doctorId })
-    //   .populate("slotId")
-    //   .populate("userId")
-    //   .populate("doctorId");
-
-    // const currentTime = Date.now();
-
-    // // Define the time window for considering an appointment as "upcoming" (30 minutes in milliseconds)
-    // const upcomingWindow = 30 * 60 * 1000;
-
-    // const upcomingAppointments = bookedSlots
-    //   .filter((slot) => {
-    //     const appointmentTime = new Date(slot.slotId.time).getTime();
-    //     return appointmentTime + upcomingWindow > currentTime;
-    //   })
-    //   .sort((a, b) => new Date(a.slotId.time) - new Date(b.slotId.time));
-
-    // const nextAppointment =
-    //   upcomingAppointments.length > 0 ? upcomingAppointments[0] : null;
-
-    // if (nextAppointment) {
-    //   console.log("Next appointment:", nextAppointment);
-    //   res.status(HttpStatusCodes.OK).json(nextAppointment);
-    // } else {
-    //   console.log("No upcoming appointments found.");
-    //   res.status(HttpStatusCodes.OK).json({});
-    // }
   } catch (error) {
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
   }
@@ -878,7 +715,7 @@ const updateUpcomingSlot = async (req, res) => {
   }
 };
 
-const update_consultationStatus = async (req, res) => {
+const updateConsultationStatus = async (req, res) => {
   try {
     const { appointmentId, status } = req.query;
     console.log("queries:", appointmentId, status);
@@ -893,7 +730,7 @@ const update_consultationStatus = async (req, res) => {
   }
 };
 
-const add_prescription = async (req, res) => {
+const addPrescription = async (req, res) => {
   try {
     const { appointmentId, disease, prescription } = req.query;
     if (!appointmentId || !disease || !prescription) {
@@ -916,7 +753,7 @@ const add_prescription = async (req, res) => {
 
 const prescriptionDetails=async(req,res)=>{
   try{
-    console.log("get_prescription_details serverside");
+    console.log("getPrescriptionDetails serverside");
     const slotId = req.query.slotId;
     console.log('slotId:',slotId);
     if (!slotId) {
@@ -931,9 +768,9 @@ const prescriptionDetails=async(req,res)=>{
   }
 }
 
-const get_doctor_dashboard_details = async (req, res) => {
+const getDoctorDashboardDetails = async (req, res) => {
   try {
-    console.log("get_doctor_dashboard_details server side");
+    console.log("getDoctorDashboardDetails server side");
     const { doctorId } = req.query;
     if(!doctorId){
       res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required content"})
@@ -947,9 +784,9 @@ const get_doctor_dashboard_details = async (req, res) => {
   }
 };
 
-const share_roomId_through_email = async (req, res) => {
+const shareRoomIdThroughEmail = async (req, res) => {
   try {
-    console.log("share_roomId_through_email server side");
+    console.log("shareRoomIdThroughEmail server side");
     const { roomId, slotId } = req.query;
     if(!roomId&&!slotId){
       res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required field"})
@@ -984,20 +821,20 @@ module.exports = {
   getSpecialization,
   getDoctorDetails,
   editDoctorProfile,
-  edit_doctor_profile_picture,
-  opt_for_new_email,
+  editDoctorProfilePicture,
+  optForNewEmail,
   slotCreation,
-  add_all_slots,
+  addAllSlots,
   doctorSlotDetails,
   RemoveSlot,
-  get_bookings_of_doctor,
-  get_booking_details,
-  upcoming_appointment,
+  getBookingsOfDoctor,
+  getBookingDetails,
+  upcomingAppointment,
   updateUpcomingSlot,
-  update_consultationStatus,
-  add_prescription,
-  get_doctor_dashboard_details,
-  share_roomId_through_email,
+  updateConsultationStatus,
+  addPrescription,
+  getDoctorDashboardDetails,
+  shareRoomIdThroughEmail,
   prescriptionDetails
   // accessedChats
 };
