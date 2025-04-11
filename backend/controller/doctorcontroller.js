@@ -259,7 +259,9 @@ const doctorLogin = async (req, res) => {
               const data = {
                 doctorId: doctordata._id,
               };
-              const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
+              const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN,{expiresIn: '15m'});
+              const refreshToken = jwt.sign(data, process.env.JWT_REFRESH_TOKEN, { expiresIn: '7d' });
+
               const accessedUser = {
                 _id: doctordata._id,
                 firstName: doctordata.firstName,

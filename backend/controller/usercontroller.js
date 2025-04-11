@@ -26,6 +26,7 @@ const registerUser = async (req, res) => {
       // console.log(firstName, lastName, email, password);
       // const profile_pic = check_the_file_is_an_image(req.files['profile_pic'][0]);
       const user = await usercollection.findOne({ email });
+      console.log('user is null or not:',user)
       if (user === null) {
         const hashed_password = await hashedPass(password);
         const otp = await generateMail(email);
@@ -151,6 +152,8 @@ const verifyOtp = async (req, res) => {
 const userLogin = async (req, res) => {
   try {
     //validation of input
+    console.log('user login controller');
+    
     const requiredFields = ["email", "password"];
     const missingFields = requiredFields.filter((field) => !req.body[field]);
     if (missingFields.length > 0) {
@@ -160,6 +163,8 @@ const userLogin = async (req, res) => {
     } else {
       const { email, password } = req.body;
       const userdata = await usercollection.findOne({ email: email });
+      console.log('userdata:',userdata);
+      
       if (userdata) {
         const password_match = await comparePass(password, userdata.password);
         if (password_match) {
@@ -180,7 +185,9 @@ const userLogin = async (req, res) => {
             const data = {
               userId: userdata._id,
             };
-            const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN,{ expiresIn: '15m' });
+            console.log('logs data:',data);
+            
+            const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
 
             const accessedUser = {
               _id: userdata._id,
@@ -215,27 +222,35 @@ const userLogin = async (req, res) => {
 };
 
 
-// const refreshToken = async (req, res) => {
-//   const token = req.cookies.refreshToken;
-//   if (!token) return res.status(401).json({ message: 'No refresh token found' });
+const refreshToken = async (req, res) => {
+  const token = req.cookies.refreshToken;
+  console.log('refresh token:',token);
+  if (!token) return res.status(401).json({ message: 'No refresh token found' });
+  
+  try {
+    const payload = jwt.verify(token, process.env.JWT_REFRESH_TOKEN);
+    console.log('payload:',payload);
+    const user = await usercollection.findById(payload.userId);
+    console.log('user:',user);
+    
+    if (!user || user.refreshToken !== token) {
+      return res.status(403).json({ message: 'Invalid refresh token' });
+    }
 
-//   try {
-//     const payload = jwt.verify(token, process.env.JWT_REFRESH_TOKEN);
+    const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_TOKEN, { expiresIn: '15m' });
+    console.log('nreAccessToken:',newAccessToken);
+    
+    res.status(200).json({ accessToken: newAccessToken });
 
-//     const user = await usercollection.findById(payload.userId);
-//     if (!user || user.refreshToken !== token) {
-//       return res.status(403).json({ message: 'Invalid refresh token' });
-//     }
+  } catch (error) {
+    res.status(403).json({ message: 'Refresh token expired or invalid' });
+  }
+};
 
-//     const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_TOKEN, { expiresIn: '15m' });
-
-//     res.status(200).json({ accessToken: newAccessToken });
-
-//   } catch (error) {
-//     res.status(403).json({ message: 'Refresh token expired or invalid' });
-//   }
-// };
-
+const logOut=async(req,res)=>{
+  res.clearCookie('refreshToken');
+  res.status(200).json({ message: "Logged out successfully" });
+}
 
 //verify email for forget password
 const verifyEmail = async (req, res) => {
@@ -307,7 +322,7 @@ const getuserDetails = async (req, res, next) => {
     const data = req.query;
     // console.log(data.userId);
     const userdata = await usercollection.findById(data.userId);
-    // console.log("userdata:", userdata);
+    console.log("userdata:", userdata);
     res.status(HttpStatusCodes.OK).json(userdata);
   } catch (error) {
     // console.log(error.error);
@@ -585,7 +600,7 @@ const getBookingDetails = async (req, res) => {
 
 const cancelSlot = async (req, res) => {
   try {
-    console.log("get getBookingDetails serverside");
+    console.log("get canceled slot serverside");
     const data = req.query;
     console.log(data, data.slotId);
     const slot = await slotCollection.findByIdAndUpdate(data.slotId, {
@@ -838,5 +853,6 @@ module.exports = {
   optForNewEmail,
   editUserProfilePicture,
   prescriptionDetails,
-  // refreshToken
+  refreshToken,
+  logOut
 };

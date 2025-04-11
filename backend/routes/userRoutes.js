@@ -10,6 +10,7 @@ router.post("/verifyOtp", usercontroller.verifyOtp);
 router.post("/verifyEmail", usercontroller.verifyEmail);
 router.post("/updatePassword", usercontroller.updatePassword);
 router.post("/login", usercontroller.userLogin);
+
 router.use(checkUserBlocked, userAuth);
 router.get("/getuserDetails", usercontroller.getuserDetails);
 
@@ -53,5 +54,6 @@ router.post(
   "/editUserProfilePicture",
   usercontroller.editUserProfilePicture
 );
+// router.post("/logout",usercontroller.logOut)
 
 module.exports = router;

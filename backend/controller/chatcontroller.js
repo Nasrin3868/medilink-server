@@ -86,7 +86,7 @@ const userFetchAllChat = async (req, res) => {
         });
       }
     }
-    // console.log('data after fetching:',data);
+    console.log('data after fetching:',data);
     res.status(HttpStatusCodes.OK).json(data);
   } catch (error) {
     console.log("userFetchChat in userside error");
