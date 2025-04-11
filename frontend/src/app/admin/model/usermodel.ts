@@ -4,5 +4,8 @@ export interface userdata{
     lastName:string,
     email:string,
     is_verified:string,
-    blocked:string                                            
+    blocked:string,
+    refreshToken?:{
+        type: String,
+    }                                            
 }

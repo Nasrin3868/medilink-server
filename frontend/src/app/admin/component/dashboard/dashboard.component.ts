@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit{
   get_Slot_Details(){
     console.log('  client side');
     const docId=localStorage.getItem('doctorId')
-    this._adminService.get_admin_dashboard_details({doctorId:docId}).subscribe({
+    this._adminService.getAdminDashboardDetails({doctorId:docId}).subscribe({
       next:(Response)=>{
         this.booked_Slots=Response.slotDetails
         this.total_users=Response.user_count

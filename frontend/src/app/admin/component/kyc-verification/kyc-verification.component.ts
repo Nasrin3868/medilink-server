@@ -77,7 +77,7 @@ export class KycVerificationComponent implements OnInit{
   //   this._router.navigate(['/admin_home/pdf_viewer'], { queryParams: { url: encodeURIComponent(pdfUrl) } });
   //   // console.log('data to download:',name);
   //   // const data={name:name,index:index,docId:this.doctor_kyc_details.docId._id}
-  //   // this._adminService.download_kyc_documents(data).subscribe({
+  //   // this._adminService.downloadKycDocuments(data).subscribe({
   //   //   next:(Response)=>{
   //   //     this._messagService.showSuccessToastr(Response.message)
   //   //   },
@@ -100,7 +100,7 @@ export class KycVerificationComponent implements OnInit{
       curr_work_hosp: this.kyc_verification_form.value.currently_working_hospital ,
     }
 
-    this._adminService.submit_kyc_details(data).subscribe({
+    this._adminService.submitKycDetails(data).subscribe({
       next:(Response)=>{
         if(Response.message==='KYC verification done'){
           this._messagService.showSuccessToastr(Response.message)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserserviceService } from 'src/app/services/userservice.service';
+import { UserModel } from 'src/app/store/model/commonModel';
 
 @Component({
   selector: 'app-wallet',
@@ -11,7 +12,7 @@ export class WalletComponent implements OnInit{
     private _userService:UserserviceService,
   ){}
 
-  wallet!:any
+  wallet!:Number|undefined
 
   ngOnInit(): void {
     this._userService.getuserDetails({userId:localStorage.getItem('userId')}).subscribe({

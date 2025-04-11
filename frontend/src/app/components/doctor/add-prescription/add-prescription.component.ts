@@ -48,7 +48,7 @@ export class AddPrescriptionComponent implements OnInit{
         disease:this.prescriptionForm.value.disease,
         prescription:this.prescriptionForm.value.prescription,
       }
-      this._doctorService.add_prescription(data).subscribe({
+      this._doctorService.addPrescription(data).subscribe({
         next:(response)=>{
           this._messageService.showSuccessToastr(response.message)
           this._router.navigate(['/doctor/doctor_profile'])

@@ -34,7 +34,7 @@ export class DoctorPaymentDetailsComponent implements OnInit{
 
   getAppointmentDetails(){
     // console.log('getAppointmentDetails func called origina');
-    this._doctorService.get_booking_details_of_doctor({doctorId:localStorage.getItem('doctorId')}).subscribe({
+    this._doctorService.getBookingDetails_of_doctor({doctorId:localStorage.getItem('doctorId')}).subscribe({
       next:(Response)=>{
         this.payments=Response
         this.payments_to_display=this.payments

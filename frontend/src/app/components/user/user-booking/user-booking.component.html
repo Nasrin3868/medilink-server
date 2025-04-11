@@ -41,8 +41,8 @@
           <td class="px-6 py-4 w-32">{{i+1}}</td>
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId._id}}</td>
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.userId.firstName+' '+payment.userId.lastName}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'dd/MM/YY'}}</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment.slotId.time | date:'shortTime'}}</td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment?.slotId?.time | date:'dd/MM/YY'}}</td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{payment?.slotId?.time | date:'shortTime'}}</td>
           <td class="px-6 py-4">
             <div *ngIf="payment.consultation_status === 'pending'">
               <span class="text-center font-medium text-red-600 dark:text-orange-500">{{payment.consultation_status}}</span>

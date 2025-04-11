@@ -40,7 +40,7 @@
            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                <tr>
                    <th scope="col" class="px-6 py-4 w-32">Sl No</th>
-                   <th scope="col" class="px-6 py-4">Slot ID</th>
+                   <!-- <th scope="col" class="px-6 py-4">Slot ID</th> -->
                    <th scope="col" class="px-6 py-4">User Name</th>
                    <th scope="col" class="px-6 py-4">Doctor Name</th>
                    <th scope="col" class="px-6 py-4">Slot Date</th>
@@ -55,9 +55,9 @@
                 <tr *ngFor="let appointment of appointments_to_display; let i=index"
                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                    <td class="px-6 py-4 w-32">{{i+1}}</td>
-                   <th scope="row" class=" px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   <!-- <th scope="row" class=" px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                        {{appointment.slotId._id}}
-                   </th>
+                   </th> -->
                    <th scope="row" class=" px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                        {{appointment.userId.firstName+' '+appointment.userId.lastName}}
                    </th>

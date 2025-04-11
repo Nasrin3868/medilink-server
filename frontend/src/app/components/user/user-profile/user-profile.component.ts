@@ -18,8 +18,7 @@ export class UserProfileComponent implements OnInit{
   userId!:string|null;
   email_edit:boolean=false
   name_edit:boolean=false
-  url: any = null;
-  imagePath!:any
+  url: string|null = null;
   profile_pic_event!:Event;
 
   constructor(
@@ -41,12 +40,16 @@ export class UserProfileComponent implements OnInit{
   previewUrl: string | null = null;
 
   onFileSelected(event: any): void {
+    console.log('type of event in user-profile component:',event);
+    
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
       this.uploadImage()
       const reader = new FileReader();
       reader.onload = (e: any) => {
+        console.log('type of e: in user-profile component:',typeof(e));
+        
         this.previewUrl = e.target.result;
       };
       reader.readAsDataURL(file);
@@ -72,7 +75,7 @@ export class UserProfileComponent implements OnInit{
       userId:this.userId,
       image_url:this.url
     }
-    this._userService.edit_user_profile_picture(data).subscribe({
+    this._userService.editUserProfilePicture(data).subscribe({
       next:(Response)=>{
         this._showMessage.showSuccessToastr(Response.message)
       },error:(error)=>{
@@ -145,7 +148,7 @@ export class UserProfileComponent implements OnInit{
         firstName: this.name_form.value.firstName,
         lastName: this.name_form.value.lastName
       };
-      this._userService.editUserProfile_name(data).subscribe({
+      this._userService.editUserProfileName(data).subscribe({
         next: (response) => {
           console.log('Success response:', response);
           this._showMessage.showSuccessToastr(response.message);
@@ -177,7 +180,7 @@ export class UserProfileComponent implements OnInit{
         userId: this.userId,
         email: this.email_form.value.email
       };
-      this._userService.opt_for_new_email(data).subscribe({
+      this._userService.optForNewEmail(data).subscribe({
         next:(Response)=>{
           this._showMessage.showSuccessToastr(Response.message)
           if(data.email){

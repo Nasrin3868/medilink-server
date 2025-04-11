@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { doctorData } from 'src/app/admin/model/docotrModel';
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { UserserviceService } from 'src/app/services/userservice.service';
+import { SlotModel } from 'src/app/store/model/commonModel';
 
 @Component({
   selector: 'app-userdoctor-profile',
@@ -12,17 +13,17 @@ import { UserserviceService } from 'src/app/services/userservice.service';
 })
 export class UserdoctorProfileComponent implements OnInit {
 
-  doctorId!: any;
+  doctorId!: string|null;
   doctor!: doctorData;
-  slots: any[] = [];
+  slots: SlotModel[] = [];
   date!: Date;
   minDate!: Date;
   maxDate!: Date;
-  slots_for_display: any[] = [];
-  userId!: any
+  slots_for_display: SlotModel[] = [];
+  userId!: string|null
   selectedTab: string = 'about';
   showModal: boolean = false;
-  selectedSlot: any;
+  selectedSlot!: SlotModel;
 
   constructor(
     private _router: Router,
@@ -36,42 +37,19 @@ export class UserdoctorProfileComponent implements OnInit {
     this.getdoctorDetails(this.doctorId);
     this.getSlots(this.doctorId);
     this.userId = localStorage.getItem('userId')
-
-    //observable example
-
-    // let observable=new Observable((observer=>{
-    //   observer.next(Math.random()*100)
-    // }))
-    // observable.subscribe(result=>{
-    //   console.log(result);
-    // })
-    // observable.subscribe(result=>{
-    //   console.log(result);
-    // })
-
-    // subject example
-
-    // let subject=new Subject()
-    // subject.subscribe((result=>{
-    //   console.log(result);
-    // }))
-    // subject.subscribe((result=>{
-    //   console.log(result);
-    // }))
-    // subject.next(Math.random()*100)
   }
 
 
-  getSlotsForDisplay(date: any) {
+  getSlotsForDisplay(date: Date) {
     const selectedDate = new Date(date.setHours(0, 0, 0, 0));
-    this.slots_for_display = this.slots.filter((slot: any) => {
+    this.slots_for_display = this.slots.filter((slot: SlotModel) => {
       const DateinSlot = new Date(slot.time);
       const midnightDateinSlot = new Date(DateinSlot.setHours(0, 0, 0, 0));
       return midnightDateinSlot.getTime() === selectedDate.getTime();
     });
   }
 
-  getdoctorDetails(data: any) {
+  getdoctorDetails(data: string|null) {
     this._userService.getdoctorDetails({ _id: data }).subscribe({
       next: (Response) => {
         this.doctor = Response;
@@ -82,7 +60,7 @@ export class UserdoctorProfileComponent implements OnInit {
     });
   }
 
-  getSlots(docId: any) {
+  getSlots(docId: string|null) {
     this._userService.getSlots({ _id: docId }).subscribe({
       next: (Response) => {
         this.slots = Response;
@@ -99,8 +77,11 @@ export class UserdoctorProfileComponent implements OnInit {
     });
   }
 
-  confirmSlot(slot: any) {
+  confirmSlot(slot: SlotModel) {
     this.selectedSlot = slot;
+    console.log('this.selectedSlot:',this.selectedSlot);
+    console.log('type of selectedSlot:',typeof(this.selectedSlot));
+    
     this.showModal = true;
   }
 
@@ -114,13 +95,13 @@ export class UserdoctorProfileComponent implements OnInit {
     this.showModal=false
   }
 
-  slotBook(id: any) {
-    this._userService.addSlot({ _id: id, docId: this.doctorId, userId: this.userId }).subscribe({
-      next: (Response) => {
-        this._messageService.showSuccessToastr('booking Confirmed.')
-      }
-    })
-  }
+  // slotBook(id: any) {
+  //   this._userService.addSlot({ _id: id, docId: this.doctorId, userId: this.userId }).subscribe({
+  //     next: (Response) => {
+  //       this._messageService.showSuccessToastr('booking Confirmed.')
+  //     }
+  //   })
+  // }
   upcomingSlotDetails(){
     this._router.navigate(['/user/user_profile/user_next_appointment'])
   }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpResponseBase } from '@angular/common/http';
 import { debounceTime } from 'rxjs';
+import { appointmentHistory } from '../../model/commonModel';
 
 @Component({
   selector: 'app-appointment-history',
@@ -13,8 +14,8 @@ import { debounceTime } from 'rxjs';
 })
 export class AppointmentHistoryComponent implements OnInit{
 
-  appointments!:any
-  appointments_to_display!:any
+  appointments!:appointmentHistory[]
+  appointments_to_display!:appointmentHistory[]
   constructor(
     private _adminService:AdminServiceService,
     private _messageService:MessageToasterService,
@@ -34,6 +35,7 @@ export class AppointmentHistoryComponent implements OnInit{
   getAppointmentDetails(){
     this._adminService.getAppointment().subscribe({
       next:(Response)=>{
+        console.log('response:',Response)
         this.appointments=Response
         this.appointments_to_display=this.appointments
       },
@@ -57,11 +59,11 @@ export class AppointmentHistoryComponent implements OnInit{
   filterDoctors(searchTerm: string|null) {
     if (searchTerm) {
       const regex = new RegExp(searchTerm, 'i');
-      this.appointments_to_display = this.appointments_to_display.filter((appointment:any) =>
+      this.appointments_to_display = this.appointments_to_display.filter((appointment:appointmentHistory) =>
         regex.test(appointment.userId.firstName) ||
         regex.test(appointment.userId.lastName)||
-        regex.test(appointment.doctorId.firstName)||
-        regex.test(appointment.doctorId.lastName)||
+        regex.test(appointment.slotId.docId.firstName)||
+        regex.test(appointment.slotId.docId.lastName)||
         regex.test(appointment.consultation_status)
       );
     } else {

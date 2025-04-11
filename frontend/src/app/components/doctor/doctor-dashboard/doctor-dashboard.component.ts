@@ -37,7 +37,7 @@ export class DoctorDashboardComponent implements OnInit {
   get_Slot_Details(){
     // console.log('  client side');
     const docId=localStorage.getItem('doctorId')
-    this._doctorService.get_doctor_dashboard_details({doctorId:docId}).subscribe({
+    this._doctorService.getDoctorDashboardDetails({doctorId:docId}).subscribe({
       next:(Response)=>{
         this.booked_Slots=Response
         this.get_dashboard_display_contents()

@@ -1,14 +1,14 @@
 <div class=" p-8">
     <!-- Next Appointment Section -->
     <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-        <ng-container *ngIf="upcoming_appointment===0; else next_slot">
+        <ng-container *ngIf="upcomingAppointment===0; else next_slot">
             <h2>No Appointmnet</h2>
         </ng-container>
         <ng-template #next_slot>
             <h2 class="text-2xl font-bold mb-4">Next Appointment</h2>
-            <p class="text-lg"><strong>User Name:</strong> {{upcoming_appointment.userId.firstName+' '+upcoming_appointment.userId.lastName}}</p>
-            <p class="text-lg"><strong>Date:</strong> {{upcoming_appointment.slotId.time|date:'dd/MM/YY'}}</p>
-            <p class="text-lg"><strong>Time:</strong> {{upcoming_appointment.slotId.time|date:'shortTime'}}</p>
+            <p class="text-lg"><strong>User Name:</strong> {{upcomingAppointment.userId.firstName+' '+upcomingAppointment.userId.lastName}}</p>
+            <p class="text-lg"><strong>Date:</strong> {{upcomingAppointment.slotId.time|date:'dd/MM/YY'}}</p>
+            <p class="text-lg"><strong>Time:</strong> {{upcomingAppointment.slotId.time|date:'shortTime'}}</p>
         </ng-template>
     </div>
 

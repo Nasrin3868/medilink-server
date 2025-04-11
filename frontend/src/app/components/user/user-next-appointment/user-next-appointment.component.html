@@ -1,7 +1,7 @@
 <div class="h-screen p-8">
     <!-- Next Appointment Section -->
     <div class="border bg-white p-6 rounded-lg shadow-lg mb-6">
-        <ng-container *ngIf="slotDetails===0; else next_slot">
+        <ng-container *ngIf="slotDetails.length===0; else next_slot">
             <h2>No Appointmnet</h2>
         </ng-container>
         <ng-template #next_slot>

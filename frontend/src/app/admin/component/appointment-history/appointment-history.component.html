@@ -83,10 +83,10 @@
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <div *ngIf="appointment.payment_status==='true'">
+                    <div *ngIf="appointment.payment_status===true">
                         <th scope="row" class="text-center font-medium text-green-600 dark:text-green-500">Done</th>
                     </div>
-                    <div *ngIf="appointment.payment_status==='false'">
+                    <div *ngIf="appointment.payment_status===false">
                         <th scope="row" class="text-center font-medium text-green-600 dark:text-red-500">Not Done</th>
                     </div>
                 </td>

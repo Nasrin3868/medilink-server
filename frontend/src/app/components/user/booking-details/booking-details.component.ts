@@ -5,6 +5,7 @@ import { MessageToasterService } from "src/app/services/message-toaster.service"
 import { UserserviceService } from "src/app/services/userservice.service";
 import { PrescriptionModalComponent } from "../../shared/prescription-modal/prescription-modal.component";
 import { DoctorService } from "src/app/services/doctor.service";
+import { BookedSlotModel, BookedSlotModelPopulate } from "src/app/store/model/commonModel";
 
 @Component({
   selector: 'app-booking-details',
@@ -13,8 +14,8 @@ import { DoctorService } from "src/app/services/doctor.service";
 })
 export class BookingDetailsComponent implements OnInit{
 
-  userId!:any
-  appointments!:any
+  userId!:string
+  appointments!:BookedSlotModelPopulate[]
   appointments_to_display!:any
   showModal=false
   selectedPrescription = {
@@ -39,7 +40,7 @@ export class BookingDetailsComponent implements OnInit{
 
   getAppointmentDetails(){
     const userId=localStorage.getItem('userId')
-    this._userService.get_booking_details_of_user({userId:userId}).subscribe({
+    this._userService.getBookingDetails_of_user({userId:userId}).subscribe({
       next:(Response)=>{
         this.appointments=Response
         this.appointments_to_display=this.appointments
@@ -50,28 +51,6 @@ export class BookingDetailsComponent implements OnInit{
     })
   }
 
-  // openPrescriptionModal(prescription_id: string) {
-  //   console.log('openPrescriptionModal calls');
-  //   const modal = document.querySelector('app-prescription-modal') as unknown as PrescriptionModalComponent;
-  //   if (modal) {
-  //     modal.prescription = prescription_id;
-  //     modal.openModal();
-  //   }
-  // }
-  // openPrescriptionModal(prescription_id: string | null) {
-  //   prescription_id="66b43fa6725d8689a520191f"
-  //   console.log('Opening prescription modal with ID:', prescription_id);
-  //   const modal = document.querySelector('app-prescription-modal') as unknown as PrescriptionModalComponent;
-  //   if (modal) {
-  //     modal.prescription_id = prescription_id;
-  //     if (prescription_id) {
-  //       modal.openModal
-  //     } else {
-  //       console.error('Invalid prescription ID:', prescription_id);
-  //     }
-  //   }
-  // }
-  
   searchForm=this._formBuilder.group({
     searchData:['',Validators.required]
   })
@@ -87,7 +66,7 @@ export class BookingDetailsComponent implements OnInit{
   filterDoctors(searchTerm: string|null) {
     if (searchTerm) {
       const regex = new RegExp(searchTerm, 'i');
-      this.appointments_to_display = this.appointments_to_display.filter((appointment:any) =>
+      this.appointments_to_display = this.appointments_to_display.filter((appointment:BookedSlotModelPopulate) =>
         regex.test(appointment.userId.firstName) ||
         regex.test(appointment.userId.lastName)||
         regex.test(appointment.doctorId.firstName)||
@@ -129,7 +108,7 @@ export class BookingDetailsComponent implements OnInit{
     }
   }
 
-  changeStatus(data: any) {
+  changeStatus(data: BookedSlotModelPopulate) {
     const slotId = data.slotId._id;
     this._userService.cancelSlot({ slotId: slotId }).subscribe({
       next: (Response) => {
@@ -143,7 +122,7 @@ export class BookingDetailsComponent implements OnInit{
     });
   }
   
-  updateInTable(slotId: any) {
+  updateInTable(slotId: string) {
     this.appointments_to_display = this.appointments_to_display.map((item: { slotId: any; consultation_status: string; }) => {
       if (item.slotId._id === slotId) {
         item.consultation_status = 'cancelled';
@@ -152,7 +131,7 @@ export class BookingDetailsComponent implements OnInit{
     });
     this._cdr.detectChanges();
   }
-  openPrescriptionModal(payment: any) {
+  openPrescriptionModal(payment: string) {
     console.log('slot details:',payment);
     
     this._userService.getPrescriptionDetails({slotId:payment}).subscribe({

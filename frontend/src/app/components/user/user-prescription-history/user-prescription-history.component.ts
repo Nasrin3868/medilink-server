@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { UserserviceService } from 'src/app/services/userservice.service';
+import { PrescriptionModel } from 'src/app/store/model/commonModel';
 
 @Component({
   selector: 'app-user-prescription-history',
@@ -9,8 +10,8 @@ import { UserserviceService } from 'src/app/services/userservice.service';
 })
 export class UserPrescriptionHistoryComponent implements OnInit{
 
-  prescription!:any
-  prescription_to_display!:any
+  prescription!:PrescriptionModel[]
+  prescription_to_display!:PrescriptionModel[]
   constructor(
     private _messageService:MessageToasterService,
     private _userService:UserserviceService
@@ -25,9 +26,5 @@ export class UserPrescriptionHistoryComponent implements OnInit{
           this._messageService.showErrorToastr(error.error.message)
         }
       })
-  }
-
-  showDetails(prescription: any) {
-
   }
 }

@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SuccessPaymentComponent implements OnInit{
 
-  doctorId!:any
+  doctorId!:string|null
 
   constructor(
     private _router:Router,

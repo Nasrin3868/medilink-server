@@ -97,7 +97,7 @@ export class DoctorProfileDataComponent implements OnInit{
       doctorId:this.docId,
       image_url:this.url
     }
-    this._doctorService.edit_doctor_profile_picture(data).subscribe({
+    this._doctorService.editDoctorProfilePicture(data).subscribe({
       next:(Response)=>{
         this._showMessage.showSuccessToastr(Response.message)
       },error:(error)=>{
@@ -188,7 +188,7 @@ export class DoctorProfileDataComponent implements OnInit{
         doctorId: this.docId,
         email: this.email_form.value.email
       };
-      this._doctorService.opt_for_new_email(data).subscribe({
+      this._doctorService.optForNewEmail(data).subscribe({
         next:(Response)=>{
           this._showMessage.showSuccessToastr(Response.message)
           if(data.email){

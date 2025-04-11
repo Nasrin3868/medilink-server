@@ -91,7 +91,7 @@ const doctorRoutes: Routes = [
   { path: 'doctorHome', component: DoctorHomeComponent,canActivate:[doctorLoggedInGuard] },
   { path: 'doctor_chat', component: DoctorChatComponent,canActivate:[doctorLoggedInGuard] },
   { path: 'doctor_video_call_room/:id/:appointmentId', component: DoctorVideoCallRoomComponent,canActivate:[doctorLoggedInGuard] },
-  { path: 'add_prescription/:appointmentId', component: AddPrescriptionComponent,canActivate:[doctorLoggedInGuard] },
+  { path: 'addPrescription/:appointmentId', component: AddPrescriptionComponent,canActivate:[doctorLoggedInGuard] },
   { path: 'bookings', component: BookingsComponent,canActivate:[doctorLoggedInGuard] },
   { path: '**', component: ErrorPageComponent }
 ]

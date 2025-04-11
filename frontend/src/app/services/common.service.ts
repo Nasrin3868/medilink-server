@@ -1,12 +1,16 @@
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  constructor() { }
+  constructor(private _http: HttpClient) { }
+  private _api: String =environment.api
+
 
 
   // get the email from local storage for the resend otp action
@@ -47,6 +51,5 @@ export class CommonService {
   getAdminTokenFromLocalStorage():string{
     return localStorage.getItem('adminToken') as string
   }
-  
 
 }

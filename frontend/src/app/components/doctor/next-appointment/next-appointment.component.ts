@@ -14,7 +14,7 @@ export class NextAppointmentComponent implements OnInit{
 
   disable:boolean=false
   roomId:string|null|undefined=''
-  upcoming_appointment!:any
+  upcomingAppointment!:any
 
   constructor(
     private _router:Router,
@@ -29,9 +29,9 @@ export class NextAppointmentComponent implements OnInit{
       this._doctorService.upcomingAppointment({doctorId:doctorId}).subscribe({
         next:(Response)=>{
           if(Object.entries(Response).length === 0){
-            this.upcoming_appointment=0
+            this.upcomingAppointment=0
           }else{
-            this.upcoming_appointment=Response
+            this.upcomingAppointment=Response
             this.checkAppointmentTime()
           }
           console.log(Response)
@@ -41,8 +41,8 @@ export class NextAppointmentComponent implements OnInit{
       })
   }
   checkAppointmentTime() {
-    if (this.upcoming_appointment && this.upcoming_appointment.dateOfBooking) {
-      const appointmentDate = new Date(this.upcoming_appointment.dateOfBooking).getTime();
+    if (this.upcomingAppointment && this.upcomingAppointment.dateOfBooking) {
+      const appointmentDate = new Date(this.upcomingAppointment.dateOfBooking).getTime();
       const windowStart = appointmentDate;
       const windowEnd = appointmentDate + 30 * 60 * 1000; // 30 minutes in milliseconds
       const currentDate = new Date().getTime();
@@ -83,7 +83,7 @@ export class NextAppointmentComponent implements OnInit{
   }
 
   enterRoom(){
-    this._doctorService.share_roomId_through_email({roomId:this.roomId,slotId:this.upcoming_appointment._id}).subscribe({
+    this._doctorService.shareRoomIdThroughEmail({roomId:this.roomId,slotId:this.upcomingAppointment._id}).subscribe({
       next:(Response)=>{
         this._messageService.showSuccessToastr(Response.message)
       },error:(error)=>{
@@ -91,7 +91,7 @@ export class NextAppointmentComponent implements OnInit{
       }
     })
     if(this.roomId){
-      this._router.navigate(['/doctor/doctor_video_call_room',this.roomId,this.upcoming_appointment._id])
+      this._router.navigate(['/doctor/doctor_video_call_room',this.roomId,this.upcomingAppointment._id])
     }else{
       this._messageService.showErrorToastr('enter the roomId')
     }

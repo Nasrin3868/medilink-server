@@ -56,11 +56,11 @@ export class DoctorVideoCallRoomComponent implements OnInit,AfterViewInit{
 
   consultationStatus(){
     const status=this.consultation_status
-    this._doctorService.update_consultationStatus({appointmentId:this.appointmentId,status:status}).subscribe({
+    this._doctorService.updateConsultationStatus({appointmentId:this.appointmentId,status:status}).subscribe({
       next:(Response)=>{
         this._messageService.showSuccessToastr('consultation status updated')
         if(status==='consulted'){
-          this._router.navigate(['/doctor/add_prescription',this.appointmentId])
+          this._router.navigate(['/doctor/addPrescription',this.appointmentId])
         }else{
           this._router.navigate(['/doctor/doctor_profile/next_appointment'])
         }

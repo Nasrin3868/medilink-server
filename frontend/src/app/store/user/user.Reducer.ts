@@ -3,6 +3,9 @@ import { user_State, userstate } from "./user.state";
 import { loginUserSuccess, logoutUser,  } from "./user.Action";
 
 export function userReducer(state:any,action:any){
+    console.log('state,action:',state,action);
+    console.log('typeofstate,action:',typeof(state),typeof(action));
+    
     return _userReducer(state,action)
 }
 

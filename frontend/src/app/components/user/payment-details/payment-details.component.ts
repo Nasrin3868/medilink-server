@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { UserserviceService } from 'src/app/services/userservice.service';
+import { BookedSlotModel, BookedSlotModelPopulate } from 'src/app/store/model/commonModel';
 
 @Component({
   selector: 'app-payment-details',
@@ -11,9 +12,9 @@ import { UserserviceService } from 'src/app/services/userservice.service';
 })
 export class PaymentDetailsComponent {
   
-  payments!:any
-  payments_to_display!:any
-  userId!:any
+  payments!:BookedSlotModelPopulate[]
+  payments_to_display!:BookedSlotModelPopulate[]
+  userId!:string
   
   constructor(
     private _messageService:MessageToasterService,
@@ -27,12 +28,12 @@ export class PaymentDetailsComponent {
     this.paymentForm.get('status')?.valueChanges.subscribe(value => {
       if(value) this.paymentFormSubmit()
     });
-    this.userId=localStorage.getItem('userId')
+    this.userId=localStorage.getItem('userId')||''
     this.setupSearchSubscription();
   }
 
   getAppointmentDetails(){
-    this._userService.get_booking_details_of_user({userId:localStorage.getItem('userId')}).subscribe({
+    this._userService.getBookingDetails_of_user({userId:localStorage.getItem('userId')}).subscribe({
       next:(Response)=>{
         this.payments=Response
         this.payments_to_display=this.payments
@@ -58,7 +59,7 @@ export class PaymentDetailsComponent {
   filterDoctors(searchTerm: string|null) {
     if (searchTerm) {
       const regex = new RegExp(searchTerm, 'i');
-      this.payments_to_display = this.payments_to_display.filter((appointment:any) =>
+      this.payments_to_display = this.payments_to_display.filter((appointment:BookedSlotModelPopulate) =>
         regex.test(appointment.doctorId.firstName)||
         regex.test(appointment.slotId.bookingAmount)||
         regex.test(appointment.payment_method)

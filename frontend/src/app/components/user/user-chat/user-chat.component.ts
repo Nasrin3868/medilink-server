@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 // import { ChatService} from 'src/app/services/chat.service';
-import {ChatAccessData} from 'src/app/store/model/usermodel'
+import {ChatAccessData, userInfo} from 'src/app/store/model/usermodel'
 import { MessageToasterService } from 'src/app/services/message-toaster.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { io } from 'socket.io-client';
@@ -10,6 +10,7 @@ import { debounceTime, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChatService } from 'src/app/services/chat.service';
 import { UserserviceService } from 'src/app/services/userservice.service';
+import { UserModel } from 'src/app/store/model/commonModel';
 
 @Component({
   selector: 'app-user-chat',
@@ -22,12 +23,12 @@ export class UserChatComponent implements OnInit{
   socket!:any;
 
   showScrollUpButton = false;
-  doctorId!:any
-  userId!:any
+  doctorId!:string
+  userId!:string
   chats!:any
   messages!:any
-  chatId!:any
-  userDetails!:any
+  chatId!:string
+  userDetails!:userInfo
 
   //specific chats
   selectedDoctor!: any;
@@ -54,10 +55,14 @@ export class UserChatComponent implements OnInit{
 
   
   ngOnInit() {
-    this.userId=localStorage.getItem('userId')
+    this.userId=localStorage.getItem('userId')||''
     this._userService.getuserDetails({userId:this.userId}).subscribe({
-      next:(response)=>{
-        this.userDetails=response
+      next:(Response)=>{
+        console.log('user details user-chat:',Response);
+        
+        this.userDetails=Response
+        // console.log('userinfo:',this.userDetails.userInfo);
+        
       },
       error:(error)=>{
         this._showMessage.showErrorToastr('Error in fetching user data')
@@ -103,6 +108,7 @@ export class UserChatComponent implements OnInit{
     const ChatAccessData :ChatAccessData={userId:this.userId}
     this._chatService.userFetchAllChat(ChatAccessData).subscribe({
       next:(Response)=>{
+        
         this.chats=Response
         this.chats_to_display=Response
       },

@@ -102,29 +102,29 @@ export class AdminServiceService {
   get_doctor_kyc_details_from_id(data:any):Observable<doctorData>{
     console.log('doc detail Service');
     const httpParams=new HttpParams({fromObject:data})
-    return this._http.get<doctorData>(`${this.api}/admin/get_kyc_details_of_doctor`,{params:httpParams})
+    return this._http.get<doctorData>(`${this.api}/admin/getKycDetailsOfDoctor`,{params:httpParams})
   }
 
-  submit_kyc_details(data:any):Observable<HttpResponseModel>{
+  submitKycDetails(data:any):Observable<HttpResponseModel>{
     console.log('doc detail Service');
-    return this._http.post<HttpResponseModel>(`${this.api}/admin/submit_kyc_details`,data)
+    return this._http.post<HttpResponseModel>(`${this.api}/admin/submitKycDetails`,data)
   }
 
-  download_kyc_documents(data:any):Observable<HttpResponseModel>{
-    console.log('download_kyc_documents Service');
+  downloadKycDocuments(data:any):Observable<HttpResponseModel>{
+    console.log('downloadKycDocuments Service');
     const httpParams=new HttpParams({fromObject:data})
-    return this._http.get<HttpResponseModel>(`${this.api}/admin/download_kyc_documents`,{params:httpParams})
+    return this._http.get<HttpResponseModel>(`${this.api}/admin/downloadKycDocuments`,{params:httpParams})
   }
 
   //getAppointment
   getAppointment():Observable<any>{
-    return this._http.get<any>(`${this.api}/admin/get_appointment_details`)
+    return this._http.get<any>(`${this.api}/admin/getAppointmentDetails`)
   }
 
-  get_admin_dashboard_details(data:any):Observable<any>{
+  getAdminDashboardDetails(data:any):Observable<any>{
     console.log('service call of get_booking_details_of_doctor');
     const httpParams=new HttpParams({fromObject:data})
-    return this._http.get<any>(`${this.api}/admin/get_admin_dashboard_details`,{params:httpParams})
+    return this._http.get<any>(`${this.api}/admin/getAdminDashboardDetails`,{params:httpParams})
   }
 
 }

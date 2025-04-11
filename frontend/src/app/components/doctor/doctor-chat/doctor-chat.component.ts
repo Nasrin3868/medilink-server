@@ -111,7 +111,7 @@ export class DoctorChatComponent implements OnInit{
 
   //fetching accessible chats
   fetch_all_chats(){
-    this._chatService.doctor_accessed_chats({doctorId:this.doctorId}).subscribe({
+    this._chatService.doctorAccessedChats({doctorId:this.doctorId}).subscribe({
       next:(Response)=>{
         console.log('fetched chats:',Response);
         this.chats=Response

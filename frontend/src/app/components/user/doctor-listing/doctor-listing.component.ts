@@ -85,7 +85,7 @@ export class DoctorListingComponent implements OnInit{
     })
   }
 
-  specializedDoctors(data:any){
+  specializedDoctors(data:string){
     if(data==='all'){
       this.displayed_doctor=this.doctors
     }else{
@@ -95,7 +95,7 @@ export class DoctorListingComponent implements OnInit{
     }
   }
 
-  doctorProfile(data:any){
+  doctorProfile(data:string|undefined){
     this._router.navigate(['/user/doctor_profile',data])
   }
 

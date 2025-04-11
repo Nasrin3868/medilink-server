@@ -60,18 +60,18 @@ export class UserserviceService {
     return this._http.get<userInfo>(`${this._api}/user/getuserDetails`, { params: httpParams })
   }
 
-  edit_user_profile_picture(data:Object): Observable<HttpResponseModel>{
-    return this._http.post<HttpResponseModel>(`${this._api}/user/edit_user_profile_picture`, data)
+  editUserProfilePicture(data:Object): Observable<HttpResponseModel>{
+    return this._http.post<HttpResponseModel>(`${this._api}/user/editUserProfilePicture`, data)
   }
 
-  editUserProfile_name(data: Object): Observable<HttpResponseModel> {
+  editUserProfileName(data: Object): Observable<HttpResponseModel> {
     console.log('edit UserProfile_name service');
-    return this._http.post<HttpResponseModel>(`${this._api}/user/editUserProfile_name`, data)
+    return this._http.post<HttpResponseModel>(`${this._api}/user/editUserProfileName`, data)
   }
 
-  opt_for_new_email(data:Object): Observable<HttpResponseModel> {
-    console.log('edit opt_for_new_email service');
-    return this._http.post<HttpResponseModel>(`${this._api}/user/opt_for_new_email`, data)
+  optForNewEmail(data:Object): Observable<HttpResponseModel> {
+    console.log('edit optForNewEmail service');
+    return this._http.post<HttpResponseModel>(`${this._api}/user/optForNewEmail`, data)
   }
 
   getSpecialization(): Observable<specialization[]> {
@@ -107,16 +107,16 @@ export class UserserviceService {
     return this._http.post<any>(`${this._api}/user/appointmnet_booking`, data)
   }
 
-  check_if_the_slot_available(data: any): Observable<any> {
+  checkIfTheSlotAvailable(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
     console.log('httpParams contains slotId:',httpParams)
-    return this._http.get<any>(`${this._api}/user/check_if_the_slot_available`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/user/checkIfTheSlotAvailable`, { params: httpParams })
   }
 
   //payment for slot booking
-  booking_payment(data: Object): Observable<any> {
+  bookingPayment(data: Object): Observable<any> {
     console.log('razorpay booking service');
-    return this._http.post<any>(`${this._api}/user/booking_payment`, data)
+    return this._http.post<any>(`${this._api}/user/bookingPayment`, data)
   }
 
   userDetails(data: any): Observable<any> {
@@ -126,10 +126,10 @@ export class UserserviceService {
   }
 
   //get booking details of this user
-  get_booking_details_of_user(data: any): Observable<any> {
+  getBookingDetails_of_user(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
     console.log('data', FormDataEvent);
-    return this._http.get<any>(`${this._api}/user/get_booking_details`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/user/getBookingDetails`, { params: httpParams })
   }
 
   //to cancel slot
@@ -138,9 +138,9 @@ export class UserserviceService {
     return this._http.get<any>(`${this._api}/user/cancelSlot`, { params: httpParams })
   }
 
-  upcoming_appointment(data: any): Observable<any> {
+  upcomingAppointment(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/user/upcoming_appointment`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/user/upcomingAppointment`, { params: httpParams })
   }
 
   getUpcomingSlot(data: any): Observable<any> {
@@ -155,7 +155,7 @@ export class UserserviceService {
 
   get_prescription_details(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/user/get_prescription_details`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/user/getPrescriptionDetails`, { params: httpParams })
   }
   get_bookings_of_user(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
@@ -165,5 +165,14 @@ export class UserserviceService {
     const httpParams = new HttpParams({ fromObject: data })
     return this._http.get<any>(`${this._api}/user/prescriptionDetails`, { params: httpParams })
   }
+  // refreshAccessTokenUser() {
+  //   // (`${this._api}/doctor/prescriptionDetails`, 
+  //   return this._http.get<{ accessToken: string }>(`${this._api}/user/refresh-token`, {
+  //     withCredentials: true // allows cookies to be sent
+  //   });
+  // }
+  // logOut(){
+  //   return this._http.post(`${this._api}/user/logout`, {}, { withCredentials: true });
+  // }
 
 }

@@ -41,11 +41,11 @@ export class ChatService {
     return this._http.get(`${this._api}/user/userFetchAllMessages`, { params: httpParams })
   }
 
-  //doctor_accessed_chats
-  doctor_accessed_chats(data: any): Observable<any> {
-    console.log('doctor_accessed_chats from userSide');
+  //doctorAccessedChats
+  doctorAccessedChats(data: any): Observable<any> {
+    console.log('doctorAccessedChats from userSide');
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get(`${this._api}/doctor/doctor_accessed_chats`, { params: httpParams })
+    return this._http.get(`${this._api}/doctor/doctorAccessedChats`, { params: httpParams })
   }
 
   doctorFetchAllMessages(data: any): Observable<any> {

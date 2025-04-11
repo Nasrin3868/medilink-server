@@ -67,13 +67,13 @@ export class DoctorService {
     return this._http.post<HttpResponseModel>(`${this._api}/doctor/editDoctorProfile`, data)
   }
 
-  edit_doctor_profile_picture(data: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/edit_doctor_profile_picture`, data)
+  editDoctorProfilePicture(data: Object): Observable<HttpResponseModel> {
+    return this._http.post<HttpResponseModel>(`${this._api}/doctor/editDoctorProfilePicture`, data)
   }
 
-  opt_for_new_email(data:Object): Observable<HttpResponseModel> {
-    console.log('edit opt_for_new_email service');
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/opt_for_new_email`, data)
+  optForNewEmail(data:Object): Observable<HttpResponseModel> {
+    console.log('edit optForNewEmail service');
+    return this._http.post<HttpResponseModel>(`${this._api}/doctor/optForNewEmail`, data)
   }
 
   //get slots for doctor
@@ -87,8 +87,8 @@ export class DoctorService {
     return this._http.post<HttpResponseModel>(`${this._api}/doctor/slotCreation`, data)
   }
 
-  add_all_slots(data: any): Observable<any> {
-    return this._http.post<any>(`${this._api}/doctor/add_all_slots`, data);
+  addAllSlots(data: any): Observable<any> {
+    return this._http.post<any>(`${this._api}/doctor/addAllSlots`, data);
   }
 
   removeSlot(data: any): Observable<HttpResponseModel> {
@@ -96,24 +96,24 @@ export class DoctorService {
     return this._http.delete<HttpResponseModel>(`${this._api}/doctor/RemoveSlot`, { params: httpParams })
   }
 
-  get_booking_details_of_doctor(data: any): Observable<any> {
+  getBookingDetails_of_doctor(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/get_booking_details`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/getBookingDetails`, { params: httpParams })
   }
 
-  get_bookings_of_doctor(data: any): Observable<any> {
+  getBookingsOfDoctor(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/get_bookings_of_doctor`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/getBookingsOfDoctor`, { params: httpParams })
   }
 
-  get_doctor_dashboard_details(data: any): Observable<any> {
+  getDoctorDashboardDetails(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/get_doctor_dashboard_details`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/getDoctorDashboardDetails`, { params: httpParams })
   }
 
   upcomingAppointment(data: upcomingAppointment): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/upcoming_appointment`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/upcomingAppointment`, { params: httpParams })
   }
 
   updateUpcomingSlot(data: any): Observable<any> {
@@ -121,19 +121,19 @@ export class DoctorService {
     return this._http.get<any>(`${this._api}/doctor/updateUpcomingSlot`, { params: httpParams })
   }
 
-  update_consultationStatus(data: any): Observable<any> {
+  updateConsultationStatus(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/update_consultationStatus`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/updateConsultationStatus`, { params: httpParams })
   }
 
-  add_prescription(data: any): Observable<any> {
+  addPrescription(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/add_prescription`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/addPrescription`, { params: httpParams })
   }
 
-  share_roomId_through_email(data: any): Observable<any> {
+  shareRoomIdThroughEmail(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/share_roomId_through_email`, { params: httpParams })
+    return this._http.get<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, { params: httpParams })
   }
 
 

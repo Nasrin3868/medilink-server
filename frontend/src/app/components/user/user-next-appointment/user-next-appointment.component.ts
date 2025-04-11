@@ -10,9 +10,9 @@ import { UserserviceService } from 'src/app/services/userservice.service';
 })
 export class UserNextAppointmentComponent implements OnInit{
 
-  roomId!:any
+  roomId!:string
   slotDetails:any=''
-  link!:any
+  link!:string
   disable=false
   noAppointmnet=false
   constructor(
@@ -24,7 +24,7 @@ export class UserNextAppointmentComponent implements OnInit{
   ngOnInit(): void {
     const userId=localStorage.getItem('userId')
     if(userId)
-      this._userService.upcoming_appointment({_id:userId}).subscribe({
+      this._userService.upcomingAppointment({_id:userId}).subscribe({
         next:(Response)=>{
           console.log('response:',Response);
           

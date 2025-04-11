@@ -10,6 +10,7 @@ export class AuthService {
 
   checkUserLoggedIn(): boolean {
     const userLoggedIn = this._commonService.getTokenFromLocalStorage()
+    console.log("is logged in:",!!userLoggedIn);
     return !!userLoggedIn
   }
 

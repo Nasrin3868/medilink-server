@@ -13,7 +13,6 @@ import { otpPattern } from '../regular_expressions/regular_expressions';
   styleUrls: ['./verify-otp.component.css']
 })
 export class VerifyOtpComponent implements OnInit{
-  timerInterval: any;
   counter: number = 59;
   email=this._commonservice.getEmailFromLocalStrorage()
   new_email=localStorage.getItem('new_email')
@@ -37,12 +36,13 @@ export class VerifyOtpComponent implements OnInit{
   });
 
   counterFn(){
-    this.timerInterval=setInterval(()=>{
+    const timerInterval=setInterval(()=>{
       this.counter--
       if(this.counter===0){
-        clearInterval(this.timerInterval)
+        clearInterval(timerInterval)
       }
     },1000)
+    
   }
 
   resendClicked(){

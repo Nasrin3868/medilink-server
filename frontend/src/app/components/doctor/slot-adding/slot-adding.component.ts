@@ -158,7 +158,7 @@ export class SlotAddingComponent implements OnInit {
     if(this.slots_for_display.length===0){
       this._messageservice.showErrorToastr('No slots available')
     }else{
-      this._doctorService.add_all_slots({slots:this.slots_for_display,doctorId:this.doctorId}).subscribe({
+      this._doctorService.addAllSlots({slots:this.slots_for_display,doctorId:this.doctorId}).subscribe({
         next:(Response)=>{
           this._messageservice.showSuccessToastr('Slots added successfully')
           this.slots.push(...Response); 

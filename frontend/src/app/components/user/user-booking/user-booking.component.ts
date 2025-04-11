@@ -36,7 +36,7 @@ export class UserBookingComponent implements OnInit{
     this._userService.get_bookings_of_user({userId:localStorage.getItem('userId')}).subscribe({
 
     })
-    this._doctorService.get_bookings_of_doctor({doctorId:localStorage.getItem('doctorId')}).subscribe({
+    this._doctorService.getBookingsOfDoctor({doctorId:localStorage.getItem('doctorId')}).subscribe({
       next:(Response)=>{
         this.payments=Response
         this.payments_to_display=this.payments
@@ -71,34 +71,4 @@ export class UserBookingComponent implements OnInit{
       this.payments_to_display = this.payments;
     }
   }
-
-  // consultationForm=this._formBuilder.group({
-  //   status:['all']
-  // })
-
-  // consultationFormSubmit(){
-  //   if(this.consultationForm.valid){
-  //     const selectedStatus=this.consultationForm.value.status
-  //     if(selectedStatus==='all'){
-  //       this.payments_to_display=this.payments
-  //     }else if(selectedStatus==='pending'){
-  //       this.payments_to_display = this.payments.filter((item: any) => 
-  //           item.consultation_status==='pending'
-  //       );
-  //     }else if(selectedStatus==='consulted'){
-  //       this.payments_to_display = this.payments.filter((item: any) => 
-  //         item.consultation_status==='consulted'
-  //       );
-  //     }else if(selectedStatus==='not_consulted'){
-  //       this.payments_to_display = this.payments.filter((item: any) => 
-  //         item.consultation_status==='not_consulted'
-  //       );
-  //     }else if(selectedStatus==='cancelled'){
-  //       this.payments_to_display = this.payments.filter((item: any) => 
-  //         item.consultation_status==='cancelled'
-  //       );
-  //     }
-  //     this._cdr.detectChanges();
-  //   }
-  // }
 }

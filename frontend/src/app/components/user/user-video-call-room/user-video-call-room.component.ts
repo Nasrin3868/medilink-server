@@ -9,7 +9,7 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 })
 
 export class UserVideoCallRoomComponent implements OnInit, AfterViewInit {
-  roomID!: any
+  roomID!: string
   constructor(
     private _route: ActivatedRoute,
   ) { }
@@ -17,7 +17,11 @@ export class UserVideoCallRoomComponent implements OnInit, AfterViewInit {
   @ViewChild('root')
   root!: ElementRef;
   ngOnInit(): void {
-    this.roomID = this._route.snapshot.paramMap.get('id');
+    
+    const room = this._route.snapshot.paramMap.get('id');
+    room?this.roomID=room:this.roomID=''
+    console.log('roomID is null, change the type of roomID to any. chnage the room to this.roomID:',this.roomID);
+    
   }
   ngAfterViewInit(): void {
     // generate Kit Token
