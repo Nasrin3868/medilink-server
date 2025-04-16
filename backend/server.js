@@ -28,7 +28,7 @@ const io = socketIo(server, {
   },
 });
 
-app.use(cors({ origin: [process.env.local_api,process.env.vercel_api,hosted_api] }));
+app.use(cors({ origin: [process.env.local_api,process.env.vercel_api,process.env.hosted_api] }));
 
 app.use(express.static(path.join(__dirname, "images")));
 app.use(logger("dev"));
