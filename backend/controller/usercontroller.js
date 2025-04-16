@@ -188,7 +188,20 @@ const userLogin = async (req, res) => {
             console.log('logs data:',data);
             
             const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
-
+            // const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN,{ expiresIn: '1m' });
+            // console.log('accessToken:',accessToken);
+            // console.log('just before creating refresh token');
+            // console.log('JWT_REFRESH_TOKEN:', process.env.JWT_REFRESH_TOKEN);
+            //  const refreshToken = jwt.sign(data, process.env.JWT_REFRESH_TOKEN, { expiresIn: '7d' });
+            //  console.log('error in refreshToken');
+             
+            //  console.log('access,refresh token:',accessToken,refreshToken);
+             
+            // userdata.refreshToken=refreshToken
+            // // await userdata.save()
+            // console.log('refreshToken:',refreshToken,userdata._id);
+            
+            // await usercollection.updateOne({ _id: userdata._id }, { $set: { refreshToken } });
             const accessedUser = {
               _id: userdata._id,
               firstName: userdata.firstName,
@@ -197,6 +210,12 @@ const userLogin = async (req, res) => {
               role: userdata.role,
             };
             res
+            // .cookie('refreshToken', refreshToken, {
+            //   httpOnly: true,
+            //   secure: true, // only for https
+            //   sameSite: 'Strict',
+            //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            // })
             .status(HttpStatusCodes.OK).json({
               accessToken,
               accessedUser,
@@ -224,7 +243,7 @@ const userLogin = async (req, res) => {
 
 const refreshToken = async (req, res) => {
   const token = req.cookies.refreshToken;
-  console.log('refresh token:',token);
+  console.log('refresh token controller:',token);
   if (!token) return res.status(401).json({ message: 'No refresh token found' });
   
   try {
@@ -661,34 +680,6 @@ const upcomingAppointment = async (req, res) => {
       console.log("No upcoming appointments found.");
       res.status(HttpStatusCodes.OK).json({});
     }
-    // const bookedSlots = await bookedSlotCollection
-    //   .find({ userId: data._id })
-    //   .populate("slotId")
-    //   .populate("userId")
-    //   .populate("doctorId");
-
-    // const currentTime = Date.now();
-
-    // // Define the time window for considering an appointment as "upcoming" (30 minutes in milliseconds)
-    // const upcomingWindow = 30 * 60 * 1000;
-
-    // const upcomingAppointments = bookedSlots
-    //   .filter((slot) => {
-    //     const appointmentTime = new Date(slot.slotId.time).getTime();
-    //     return appointmentTime + upcomingWindow > currentTime;
-    //   })
-    //   .sort((a, b) => new Date(a.slotId.time) - new Date(b.slotId.time));
-
-    // const nextAppointment =
-    //   upcomingAppointments.length > 0 ? upcomingAppointments[0] : null;
-
-    // if (nextAppointment) {
-    //   console.log("Next appointment:", nextAppointment);
-    //   res.status(HttpStatusCodes.OK).json(nextAppointment);
-    // } else {
-    //   console.log("No upcoming appointments found.");
-    //   res.status(HttpStatusCodes.OK).json({});
-    // }
   } catch (error) {
     res
       .status(HttpStatusCodes.INTERNAL_SERVER_ERROR)

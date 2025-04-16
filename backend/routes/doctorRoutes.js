@@ -17,21 +17,21 @@ router.post(
   doctorController.doctorRegistration
 );
 router.get("/getSpecialization", doctorController.getSpecialization);
-router.post("/resendOtp", doctorController.resendOtp);
-router.post("/verifyOtp", doctorController.verifyOtp);
+router.patch("/resendOtp", doctorController.resendOtp);
+router.patch("/verifyOtp", doctorController.verifyOtp);
 router.post("/login", doctorController.doctorLogin);
-router.post("/verifyEmail", doctorController.verifyEmail);
-router.post("/updatePassword", doctorController.updatePassword);
+router.patch("/verifyEmail", doctorController.verifyEmail);
+router.patch("/updatePassword", doctorController.updatePassword);
 
 router.use(doctorAuth, checkDoctorBlocked);
 
 router.get("/getDoctorDetails", doctorController.getDoctorDetails);
-router.post("/editDoctorProfile", doctorController.editDoctorProfile);
-router.post(
+router.patch("/editDoctorProfile", doctorController.editDoctorProfile);
+router.patch(
   "/editDoctorProfilePicture",
   doctorController.editDoctorProfilePicture
 );
-router.post("/optForNewEmail", doctorController.optForNewEmail);
+router.patch("/optForNewEmail", doctorController.optForNewEmail);
 
 router.post("/slotCreation", doctorController.slotCreation);
 router.post("/addAllSlots", doctorController.addAllSlots);
@@ -46,19 +46,19 @@ router.get("/doctorFetchAllMessages", chatController.doctorFetchAllMessages);
 router.post("/doctorSendMessage", chatController.doctorSendMessage);
 
 router.get("/upcomingAppointment", doctorController.upcomingAppointment);
-router.get("/updateUpcomingSlot", doctorController.updateUpcomingSlot);
-router.get(
+router.patch("/updateUpcomingSlot", doctorController.updateUpcomingSlot);
+router.patch(
   "/updateConsultationStatus",
   doctorController.updateConsultationStatus
 );
 
-router.get("/addPrescription", doctorController.addPrescription);
+router.post("/addPrescription", doctorController.addPrescription);
 router.get("/prescriptionDetails", doctorController.prescriptionDetails);
 router.get(
   "/getDoctorDashboardDetails",
   doctorController.getDoctorDashboardDetails
 );
-router.get(
+router.patch(
   "/shareRoomIdThroughEmail",
   doctorController.shareRoomIdThroughEmail
 );
