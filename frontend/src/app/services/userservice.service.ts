@@ -29,13 +29,13 @@ export class UserserviceService {
   //resendotp
   resendOtp(email: Object): Observable<HttpResponseModel> {
     console.log('resend otp')
-    return this._http.post<HttpResponseModel>(`${this._api}/user/resendOtp`, email)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/resendOtp`, email)
   }
 
   //verifyOtp
   verifyOtp(data: otpdata): Observable<HttpResponseModel> {
     console.log('verify otp service')
-    return this._http.post<HttpResponseModel>(`${this._api}/user/verifyOtp`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/verifyOtp`, data)
   }
 
   //login user
@@ -45,12 +45,12 @@ export class UserserviceService {
 
   //verifyEmail_Forgetpassword
   verifyEmail(data: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/user/verifyEmail`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/verifyEmail`, data)
   }
 
   //newPassword
   updatePassword(data: UpdatePasswordRequest): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/user/updatePassword`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/updatePassword`, data)
   }
 
   //get user profile
@@ -61,17 +61,17 @@ export class UserserviceService {
   }
 
   editUserProfilePicture(data:Object): Observable<HttpResponseModel>{
-    return this._http.post<HttpResponseModel>(`${this._api}/user/editUserProfilePicture`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/editUserProfilePicture`, data)
   }
 
   editUserProfileName(data: Object): Observable<HttpResponseModel> {
     console.log('edit UserProfile_name service');
-    return this._http.post<HttpResponseModel>(`${this._api}/user/editUserProfileName`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/editUserProfileName`, data)
   }
 
   optForNewEmail(data:Object): Observable<HttpResponseModel> {
     console.log('edit optForNewEmail service');
-    return this._http.post<HttpResponseModel>(`${this._api}/user/optForNewEmail`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/user/optForNewEmail`, data)
   }
 
   getSpecialization(): Observable<specialization[]> {
@@ -93,7 +93,7 @@ export class UserserviceService {
   }
 
   addSlot(data: Object): Observable<any> {
-    return this._http.post<any>(`${this._api}/user/addSlots`, data)
+    return this._http.patch<any>(`${this._api}/user/addSlots`, data)
   }
 
   //get a particular slot
@@ -135,7 +135,7 @@ export class UserserviceService {
   //to cancel slot
   cancelSlot(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/user/cancelSlot`, { params: httpParams })
+    return this._http.patch<any>(`${this._api}/user/cancelSlot`, { params: httpParams })
   }
 
   upcomingAppointment(data: any): Observable<any> {
@@ -167,7 +167,9 @@ export class UserserviceService {
   }
   // refreshAccessTokenUser() {
   //   // (`${this._api}/doctor/prescriptionDetails`, 
-  //   return this._http.get<{ accessToken: string }>(`${this._api}/user/refresh-token`, {
+  //   console.log('refreshToken in service user side');
+    
+  //   return this._http.post<{ accessToken: string }>(`${this._api}/user/refresh_token`, {},{
   //     withCredentials: true // allows cookies to be sent
   //   });
   // }

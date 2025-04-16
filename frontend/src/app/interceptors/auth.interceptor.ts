@@ -10,6 +10,7 @@ import { catchError, Observable, throwError,switchMap } from 'rxjs';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { UserserviceService } from '../services/userservice.service';
+import { MessageToasterService } from '../services/message-toaster.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private _commonService:CommonService,
     private _router:Router,
     private _userService:UserserviceService,
-
+    private _messageToaster:MessageToasterService
   ) {}
 
   userToken!:string;
@@ -28,6 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (request.url.includes('cloudinary.com')) {
       return next.handle(request);
+    }
+    if (request.url.includes('/refresh_token')) {
+      return next.handle(request); // don't attach token
     }
     const userToken = this._commonService.getTokenFromLocalStorage(); // User token from local storage
     const doctorToken = this._commonService.getDoctorTokenFromLocalStorage(); // Doctor token from local storage
@@ -74,6 +78,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
           console.log('403 Forbidden - Redirecting to home page');
+          this._messageToaster.showErrorToastr(error.error.message || 'Something went wrong!')
           this._router.navigate(['/home']); // Navigate to the home page or desired route
         }
         return throwError(error);

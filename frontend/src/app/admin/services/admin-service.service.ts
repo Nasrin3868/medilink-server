@@ -46,7 +46,7 @@ export class AdminServiceService {
 
   //change status of user
   userBlock(data:Object):Observable<HttpResponseModel>{
-    return this._http.post<HttpResponseModel>(`${this.api}/admin/userBlock`,data)
+    return this._http.patch<HttpResponseModel>(`${this.api}/admin/userBlock`,data)
   }
 
   //get a single user
@@ -82,7 +82,7 @@ export class AdminServiceService {
   //edit specialization
   editSpecialization(data:specialization):Observable<HttpResponseModel>{
     console.log('edit specialization Service');
-    return this._http.post<HttpResponseModel>(`${this.api}/admin/editSpecialization`,data)
+    return this._http.patch<HttpResponseModel>(`${this.api}/admin/editSpecialization`,data)
   }
 
   //delete specialization
@@ -95,7 +95,7 @@ export class AdminServiceService {
   //edit payOut
   editpayOut(data:Object):Observable<HttpResponseModel>{
     console.log('delete specialization Service');
-    return this._http.post<HttpResponseModel>(`${this.api}/admin/editpayOut`,data)
+    return this._http.patch<HttpResponseModel>(`${this.api}/admin/editpayOut`,data)
   }
 
   //get a doctor details
@@ -107,7 +107,7 @@ export class AdminServiceService {
 
   submitKycDetails(data:any):Observable<HttpResponseModel>{
     console.log('doc detail Service');
-    return this._http.post<HttpResponseModel>(`${this.api}/admin/submitKycDetails`,data)
+    return this._http.put<HttpResponseModel>(`${this.api}/admin/submitKycDetails`,data)
   }
 
   downloadKycDocuments(data:any):Observable<HttpResponseModel>{

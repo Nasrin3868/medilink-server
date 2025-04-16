@@ -38,22 +38,22 @@ export class DoctorService {
 
   //verifyEmail_Forgetpassword
   verifyEmail(data: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/verifyEmail`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/verifyEmail`, data)
   }
 
   //resendotp
   resendOtp(email: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/resendOtp`, email)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/resendOtp`, email)
   }
 
   //verifyOtp
   verifyOtp(data: otpdata): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/verifyOtp`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/verifyOtp`, data)
   }
 
   //newPassword
   updatePassword(data: UpdatePasswordRequest): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/updatePassword`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/updatePassword`, data)
   }
 
   //get doc details
@@ -64,16 +64,16 @@ export class DoctorService {
 
   //edit doc profile
   editDoctorProfile(data: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/editDoctorProfile`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/editDoctorProfile`, data)
   }
 
   editDoctorProfilePicture(data: Object): Observable<HttpResponseModel> {
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/editDoctorProfilePicture`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/editDoctorProfilePicture`, data)
   }
 
   optForNewEmail(data:Object): Observable<HttpResponseModel> {
     console.log('edit optForNewEmail service');
-    return this._http.post<HttpResponseModel>(`${this._api}/doctor/optForNewEmail`, data)
+    return this._http.patch<HttpResponseModel>(`${this._api}/doctor/optForNewEmail`, data)
   }
 
   //get slots for doctor
@@ -118,22 +118,22 @@ export class DoctorService {
 
   updateUpcomingSlot(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/updateUpcomingSlot`, { params: httpParams })
+    return this._http.patch<any>(`${this._api}/doctor/updateUpcomingSlot`, { params: httpParams })
   }
 
   updateConsultationStatus(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/updateConsultationStatus`, { params: httpParams })
+    return this._http.patch<any>(`${this._api}/doctor/updateConsultationStatus`, { params: httpParams })
   }
 
   addPrescription(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/addPrescription`, { params: httpParams })
+    return this._http.post<any>(`${this._api}/doctor/addPrescription`, { params: httpParams })
   }
 
   shareRoomIdThroughEmail(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.get<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, { params: httpParams })
+    return this._http.patch<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, { params: httpParams })
   }
 
 

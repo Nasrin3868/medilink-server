@@ -28,7 +28,6 @@ export class ImageUploadService {
         map(response => {
           console.log("response:",response,response.url);
           return response.url
-          
         }),
         catchError(error => {
           console.error('Error uploading image:', error);
