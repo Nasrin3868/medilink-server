@@ -2,5 +2,5 @@
 //     api:'http://localhost:3000'
 // };
 export const environment = {
-    api:'https://medilink.live'
+    api:'https://medilink-server.fathimanasrin.shop'
 };

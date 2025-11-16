@@ -1,3 +1,3 @@
 export const environment = {
-    api :'https://medilink.live'
+    api :'https://medilink-server.fathimanasrin.shop'
 };
