@@ -40,7 +40,7 @@
                             <a (click)="doctorHome()" class="text-gray-700 hover:text-red-600 px-3 py-2 text-base font-semibold cursor-pointer" aria-current="page">Home</a>
                         </li>
                         <li>
-                            <a (click)="bookings()" class="text-gray-700 hover:text-red-600 px-3 py-2 text-base font-semibold cursor-pointer">Appointments</a>
+                            <a (click)="bookings()" class="text-gray-700 hover:text-red-600 px-3 py-2 text-base font-semibold cursor-pointer">Bookings</a>
                         </li>
                         <li>
                             <a (click)="doctorChat()" class="text-gray-700 hover:text-red-600 px-3 py-2 text-base font-semibold cursor-pointer">Chat with patients</a>
@@ -81,7 +81,7 @@
             </ng-container>
             <ng-container *ngIf="doctor">
                 <a (click)="doctorHome(); toggleMenu()" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md cursor-pointer" aria-current="page">Home</a>
-                <a (click)="bookings(); toggleMenu()" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md cursor-pointer">Appointments</a>
+                <a (click)="bookings(); toggleMenu()" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md cursor-pointer">Bookings</a>
                 <a (click)="doctorChat(); toggleMenu()" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md cursor-pointer">Chat with patients</a>
                 <a (click)="doctorProfile(); toggleMenu()" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md cursor-pointer">Profile</a>
                 <a (click)="userLogout(); toggleMenu()" class="mt-2 block px-3 py-2 text-base font-medium text-white bg-red-600 hover:bg-red-700 rounded-md text-center cursor-pointer">Logout</a>
