@@ -11,7 +11,6 @@ const { check_the_file_is_an_image } = require("../helper/isPDF");
 const { HttpStatusCodes } = require("../helper/enum");
 
 const registerUser = async (req, res) => {
-  console.log("register in userside");
   try {
     //validation of input
     const requiredFields = ["firstName", "lastName", "email", "password"];

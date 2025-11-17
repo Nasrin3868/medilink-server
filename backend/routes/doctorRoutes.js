@@ -7,13 +7,13 @@ const uploads = require("../helper/multer");
 
 router.post(
   "/registration",
-  uploads.fields([
-    { name: "identity_proof", maxCount: 1 },
-    { name: "doctors_liscence", maxCount: 1 },
-    { name: "profile_picture", maxCount: 1 },
-    { name: "qualification_certificate" },
-    { name: "experience_certificate" },
-  ]),
+  // uploads.fields([
+  //   { name: "identity_proof", maxCount: 1 },
+  //   { name: "doctors_liscence", maxCount: 1 },
+  //   { name: "profile_picture", maxCount: 1 },
+  //   { name: "qualification_certificate" },
+  //   { name: "experience_certificate" },
+  // ]),
   doctorController.doctorRegistration
 );
 router.get("/getSpecialization", doctorController.getSpecialization);

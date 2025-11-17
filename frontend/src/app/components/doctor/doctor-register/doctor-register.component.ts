@@ -244,7 +244,7 @@ export class DoctorRegisterComponent implements OnInit {
   }
 
   close() {
-    this._router.navigate(['/doctor/login'])
+    this._router.navigate(['/doctor/doctor_login'])
   }
 
 }

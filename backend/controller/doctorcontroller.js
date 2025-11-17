@@ -17,6 +17,8 @@ const {HttpStatusCodes}=require("../helper/enum")
 const { check_the_file_is_in_pdf,check_the_file_is_an_image } = require("../helper/isPDF");
 
 const doctorRegistration = async (req, res) => {
+  console.log('error while registreing');
+  
   try {
     console.log("doctor registration backend");
     //validation of input
@@ -115,6 +117,8 @@ const getSpecialization = async (req, res) => {
     const specialization = await specializationCollection.find();
     res.status(HttpStatusCodes.OK).json({ specialization: specialization });
   } catch (error) {
+    console.log("error due to get specialization", error);
+    
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
   }
 };

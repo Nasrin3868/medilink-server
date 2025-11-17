@@ -25,6 +25,7 @@ export class UserloginComponent {
   ngOnInit(){
       this.user_login()
       this.auth=this._commonService.getAuthFromLocalStorage()
+      
     }
 
   user_login(){
