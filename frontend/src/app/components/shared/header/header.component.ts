@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit{
   user!:boolean
   doctor!:boolean
   nobody!:boolean
+  isMenuOpen: boolean = false;
 
   constructor(
     private _commonService:CommonService,
@@ -25,6 +26,9 @@ export class HeaderComponent implements OnInit{
   ){}
   ngOnInit(){
     this.checkuser()
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   checkuser(){
@@ -46,7 +50,8 @@ export class HeaderComponent implements OnInit{
   }
 
   home(){
-    this._router.navigate(['/home'])
+    this._router.navigate(['/home']);
+    this.toggleMenu();
   }
 
   doctor_signIn(){

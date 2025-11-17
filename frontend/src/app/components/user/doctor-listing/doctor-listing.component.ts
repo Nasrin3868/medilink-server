@@ -18,6 +18,9 @@ export class DoctorListingComponent implements OnInit{
   specializations:specialization[]=[]
   doctors:doctorData[]=[]
   displayed_doctor:doctorData[]=[]
+  // NEW: State for controlling the mobile specialization filter modal
+  isFilterOpen: boolean = false;
+  
   constructor(
     private _userService:UserserviceService,
     private _messageService:MessageToasterService,
@@ -39,9 +42,9 @@ export class DoctorListingComponent implements OnInit{
       .pipe(debounceTime(300)) // Adjust debounce time as needed
       .subscribe(value => {
           this.filterDoctors(value);
-          this.searchForm.get('searchData')?.reset(
-            '', { emitEvent: false } // Prevent another valueChanges trigger
-          );
+          // this.searchForm.get('searchData')?.reset(
+          //   '', { emitEvent: false } // Prevent another valueChanges trigger
+          // );
       });
   }
 
@@ -84,8 +87,14 @@ export class DoctorListingComponent implements OnInit{
       }
     })
   }
+  // 🔑 NEW: Method to toggle the mobile filter modal state
+  toggleFilter() {
+    this.isFilterOpen = !this.isFilterOpen;
+  }
 
   specializedDoctors(data:string){
+    console.log('done:',data);
+    
     if(data==='all'){
       this.displayed_doctor=this.doctors
     }else{
@@ -94,6 +103,7 @@ export class DoctorListingComponent implements OnInit{
       })
     }
   }
+  
 
   doctorProfile(data:string|undefined){
     this._router.navigate(['/user/doctor_profile',data])
