@@ -1,18 +1,32 @@
-<div class="bg-cover bg-center min-h-screen flex flex-col">
-  <app-header></app-header>
+<div class="bg-gray-100 min-h-screen flex flex-col">
+    <app-header></app-header>
 
-  <!-- Centered container -->
-  <div class=" border-t flex-1 flex items-center justify-center">
-    <div class="border bg-white p-6 rounded-lg shadow-lg text-center">
-      <div class="text-green-800">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      </div>
-      <h1 class="text-2xl font-bold mt-4 text-green-800">Success!</h1>
-      <p class="text-green-700 mt-2">Your booking completed successfully.</p>
-      <button class="mt-6 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-200" (click)="toHome()">Go to Homepage</button>
-      <button class="mt-6 ml-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-200" (click)="toDoctorProfile()">Go to Doctor Profile</button>
+    <div class="flex-1 flex items-center justify-center p-4">
+        <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-2xl max-w-md w-full text-center border-t-4 border-red-600 transform transition duration-300 hover:shadow-red-300/50">
+            
+            <div class="text-green-600 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            
+            <h1 class="text-3xl font-extrabold mt-4 text-gray-900">Appointment Confirmed!</h1>
+            <p class="text-lg text-gray-600 mt-2">Your payment and booking were completed successfully.</p>
+            <p class="text-sm text-green-700 font-semibold mt-1">We look forward to your consultation.</p>
+
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+                <button 
+                    class="w-full sm:w-auto bg-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 transition duration-200 shadow-md" 
+                    (click)="toDoctorProfile()">
+                    Go to Doctor Profile
+                </button>
+                
+                <button 
+                    class="w-full sm:w-auto bg-gray-200 text-gray-800 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition duration-200" 
+                    (click)="toHome()">
+                    Go to Homepage
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

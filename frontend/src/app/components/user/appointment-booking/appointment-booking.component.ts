@@ -64,6 +64,7 @@ export class AppointmentBookingComponent implements OnInit{
   patient_details_form_submit(){
     if(this.patient_details_form.invalid){
       this.markFormGroupTouched(this.patient_details_form);
+      this.isDisable = true; // Ensure payment button remains disabled
       return;
     }else{
       this.patient_details={
@@ -79,8 +80,16 @@ export class AppointmentBookingComponent implements OnInit{
           reason_for_visit:this.patient_details_form.value.reason_for_visit
         }
       }
+      // UX FIX: Set isDisable to false to ENABLE the payment button and DISABLE patient form editing
       this.isDisable=false
+      this._messageService.showSuccessToastr('Patient details confirmed! Ready to pay.')
     }
+  }
+  // NEW: Function to re-enable the patient form for editing
+  enableEditing() {
+      // Set isDisable back to true to ENABLE the form fields and DISABLE the payment button
+      this.isDisable = true; 
+      this._messageService.showWarningToastr('Patient details unlocked for editing.');
   }
 
   payment_form=this._formBuilder.group({
@@ -88,6 +97,11 @@ export class AppointmentBookingComponent implements OnInit{
   })
 
   payment_form_submit(){
+    // Check if patient details were actually confirmed (isDisable must be false)
+    if (this.isDisable) {
+        this._messageService.showErrorToastr('Please confirm patient details first!');
+        return;
+    }
     this._userService.checkIfTheSlotAvailable({slotId:this.slotId}).subscribe({
       next:(Response)=>{
         if(this.payment_form.value.payment_method==='online_payment'){
