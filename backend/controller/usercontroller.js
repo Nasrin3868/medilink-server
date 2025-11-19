@@ -624,18 +624,86 @@ const cancelSlot = async (req, res) => {
     const slot = await slotCollection.findByIdAndUpdate(data.slotId, {
       $set: { cancelled: true,booked:false },
     });
+    if (!slot) {
+        return res.status(HttpStatusCodes.NOT_FOUND).json({ message: "Slot not found." });
+    }
     console.log('cancelled slot:',slot);
+
+    const slotTime = new Date(slot.time).getTime();
+    const now = Date.now();
+    const CANCEL_WINDOW_MINUTES = 10; // Define your "no refund" window
+    console.log('now,noRefundTime:',now,slotTime);
+
+    // Time window for refund logic
+    const noCancellationTime = slotTime; // Cannot cancel at or after the start time
+    const noRefundTime = slotTime - (CANCEL_WINDOW_MINUTES * 60 * 1000); // e.g., 10 minutes before slot time
+    console.log('now,noRefundTime:',now,noCancellationTime,noRefundTime);
+
+    // --- 2. Check for the "No Cancellation" window ---
+    if (now >= noCancellationTime) {
+        return res.status(HttpStatusCodes.BAD_REQUEST).json({ 
+            message: "Cancellation not allowed after the appointment start time." 
+        });
+    }
+
+    // --- 3. Determine Refund Eligibility ---
+    let refundAmount = slot.bookingAmount || 0;
+    let refundMessage = "Slot successfully cancelled.";
+    let shouldRefund = true
+    console.log('now,noRefundTime:',now,noRefundTime);
     
-    const bookedSlot = await bookedSlotCollection.findOneAndUpdate(
-      { slotId: data.slotId },
-      { $set: { consultation_status: "cancelled" } }
-    );
-    console.log(bookedSlot);
-    const user = await usercollection.findById(bookedSlot.userId);
-    await usercollection.findByIdAndUpdate(bookedSlot.userId, {
-      $set: { wallet: user.wallet + slot.bookingAmount },
-    });
-    res.status(HttpStatusCodes.OK).json({ message: "slot cancelled" });
+    if (now >= noRefundTime) {
+        // Cancellation is within 10 minutes of the slot time (or your defined window)
+        refundAmount = 0; // Set refund amount to zero
+        shouldRefund = false;
+        refundMessage = `Slot cancelled, but no refund is provided for cancellations made within ${CANCEL_WINDOW_MINUTES} minutes of the appointment.`;
+    }
+    // --- 4. Update the main slot document ---
+        const updatedSlot = await slotCollection.findByIdAndUpdate(
+            data.slotId,
+            { $set: { cancelled: true, booked: false } },
+            { new: true }
+        );
+
+        // --- 5. Update the booked slot document ---
+        const bookedSlot = await bookedSlotCollection.findOneAndUpdate(
+            { slotId: data.slotId },
+            { $set: { consultation_status: "cancelled" } }
+        );
+
+        if (!bookedSlot) {
+            // Should not happen if originalSlot was found, but a safety check is good
+            return res.status(HttpStatusCodes.NOT_FOUND).json({ message: "Booked slot entry not found." });
+        }
+        
+        // --- 6. Handle Refund (if applicable) ---
+        if (shouldRefund && refundAmount > 0) {
+            const user = await usercollection.findByIdAndUpdate(
+                bookedSlot.userId,
+                { $inc: { wallet: refundAmount } },
+                { new: true }
+            );
+            if (!user) {
+                // Log or handle the case where the user wasn't found for the refund
+                console.error("User not found for refund:", bookedSlot.userId);
+            }
+        }
+
+        res.status(HttpStatusCodes.OK).json({ message: refundMessage });
+
+  //   const bookedSlot = await bookedSlotCollection.findOneAndUpdate(
+  //     { slotId: data.slotId },
+  //     { $set: { consultation_status: "cancelled" } }
+  //   );
+  //   if (!bookedSlot) {
+  //       return res.status(HttpStatusCodes.NOT_FOUND).json({ message: "Booked slot entry not found." });
+  //   }
+  //   console.log(bookedSlot);
+  //   const user = await usercollection.findById(bookedSlot.userId);
+  //   await usercollection.findByIdAndUpdate(bookedSlot.userId, {
+  //     $set: { wallet: user.wallet + slot.bookingAmount },
+  //   });
+  //   res.status(HttpStatusCodes.OK).json({ message: "slot cancelled" });
   } catch (error) {
     res
       .status(HttpStatusCodes.INTERNAL_SERVER_ERROR)

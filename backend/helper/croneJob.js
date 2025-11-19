@@ -61,7 +61,7 @@ const delete_unbooked_slots=async()=>{
 }
 const change_status_of_non_consulted_slots=async()=>{
   console.log('change_status_of_non_consulted_slots')
-  cron.schedule('38,50 9-20 * * *', async() => {
+  cron.schedule('20,50 9-21 * * *', async() => {
       console.log('Running task every 30 minutes from 9:20 AM to 8:20 PM');
       
    
@@ -83,7 +83,7 @@ const change_status_of_non_consulted_slots=async()=>{
         const result = await bookedSlotCollection.updateMany(
           {
             slotId: { $in: pastSlotIds },
-            consultation_status: 'non_consulted'
+            consultation_status: 'pending'
           },
           {
             $set: { consultation_status: 'not_consulted' }

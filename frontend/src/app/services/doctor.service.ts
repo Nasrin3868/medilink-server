@@ -131,11 +131,14 @@ export class DoctorService {
     return this._http.post<any>(`${this._api}/doctor/addPrescription`, { params: httpParams })
   }
 
-  shareRoomIdThroughEmail(data: any): Observable<any> {
-    const httpParams = new HttpParams({ fromObject: data })
-    return this._http.patch<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, { params: httpParams })
-  }
-
+  // shareRoomIdThroughEmail(data: any): Observable<any> {
+  //   const httpParams = new HttpParams({ fromObject: data })
+  //   return this._http.patch<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, { params: httpParams })
+  // }
+  shareRoomIdThroughEmail(data: {roomId: string | null | undefined, slotId: any}): Observable<any> {
+    // Send the data object directly as the request body for the PATCH request.
+    return this._http.patch<any>(`${this._api}/doctor/shareRoomIdThroughEmail`, data);
+  }
 
 
 }

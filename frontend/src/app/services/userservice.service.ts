@@ -135,7 +135,7 @@ export class UserserviceService {
   //to cancel slot
   cancelSlot(data: any): Observable<any> {
     const httpParams = new HttpParams({ fromObject: data })
-    return this._http.patch<any>(`${this._api}/user/cancelSlot`, { params: httpParams })
+    return this._http.patch<any>(`${this._api}/user/cancelSlot`,{} ,{ params: httpParams })
   }
 
   upcomingAppointment(data: any): Observable<any> {

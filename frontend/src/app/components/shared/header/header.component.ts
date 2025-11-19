@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit{
   }
 
   userProfile(){
-    this._router.navigate(['/user/user_profile'])
+    this._router.navigate(['/user/user_profile/user_next_appointment'])
   }
 
   userChat(){

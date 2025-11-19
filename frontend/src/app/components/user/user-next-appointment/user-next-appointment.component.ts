@@ -15,6 +15,8 @@ export class UserNextAppointmentComponent implements OnInit{
   link!:string
   disable=false
   noAppointmnet=false
+  // NEW: State variable for loading
+  isLoading: boolean = true;
   constructor(
     private _userService:UserserviceService,
     private _router:Router,
@@ -23,7 +25,9 @@ export class UserNextAppointmentComponent implements OnInit{
 
   ngOnInit(): void {
     const userId=localStorage.getItem('userId')
-    if(userId)
+    if(userId){
+      // loading to true before API call
+      this.isLoading = true;
       this._userService.upcomingAppointment({_id:userId}).subscribe({
         next:(Response)=>{
           console.log('response:',Response);
@@ -34,27 +38,47 @@ export class UserNextAppointmentComponent implements OnInit{
             this.slotDetails=Response
             this.checkAppointmentTime()
           }
+          // SET loading to false after successful response
+          this.isLoading = false;
         },error:(error)=>{
           this._messageService.showErrorToastr(error.error.message)
+          // SET loading to false on error
+          this.isLoading = false; 
         }
+        
       })
+    }else {
+        // If no userId, stop loading and show no appointment
+        this.isLoading = false;
+        this.slotDetails = 0;
+    }
   }
 
 
   //change this with iso date formta and check, change dateofbooking to time
   checkAppointmentTime() {
-    if (this.slotDetails && this.slotDetails.dateOfBooking) {
-      const appointmentDate = new Date(this.slotDetails.dateOfBooking).getTime();
-      const windowStart = appointmentDate;
-      const windowEnd = appointmentDate + 30 * 60 * 1000; // 30 minutes in milliseconds
+    // Assuming slotDetails.slotId.time holds the ISO time string for the appointment
+    if (this.slotDetails && this.slotDetails.slotId && this.slotDetails.slotId.time) {
+      // Use the slot time for accurate check, not dateOfBooking (which is likely the booking creation date)
+      const appointmentDate = new Date(this.slotDetails.slotId.time).getTime();
+      const prepTime = 5 * 60 * 1000; // 5 minutes before the appointment
+      
+      // The entry window starts 5 minutes before the appointment time
+      const windowStart = appointmentDate - prepTime; 
+      // Assuming the window closes 30 minutes after the start time for the doctor to join
+      const windowEnd = appointmentDate + 30 * 60 * 1000; 
+      
       const currentDate = new Date().getTime();
   
-      // Enable the input only if the current time is within the 30-minute window
+      // Enable the input only if the current time is within the window
       if (currentDate >= windowStart && currentDate <= windowEnd) {
         this.disable = false;
       } else {
         this.disable = true;
       }
+    } else {
+      // Safely disable if data is missing or unexpected
+      this.disable = true;
     }
   }
 

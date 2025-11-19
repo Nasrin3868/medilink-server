@@ -20,6 +20,7 @@
     "razorpay": "^2.9.4",
     "request-promise-native": "^1.0.9",
     "socket.io": "^4.7.5",
+    "sweetalert2": "^11.26.3",
     "uuid": "^9.0.1"
   }
 }

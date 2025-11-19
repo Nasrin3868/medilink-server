@@ -8,11 +8,18 @@ import { UserserviceService } from 'src/app/services/userservice.service';
   styleUrls: ['./user-side-bar.component.css']
 })
 export class UserSideBarComponent {
-  
+  // New property to control the mobile sidebar state
+  isSidebarOpen: boolean = false;
+
   constructor(
     private _router:Router,
     private _userService:UserserviceService
   ){}
+
+  // New method to toggle the sidebar
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
   logout(){
     localStorage.removeItem('userToken')

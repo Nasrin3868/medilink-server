@@ -789,33 +789,85 @@ const getDoctorDashboardDetails = async (req, res) => {
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
   }
 };
+// doctorController.js
 
 const shareRoomIdThroughEmail = async (req, res) => {
-  try {
-    console.log("shareRoomIdThroughEmail server side");
-    const { roomId, slotId } = req.query;
-    if(!roomId&&!slotId){
-      res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required field"})
+  try {
+    console.log("shareRoomIdThroughEmail server side");
+    // CHANGE: Get roomId and slotId from req.body
+    const { roomId, slotId } = req.body; 
+
+    if(!roomId || !slotId){ // Use OR (||) and check for falsy values
+      // RESPONSE 1: Sends a 400 and returns to stop execution
+      return res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required field"});
+    }
+    console.log(roomId, slotId);
+
+    // FindByIdAndUpdate returns the *old* document by default. 
+    // Add { new: true } if you need the updated document immediately.
+    const data = await bookedSlotCollection.findByIdAndUpdate(
+        slotId,
+        {$set:{roomId:roomId}},
+        { new: true } // Optional: get the updated document
+    );
+    
+    if (!data) {
+        // Handle case where slotId is invalid
+        return res.status(HttpStatusCodes.NOT_FOUND).json({ message: "Appointment slot not found." });
     }
-    console.log(roomId, slotId);
-    const data = await bookedSlotCollection.findByIdAndUpdate(slotId,{$set:{roomId:roomId}});
-    console.log("slotDetails:", data);
-    //get userid from the slot
-    const userId = data.userId;
-    const userData = await userCollection.findById(userId);
-    console.log("userdata:", userData);
-    const userEmail = userData.email;
-    const emailsend = await generateMailForRoomId(userEmail, roomId);
-    data.roomId=roomId
-    // await data.save()
-    // console.log(data)
-    res
-      .status(HttpStatusCodes.OK)
-      .json({ message: `RoomId is send to user's email account.` });
-  } catch (error) {
-    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
-  }
+    
+    console.log("slotDetails:", data);
+    
+    //get userid from the slot
+    const userId = data.userId;
+    const userData = await userCollection.findById(userId);
+    console.log("userdata:", userData);
+    
+    // Check if user data exists
+    if (!userData) {
+        return res.status(HttpStatusCodes.NOT_FOUND).json({ message: "User for this booking not found." });
+    }
+
+    const userEmail = userData.email;
+    const emailsend = await generateMailForRoomId(userEmail, roomId);
+    
+    // RESPONSE 2: Sends a 200 OK
+    res
+      .status(HttpStatusCodes.OK)
+      .json({ message: `RoomId is send to user's email account.` });
+  } catch (error) {
+    console.error(error); // Log the internal server error
+    // Ensure this is the only remaining response if an error occurs
+    res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
+  }
 };
+// const shareRoomIdThroughEmail = async (req, res) => {
+//   try {
+//     console.log("shareRoomIdThroughEmail server side");
+//     // const { roomId, slotId } = req.query;
+//     const { roomId, slotId } = req.body;
+//     if(!roomId||!slotId){
+//       return res.status(HttpStatusCodes.BAD_REQUEST).json({message:"missing required field"})
+//     }
+//     console.log(roomId, slotId);
+//     const data = await bookedSlotCollection.findByIdAndUpdate(slotId,{$set:{roomId:roomId}});
+//     console.log("slotDetails:", data);
+//     //get userid from the slot
+//     const userId = data.userId;
+//     const userData = await userCollection.findById(userId);
+//     console.log("userdata:", userData);
+//     const userEmail = userData.email;
+//     const emailsend = await generateMailForRoomId(userEmail, roomId);
+//     data.roomId=roomId
+//     // await data.save()
+//     // console.log(data)
+//     return res
+//       .status(HttpStatusCodes.OK)
+//       .json({ message: `RoomId is send to user's email account.` });
+//   } catch (error) {
+//     return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error" });
+//   }
+// };
 
 module.exports = {
   resendOtp,

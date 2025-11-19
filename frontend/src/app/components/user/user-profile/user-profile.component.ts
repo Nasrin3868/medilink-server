@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit{
   name_edit:boolean=false
   url: string|null = null;
   profile_pic_event!:Event;
+  isLoading: boolean = true;
 
   constructor(
     private _userService:UserserviceService,
@@ -207,6 +208,7 @@ export class UserProfileComponent implements OnInit{
 
   profileData(){
     this.userId=localStorage.getItem('userId')
+    this.isLoading = true;
     this._userService.getuserDetails({userId:this.userId}).subscribe({
       next:(response)=>{
         this.user_profile_data=response
@@ -218,9 +220,11 @@ export class UserProfileComponent implements OnInit{
         this.email_form.patchValue({
           email: this.user_profile_data.email
         });
+        this.isLoading = false;
       },
       error:(error)=>{
         this._showMessage.showErrorToastr('Error in fetching profile data')
+        this.isLoading = false;
       }
     })
   }
