@@ -1,114 +1,121 @@
+<app-header></app-header>
 <div class="bg-gray-100 min-h-screen flex flex-col">
-    <app-header></app-header>
+    
+        <div class="max-w-7xl mx-auto w-full p-4 sm:p-8">
 
-    <div class="max-w-7xl mx-auto w-full p-4 sm:p-8">
-        
-        <div class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-red-600 mb-6">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-2">My Upcoming Schedule</h2>
-            <p class="text-gray-600">Manage all your patient bookings and consultation details.</p>
-        </div>
-
-        <div class="bg-white shadow-xl rounded-xl overflow-hidden">
-            
-            <div class="p-4 sm:p-6 bg-gray-50 border-b border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                
-                <form [formGroup]="searchForm" class="w-full col-span-1 md:col-span-2">
-                    <label for="table-search" class="block mb-2 text-sm font-semibold text-gray-700">Search Patients/Status</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
-                        </div>
-                        <input type="text" formControlName="searchData" id="table-search" placeholder="Search by patient name or status"
-                            class="block w-full pt-3 pb-3 ps-10 text-base text-gray-900 border border-gray-300 rounded-xl bg-white focus:ring-red-500 focus:border-red-500 shadow-sm">
-                    </div>
-                </form>
-                
-                <div class="col-span-1">
-                    <label for="status-filter" class="block mb-2 text-sm font-semibold text-gray-700">Filter by Status</label>
-                    <select id="status-filter" 
-                            class="w-full p-3 border border-gray-300 rounded-xl bg-white text-gray-900 text-base focus:ring-red-500 focus:border-red-500 shadow-sm"
-                            (change)="filterByConsultationStatus($event)">
-                        <option value="all">All Statuses</option>
-                        <option value="pending">Pending</option>
-                        <!-- <option value="consulted">Consulted</option> -->
-                        <option value="not_consulted">Not Consulted</option>
-                        <!-- <option value="cancelled">Cancelled</option> -->
-                    </select>
-                </div>
+            <div class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-red-600 mb-6">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-2">My Upcoming Schedule</h2>
+                <p class="text-gray-600">Manage all your patient bookings and consultation details.</p>
             </div>
-            
-            <ng-container *ngIf="paginated_payments.length!==0 else no_appointments">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full text-base text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 w-12">No.</th>
-                                <th scope="col" class="px-6 py-3">Patient Name</th>
-                                <th scope="col" class="px-6 py-3">Date</th>
-                                <th scope="col" class="px-6 py-3">Time</th>
-                                <th scope="col" class="px-6 py-3">Consultation Status</th>
-                                <th scope="col" class="px-6 py-3">Payment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let payment of paginated_payments; let i=index" 
-                                class="bg-white border-b hover:bg-gray-50 transition duration-150">
-                                <td class="px-6 py-4 w-12 text-gray-900 font-semibold">{{(currentPage - 1) * itemsPerPage + i + 1}}</td>
-                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    {{payment.userId.firstName+' '+payment.userId.lastName}}
-                                </td>
-                                <td class="px-6 py-4">{{payment.slotId.time | date:'MMM d, y'}}</td>
-                                <td class="px-6 py-4 font-bold text-red-600">{{payment.slotId.time | date:'shortTime'}}</td>
-                                <td class="px-6 py-4">
-                                    <span [ngClass]="{
-                                        'bg-yellow-100 text-yellow-800': payment.consultation_status === 'pending',
-                                        'bg-green-100 text-green-800': payment.consultation_status === 'consulted',
-                                        'bg-red-100 text-red-800': payment.consultation_status === 'not_consulted' || payment.consultation_status === 'cancelled'
-                                    }" class="px-3 py-1 rounded-full text-xs font-semibold uppercase">
-                                        {{payment.consultation_status}}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span [ngClass]="{
-                                        'text-green-600 bg-green-50': payment.payment_status === true,
-                                        'text-red-600 bg-red-50': payment.payment_status === false
-                                    }" class="px-3 py-1 rounded-full text-xs font-semibold">
-                                        {{payment.payment_status ? 'Done' : 'Not Done'}}
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div *ngIf="totalPages > 1" class="flex justify-between items-center p-4 sm:p-6 border-t border-gray-200 bg-white">
-                    <p class="text-sm text-gray-700">
-                        Showing appointments {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ (currentPage * itemsPerPage) > payments_to_display.length ? payments_to_display.length : (currentPage * itemsPerPage) }} of {{ payments_to_display.length }}
+            <ng-container *ngIf="isLoading">
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8 flex flex-col items-center justify-center space-y-4">
+                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-red-500 border-t-transparent"></div>
+                    <p class="text-lg font-medium text-gray-700 dark:text-gray-300">
+                        Retrieving patient bookings...
                     </p>
-                    <nav class="flex space-x-2">
-                        <button (click)="previousPage()" [disabled]="currentPage === 1" 
-                                class="px-3 py-1 text-sm font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-50">
-                            Previous
-                        </button>
-                        <span class="px-3 py-1 text-sm font-medium text-gray-800">{{ currentPage }} / {{ totalPages }}</span>
-                        <button (click)="nextPage()" [disabled]="currentPage === totalPages" 
-                                class="px-3 py-1 text-sm font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-50">
-                            Next
-                        </button>
-                    </nav>
                 </div>
-
             </ng-container>
-            
-            <ng-template #no_appointments>
-                <div class="p-16 text-center bg-white">
-                    <h2 class="text-3xl font-extrabold text-gray-900 mb-3">No Appointments Found</h2>
-                    <p class="text-lg text-gray-600">We couldn't find any appointments matching your current search or filters.</p>
+            <ng-container *ngIf="!isLoading">
+                <div class="bg-white shadow-xl rounded-xl overflow-hidden">
+
+                    <div class="p-4 sm:p-6 bg-gray-50 border-b border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+
+                        <form [formGroup]="searchForm" class="w-full col-span-1 md:col-span-2">
+                            <label for="table-search" class="block mb-2 text-sm font-semibold text-gray-700">Search Patients/Status</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" formControlName="searchData" id="table-search" placeholder="Search by patient name or status"
+                                    class="block w-full pt-3 pb-3 ps-10 text-base text-gray-900 border border-gray-300 rounded-xl bg-white focus:ring-red-500 focus:border-red-500 shadow-sm">
+                            </div>
+                        </form>
+
+                        <div class="col-span-1">
+                            <label for="status-filter" class="block mb-2 text-sm font-semibold text-gray-700">Filter by Status</label>
+                            <select id="status-filter" 
+                                    class="w-full p-3 border border-gray-300 rounded-xl bg-white text-gray-900 text-base focus:ring-red-500 focus:border-red-500 shadow-sm"
+                                    (change)="filterByConsultationStatus($event)">
+                                <option value="all">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="not_consulted">Not Consulted</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="paginated_payments.length!==0 else no_appointments">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-base text-left text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 w-12">No.</th>
+                                        <th scope="col" class="px-6 py-3">Patient Name</th>
+                                        <th scope="col" class="px-6 py-3">Date</th>
+                                        <th scope="col" class="px-6 py-3">Time</th>
+                                        <th scope="col" class="px-6 py-3">Consultation Status</th>
+                                        <th scope="col" class="px-6 py-3">Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let payment of paginated_payments; let i=index" 
+                                        class="bg-white border-b hover:bg-gray-50 transition duration-150">
+                                        <td class="px-6 py-4 w-12 text-gray-900 font-semibold">{{(currentPage - 1) * itemsPerPage + i + 1}}</td>
+                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            {{payment.userId.firstName+' '+payment.userId.lastName}}
+                                        </td>
+                                        <td class="px-6 py-4">{{payment.slotId.time | date:'MMM d, y'}}</td>
+                                        <td class="px-6 py-4 font-bold text-red-600">{{payment.slotId.time | date:'shortTime'}}</td>
+                                        <td class="px-6 py-4">
+                                            <span [ngClass]="{
+                                                'bg-yellow-100 text-yellow-800': payment.consultation_status === 'pending',
+                                                'bg-green-100 text-green-800': payment.consultation_status === 'consulted',
+                                                'bg-red-100 text-red-800': payment.consultation_status === 'not_consulted' || payment.consultation_status === 'cancelled'
+                                            }" class="px-3 py-1 rounded-full text-xs font-semibold uppercase">
+                                                {{payment.consultation_status}}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span [ngClass]="{
+                                                'text-green-600 bg-green-50': payment.payment_status === true,
+                                                'text-red-600 bg-red-50': payment.payment_status === false
+                                            }" class="px-3 py-1 rounded-full text-xs font-semibold">
+                                                {{payment.payment_status ? 'Done' : 'Not Done'}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div *ngIf="totalPages > 1" class="flex justify-between items-center p-4 sm:p-6 border-t border-gray-200 bg-white">
+                            <p class="text-sm text-gray-700">
+                                Showing appointments {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ (currentPage * itemsPerPage) > payments_to_display.length ? payments_to_display.length : (currentPage * itemsPerPage) }} of {{ payments_to_display.length }}
+                            </p>
+                            <nav class="flex space-x-2">
+                                <button (click)="previousPage()" [disabled]="currentPage === 1" 
+                                        class="px-3 py-1 text-sm font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-50">
+                                    Previous
+                                </button>
+                                <span class="px-3 py-1 text-sm font-medium text-gray-800">{{ currentPage }} / {{ totalPages }}</span>
+                                <button (click)="nextPage()" [disabled]="currentPage === totalPages" 
+                                        class="px-3 py-1 text-sm font-medium rounded-lg border border-gray-300 bg-white hover:bg-gray-100 disabled:opacity-50">
+                                    Next
+                                </button>
+                            </nav>
+                        </div>
+
+                    </ng-container>
+
+                    <ng-template #no_appointments>
+                        <div class="p-16 text-center bg-white">
+                            <h2 class="text-3xl font-extrabold text-gray-900 mb-3">No Appointments Found</h2>
+                            <p class="text-lg text-gray-600">We couldn't find any appointments matching your current search or filters.</p>
+                        </div>
+                    </ng-template>
+
                 </div>
-            </ng-template>
-            
+            </ng-container>
         </div>
-    </div>
 </div>

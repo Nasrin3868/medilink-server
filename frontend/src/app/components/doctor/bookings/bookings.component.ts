@@ -14,6 +14,8 @@ export class BookingsComponent implements OnInit{
   payments_master: any[] = []; // Master list to always filter from
   payments_to_display: any[] = []; // List after search/status filtering (pre-pagination)
   doctorId!:string|null;
+  isLoading: boolean = true; // NEW: Loading state
+
   
   // 🔑 PAGINATION VARIABLES
   currentPage: number = 1;
@@ -63,6 +65,8 @@ export class BookingsComponent implements OnInit{
 
 
   getAppointmentDetails(){
+    this.isLoading = true;
+
     this._doctorService.getBookingsOfDoctor({doctorId:localStorage.getItem('doctorId')}).subscribe({
       next:(Response)=>{
         if(Response && Response.length !== 0){
@@ -74,12 +78,14 @@ export class BookingsComponent implements OnInit{
           this.payments_to_display = [];
           this.updatePagination();
         }
+        this.isLoading = false;
       },
       error:(error)=>{
         this._messageService.showErrorToastr(error.error.message)
         this.payments_master = [];
         this.payments_to_display = [];
         this.updatePagination();
+        this.isLoading = false;
       }
     })
   }

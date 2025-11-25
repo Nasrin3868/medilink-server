@@ -16,6 +16,9 @@ export class NextAppointmentComponent implements OnInit{
   roomId:string|null|undefined=''
   upcomingAppointment!:any
 
+  // NEW: State variable for loading
+  isLoading: boolean = true;
+
   constructor(
     private _router:Router,
     private _messageService:MessageToasterService,
@@ -24,37 +27,57 @@ export class NextAppointmentComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-      const doctorId=localStorage.getItem('doctorId')
-      if(doctorId)
-      this._doctorService.upcomingAppointment({doctorId:doctorId}).subscribe({
-        next:(Response)=>{
-          if(Object.entries(Response).length === 0){
-            this.upcomingAppointment=0
-          }else{
-            this.upcomingAppointment=Response
-            this.checkAppointmentTime()
-          }
-          console.log(Response)
-        },error:(error)=>{
-          this._messageService.showErrorToastr(error.error.message)
+    this.isLoading = true; // Start loading
+    const doctorId=localStorage.getItem('doctorId')
+    if(doctorId)
+    this._doctorService.upcomingAppointment({doctorId:doctorId}).subscribe({
+      next:(Response)=>{
+        if(Object.entries(Response).length === 0){
+          this.upcomingAppointment=0
+        }else{
+          this.upcomingAppointment=Response
+          this.checkAppointmentTime()
         }
-      })
+        console.log(Response)
+        this.isLoading = false; // Stop loading
+      },error:(error)=>{
+        this._messageService.showErrorToastr(error.error.message)
+        this.isLoading = false; // Stop loading
+      }
+    })
   }
   checkAppointmentTime() {
-    if (this.upcomingAppointment && this.upcomingAppointment.dateOfBooking) {
-      const appointmentDate = new Date(this.upcomingAppointment.dateOfBooking).getTime();
-      const windowStart = appointmentDate;
-      const windowEnd = appointmentDate + 30 * 60 * 1000; // 30 minutes in milliseconds
-      const currentDate = new Date().getTime();
-      // Enable the input only if the current time is within the 30-minute window
-      if (currentDate >= windowStart && currentDate <= windowEnd) {
-        this.roomIdForm.get('roomId')?.enable()
-        this.disable = false;
-      } else {
-        this.disable = true;
-        this.roomIdForm.get('roomId')?.disable()
-      }
-    }
+    if (this.upcomingAppointment && this.upcomingAppointment.slotId.time) { // Use slotId.time (actual time) instead of dateOfBooking
+      const appointmentDate = new Date(this.upcomingAppointment.slotId.time).getTime();
+      const prepTime = 5 * 60 * 1000; // 5 minutes before the appointment
+      
+      const windowStart = appointmentDate - prepTime;
+      const windowEnd = appointmentDate + 30 * 60 * 1000; 
+      const currentDate = new Date().getTime();
+      
+      // Enable the input only if the current time is within the window
+      if (currentDate >= windowStart && currentDate <= windowEnd) {
+        this.roomIdForm.get('roomId')?.enable()
+        this.disable = false;
+      } else {
+        this.disable = true;
+        this.roomIdForm.get('roomId')?.disable()
+      }
+    }
+    // if (this.upcomingAppointment && this.upcomingAppointment.dateOfBooking) {
+    //   const appointmentDate = new Date(this.upcomingAppointment.dateOfBooking).getTime();
+    //   const windowStart = appointmentDate;
+    //   const windowEnd = appointmentDate + 30 * 60 * 1000; // 30 minutes in milliseconds
+    //   const currentDate = new Date().getTime();
+    //   // Enable the input only if the current time is within the 30-minute window
+    //   if (currentDate >= windowStart && currentDate <= windowEnd) {
+    //     this.roomIdForm.get('roomId')?.enable()
+    //     this.disable = false;
+    //   } else {
+    //     this.disable = true;
+    //     this.roomIdForm.get('roomId')?.disable()
+    //   }
+    // }
   }
 
   roomIdForm=this._formBuilder.group({

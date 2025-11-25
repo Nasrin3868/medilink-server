@@ -1,151 +1,210 @@
-<section class="py-10 my-auto dark:bg-gray-900">
-    <div class="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
-      <div class="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
-        <div class="">
-          <div class="relative mt-2 flex justify-center">
-            <div 
-              class="flex justify-center items-center w-[141px] h-[141px] rounded-full bg-cover bg-center bg-no-repeat" 
-              [style.background-image]="url ? 'url(' + url + ')' : 'url(https://res.cloudinary.com/dyemxd31x/image/upload/v1724227646/i4lf0zmuyz9k9prs8hbw.jpg)'">
-            </div>
-            <input 
-              type="file" 
-              accept=".jpg, .jpeg, .png" 
-              name="profile" 
-              id="upload_profile" 
-              hidden 
-              required 
-              (change)="onFileSelected($event)"
-            >
-          </div>
-          <div class="flex justify-center mt-4">
-            <button 
-              class="justify-center py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900"
-              (click)="triggerFileInput()"
-            >
-              Change Profile Pic
-            </button>
-          </div>
-          <h1 class="mt-4 lg:text-2xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
-            Profile details
-          </h1>
-          <form [formGroup]="editProfileForm" (ngSubmit)="submit_profile_details()" #myform="ngForm">
-            <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-              <div class="w-full  mb-4 mt-4">
-                <label for="" class="mb-2 dark:text-gray-300">First Name</label>
-                <input type="text" formControlName="firstName"
-                        class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800" 
-                        [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit, 'border-red-500': editProfileForm.get('firstName')?.touched && editProfileForm.get('firstName')?.invalid }"
-                        placeholder="First Name" >
-                <div *ngIf="editProfileForm.get('firstName')?.touched && editProfileForm.get('firstName')?.invalid" class="text-red-500 text-xs mt-1">
-                    <div *ngIf="editProfileForm.get('firstName')?.hasError('required')">*required</div>
-                    <div *ngIf="editProfileForm.get('firstName')?.hasError('maxlength')">*length exceeds</div>
-                    <div *ngIf="editProfileForm.get('firstName')?.hasError('pattern')">*enter a valid firstname</div>
-                </div>
-              </div>
-              <div class="w-full  mb-4 lg:mt-4">
-                  <label for="" class=" dark:text-gray-300">Last Name</label>
-                  <input type="text" formControlName="lastName"
-                    class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                    [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': editProfileForm.get('lastName')?.touched && editProfileForm.get('lastName')?.invalid}"
-                    placeholder="Last Name">
-                  <div *ngIf="editProfileForm.get('lastName')?.touched && editProfileForm.get('lastName')?.invalid" class="text-red-500 text-xs mt-1">
-                    <div *ngIf="editProfileForm.get('lastName')?.hasError('required')">*required</div>
-                    <div *ngIf="editProfileForm.get('lastName')?.hasError('maxlength')">*length exceeds</div>
-                    <div *ngIf="editProfileForm.get('lastName')?.hasError('pattern')">*enter a valid lastname</div>
-                  </div>
-              </div>
-            </div>
-            <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                <div class="w-full  mb-4 lg:mt-4">
-                    <label for="" class=" dark:text-gray-300">Contact No.</label>
-                    <input type="text" formControlName="contactno"
-                      class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                      [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': editProfileForm.get('contactno')?.touched && editProfileForm.get('contactno')?.invalid}"
-                      placeholder="contact number">
-                    <div *ngIf="editProfileForm.get('contactno')?.touched && editProfileForm.get('contactno')?.invalid" class="text-red-500 text-xs mt-1">
-                      <div *ngIf="editProfileForm.get('contactno')?.hasError('required')">*required</div>
-                      <div *ngIf="editProfileForm.get('contactno')?.hasError('pattern')">*enter a valid contact no.</div>
-                    </div>
-                </div>
-                <div class="w-full  mb-4 lg:mt-4">
-                    <label for="" class=" dark:text-gray-300">Current working hospital</label>
-                    <input type="text" formControlName="current_working_hospital_address"
-                      class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                      [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': editProfileForm.get('current_working_hospital_address')?.touched && editProfileForm.get('current_working_hospital_address')?.invalid}"
-                      placeholder="contact number">
-                    <div *ngIf="editProfileForm.get('current_working_hospital_address')?.touched && editProfileForm.get('current_working_hospital_address')?.invalid" class="text-red-500 text-xs mt-1">
-                      <div *ngIf="editProfileForm.get('current_working_hospital_address')?.hasError('required')">*required</div>
-                      <div *ngIf="editProfileForm.get('current_working_hospital_address')?.hasError('maxlength')">*limit exceeds</div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                <div class="w-full  mb-4 lg:mt-4">
-                    <label for="" class=" dark:text-gray-300">Experience</label>
-                    <input type="text" formControlName="experience"
-                      class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                      [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': editProfileForm.get('experience')?.touched && editProfileForm.get('experience')?.invalid}"
-                      placeholder="experience">
-                    <div *ngIf="editProfileForm.get('experience')?.touched && editProfileForm.get('experience')?.invalid" class="text-red-500 text-xs mt-1">
-                      <div *ngIf="editProfileForm.get('experience')?.hasError('required')">*required</div>
-                      <div *ngIf="editProfileForm.get('experience')?.hasError('pattern')">*should upto 60 years</div>
-                    </div>
-                </div>
-                <div class="w-full  mb-4 lg:mt-4">
-                    <label for="" class=" dark:text-gray-300">Consultation fee</label>
-                    <input type="text" formControlName="consultation_fee"
-                      class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                      [ngClass]="{'border-gray-600 dark:bg-gray-700': name_edit, 'border-gray-300 dark:bg-gray-900': !name_edit,'border-red-500': editProfileForm.get('consultation_fee')?.touched && editProfileForm.get('consultation_fee')?.invalid}"
-                      placeholder="consultation fee">
-                    <div *ngIf="editProfileForm.get('consultation_fee')?.touched && editProfileForm.get('consultation_fee')?.invalid" class="text-red-500 text-xs mt-1">
-                      <div *ngIf="editProfileForm.get('consultation_fee')?.hasError('required')">*required</div>
-                      <div *ngIf="editProfileForm.get('consultation_fee')?.hasError('pattern')">**should be between &#8377;200 to &#8377;2000</div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-center w-full lg:mt-4 lg:mb-4">
-              <button (click)="close_name()" *ngIf="name_edit===false" class=" py-3.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                Edit your profile details
-              </button>
-              <button type="submit" *ngIf="name_edit===true" class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                Save
-              </button>
-              <button (click)="close_name()" *ngIf="name_edit===true" class="ml-8 py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                Close
-              </button>
-            </div>
+<section class="py-10 bg-gray-50 dark:bg-gray-900 min-h-screen flex justify-center">
+    <div class="lg:w-[90%] md:w-[96%] sm:w-[98%] xs:w-full mx-auto">
+
+        <div class="bg-white dark:bg-gray-800 shadow-2xl p-6 sm:p-8 rounded-xl border border-gray-200 dark:border-gray-700">
             
-          </form>
-          <h1 class="mt-4 lg:text-2xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
-            Your Email
-          </h1>
-          <form [formGroup]="email_form" (ngSubmit)="submit_email()" #myform="ngForm">
-            <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-              <div class="w-full  mb-4 mt-4">
-                  <label for="" class="mb-2 dark:text-gray-300">Email</label>
-                  <input formControlName="email" type="text"
-                    class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                    [ngClass]="{'border-gray-600 dark:bg-gray-700': email_edit, 'border-gray-300 dark:bg-gray-900': !email_edit,'border-red-500': email_form.get('email')?.touched && email_form.get('email')?.invalid}"
-                    placeholder="Email">
-                  <div *ngIf="email_form.get('email')?.touched && email_form.get('email')?.invalid" class="text-red-500 text-xs mt-1">
-                      <div *ngIf="email_form.get('email')?.hasError('required')">*required</div>
-                      <div *ngIf="email_form.get('email')?.hasError('email')">*invalid email</div>
-                  </div>
-              </div>
-              <div class="flex justify-start w-full lg:mt-12 lg:mb-4 ">
-                <button (click)="close_email()" *ngIf="email_edit===false" class=" py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                  Edit your email
+            <div class="flex flex-col items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+                <div 
+                    class="w-36 h-36 rounded-full bg-cover bg-center bg-no-repeat ring-4 ring-red-500 ring-offset-2 dark:ring-red-600 dark:ring-offset-gray-800" 
+                    [style.background-image]="url ? 'url(' + url + ')' : 'url(https://res.cloudinary.com/dyemxd31x/image/upload/v1724227646/i4lf0zmuyz9k9prs8hbw.jpg)'">
+                </div>
+                <input 
+                    type="file" 
+                    accept=".jpg, .jpeg, .png" 
+                    name="profile" 
+                    id="upload_profile" 
+                    hidden 
+                    required 
+                    (change)="onFileSelected($event)"
+                >
+                <button 
+                    class="mt-4 py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition duration-150 ease-in-out shadow-md"
+                    (click)="triggerFileInput()"
+                >
+                    Change Profile Pic
                 </button>
-                <button type="submit" *ngIf="email_edit===true" class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                  Save
-                </button>
-                <button (click)="close_email()" *ngIf="email_edit===true" class="ml-8 py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-gray-900">
-                  Close
-                </button>
-              </div>
             </div>
-          </form>
+
+            <h2 class="text-2xl font-bold font-serif mb-4 text-gray-900 dark:text-white border-b pb-2">
+                Professional Details
+            </h2>
+            
+            <form [formGroup]="editProfileForm" (ngSubmit)="submit_profile_details()" #myform="ngForm">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="w-full mb-4">
+                        <label for="firstName" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
+                        <input type="text" formControlName="firstName" id="firstName"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out" 
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('firstName')?.touched && editProfileForm.get('firstName')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('firstName')?.touched && editProfileForm.get('firstName')?.invalid)
+                            }"
+                            placeholder="First Name" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('firstName')?.touched && editProfileForm.get('firstName')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('firstName')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('firstName')?.hasError('maxlength')">*length exceeds</div>
+                            <div *ngIf="editProfileForm.get('firstName')?.hasError('pattern')">*enter a valid firstname</div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full mb-4">
+                        <label for="lastName" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
+                        <input type="text" formControlName="lastName" id="lastName"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('lastName')?.touched && editProfileForm.get('lastName')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('lastName')?.touched && editProfileForm.get('lastName')?.invalid)
+                            }"
+                            placeholder="Last Name" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('lastName')?.touched && editProfileForm.get('lastName')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('lastName')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('lastName')?.hasError('maxlength')">*length exceeds</div>
+                            <div *ngIf="editProfileForm.get('lastName')?.hasError('pattern')">*enter a valid lastname</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="w-full mb-4">
+                        <label for="contactno" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Contact No.</label>
+                        <input type="text" formControlName="contactno" id="contactno"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('contactno')?.touched && editProfileForm.get('contactno')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('contactno')?.touched && editProfileForm.get('contactno')?.invalid)
+                            }"
+                            placeholder="Contact number" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('contactno')?.touched && editProfileForm.get('contactno')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('contactno')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('contactno')?.hasError('pattern')">*enter a valid contact no.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full mb-4">
+                        <label for="hospital" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Current working hospital</label>
+                        <input type="text" formControlName="current_working_hospital_address" id="hospital"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('current_working_hospital_address')?.touched && editProfileForm.get('current_working_hospital_address')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('current_working_hospital_address')?.touched && editProfileForm.get('current_working_hospital_address')?.invalid)
+                            }"
+                            placeholder="Current working hospital address" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('current_working_hospital_address')?.touched && editProfileForm.get('current_working_hospital_address')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('current_working_hospital_address')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('current_working_hospital_address')?.hasError('maxlength')">*limit exceeds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="w-full mb-4">
+                        <label for="experience" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Experience (Years)</label>
+                        <input type="text" formControlName="experience" id="experience"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('experience')?.touched && editProfileForm.get('experience')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('experience')?.touched && editProfileForm.get('experience')?.invalid)
+                            }"
+                            placeholder="Experience in years" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('experience')?.touched && editProfileForm.get('experience')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('experience')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('experience')?.hasError('pattern')">*should be a valid number of years</div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full mb-4">
+                        <label for="fee" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Consultation Fee (&#8377;)</label>
+                        <input type="text" formControlName="consultation_fee" id="fee"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': name_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !name_edit,
+                                'border-red-500': editProfileForm.get('consultation_fee')?.touched && editProfileForm.get('consultation_fee')?.invalid,
+                                'border-gray-300': !(editProfileForm.get('consultation_fee')?.touched && editProfileForm.get('consultation_fee')?.invalid)
+                            }"
+                            placeholder="Consultation fee" [readonly]="!name_edit">
+                        <div *ngIf="editProfileForm.get('consultation_fee')?.touched && editProfileForm.get('consultation_fee')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="editProfileForm.get('consultation_fee')?.hasError('required')">*required</div>
+                            <div *ngIf="editProfileForm.get('consultation_fee')?.hasError('pattern')">**should be between &#8377;200 to &#8377;2000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center sm:justify-end w-full space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
+                    <button type="button" (click)="close_name()" *ngIf="name_edit===false" 
+                            class="py-3 px-8 rounded-lg text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition duration-150 ease-in-out shadow-md">
+                        Edit Profile Details
+                    </button>
+                    
+                    <ng-container *ngIf="name_edit===true">
+                        <button type="submit" 
+                                class="py-3 px-6 rounded-lg text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition duration-150 ease-in-out shadow-md">
+                            Save Changes
+                        </button>
+                        <button type="button" (click)="close_name()" 
+                                class="py-3 px-6 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 transition duration-150 ease-in-out">
+                            Cancel
+                        </button>
+                    </ng-container>
+                </div>
+                
+            </form>
+
+            <h2 class="mt-8 text-2xl font-bold font-serif mb-4 text-gray-900 dark:text-white border-b pb-2">
+                Email Management
+            </h2>
+            
+            <form [formGroup]="email_form" (ngSubmit)="submit_email()" #myform="ngForm">
+                <div class="flex flex-col lg:flex-row gap-4 w-full items-start">
+                    
+                    <div class="w-full lg:w-3/4 mb-4">
+                        <label for="email" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                        <input formControlName="email" type="text" id="email"
+                            class="p-3 w-full border-2 rounded-lg text-gray-800 dark:text-gray-200 dark:border-gray-700 transition duration-150 ease-in-out"
+                            [ngClass]="{
+                                'bg-gray-100 dark:bg-gray-700': email_edit, 
+                                'bg-gray-50 dark:bg-gray-900': !email_edit,
+                                'border-red-500': email_form.get('email')?.touched && email_form.get('email')?.invalid,
+                                'border-gray-300': !(email_form.get('email')?.touched && email_form.get('email')?.invalid)
+                            }"
+                            placeholder="Email" [readonly]="!email_edit">
+                        <div *ngIf="email_form.get('email')?.touched && email_form.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="email_form.get('email')?.hasError('required')">*required</div>
+                            <div *ngIf="email_form.get('email')?.hasError('email')">*invalid email</div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/4 flex flex-row lg:flex-col justify-start lg:justify-end items-end lg:items-end space-x-4 lg:space-x-0 lg:space-y-2 mt-2 lg:mt-8">
+                        <button type="button" (click)="close_email()" *ngIf="email_edit===false" 
+                                class="py-3 px-6 rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition duration-150 ease-in-out shadow-md">
+                            Edit Email
+                        </button>
+                        
+                        <ng-container *ngIf="email_edit===true">
+                            <button type="submit" 
+                                    class="py-3 px-6 rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition duration-150 ease-in-out shadow-md">
+                                Save
+                            </button>
+                            <button type="button" (click)="close_email()" 
+                                    class="py-3 px-6 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 transition duration-150 ease-in-out">
+                                Cancel
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+            </form>
+            
         </div>
-      </div>
     </div>
-  </section>
+</section>

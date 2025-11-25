@@ -42,7 +42,7 @@ export class usereffects {
                             localStorage.setItem('userToken', userdata.accessToken)
                             localStorage.setItem('userId', userdata.accessedUser._id)
                             console.log('userId:', localStorage.getItem('userId'))
-                            this.showMessage.showSuccessToastr(userdata.message)
+                            // this.showMessage.showSuccessToastr(userdata.message)
                             this.router.navigate(['/user/userHome'])  //page after login--->correct it
                             return loginUserSuccess({ data: userdata.accessedUser })
                         } else {
@@ -53,7 +53,7 @@ export class usereffects {
                         console.log('error', error)
                         console.log('error.error:', error.error)
                         console.log('error.error.message:', error.error.message)
-                        this.showMessage.showErrorToastr(error.error.message)
+                        // this.showMessage.showErrorToastr(error.error.message)
                         return of(error.message)
                     })
                 )

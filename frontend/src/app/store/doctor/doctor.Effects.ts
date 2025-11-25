@@ -41,7 +41,7 @@ export class doctorEffects implements OnInit{
                             console.log('docId in effects:',doctordata.accessedUser._id);
                             console.log('docId in effects:',localStorage.getItem('doctorId')as string);
                             
-                            this.showMessage.showSuccessToastr(doctordata.message)
+                            // this.showMessage.showSuccessToastr(doctordata.message)
                             this.router.navigate(['/doctor/doctorHome'])  //page after login--->correct it
                             return loginDoctorSuccess({data:doctordata.accessedUser})
                         }else{
@@ -50,7 +50,7 @@ export class doctorEffects implements OnInit{
                     }),
                     catchError((error)=>{
                         console.log('error.error.message:',error.error.message)
-                        this.showMessage.showErrorToastr(error.error.message)
+                        // this.showMessage.showErrorToastr(error.error.message)
                         return of(error.message)
                     })
                 )
